@@ -2243,3 +2243,32 @@ SMODS.Joker { -- Mugman
         end
     end
 }
+
+SMODS.Joker { -- Selenologist
+    key = "selenologist",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = 2,
+    cost = 6,
+    pos = {x = 8, y = 3},
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    SMODS.add_card({ set = 'BasePhases', area = G.consumeables })
+                    G.GAME.consumeable_buffer = 0
+                    return true
+                end
+            }))
+            return {
+                message = localize('k_nic_plus_phases'),
+                colour = G.C.NIC_PHASES
+            }
+        end
+    end,
+}

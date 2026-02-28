@@ -21,8 +21,10 @@ assert(SMODS.load_file("src/functions.lua"))()
 assert(SMODS.load_file("src/music.lua"))()
 assert(SMODS.load_file("src/quips.lua"))()
 assert(SMODS.load_file("src/rarity.lua"))()
+assert(SMODS.load_file("src/seals.lua"))()
 assert(SMODS.load_file("src/sounds.lua"))()
 assert(SMODS.load_file("src/stickers.lua"))()
+assert(SMODS.load_file("src/spectrals.lua"))()
 assert(SMODS.load_file("src/tags.lua"))()
 assert(SMODS.load_file("src/tarots.lua"))()
 assert(SMODS.load_file("src/texturedeck.lua"))()
@@ -37,7 +39,7 @@ assert(SMODS.load_file("src/pvz/jokers.lua"))()
 assert(SMODS.load_file("src/pvz/zengarden.lua"))()
 
 -- Phases
-
+assert(SMODS.load_file("src/phases/functions.lua"))()
 assert(SMODS.load_file("src/phases/basephases.lua"))()
 assert(SMODS.load_file("src/phases/specialphases.lua"))()
 

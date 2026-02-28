@@ -377,6 +377,14 @@ return {
                     "{C:inactive}SUPER EX does {C:chips}+#7#{C:inactive} Chips"},
                 }
             },
+            j_nic_selenologist = {
+                name = "Selenologist",
+                text = {
+                    "Create a {C:nic_phases}Phases{} card",
+                    "at end of round",
+                    "{C:inactive}(Must have room)",
+                }
+            },
 
             j_nic_identity = {
                 name = "Identity",
@@ -1149,67 +1157,119 @@ return {
             c_nic_newmoon = {
                 name = "New Moon",
                 text = {
-                    "",
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
                 }
             },
             c_nic_waxingcrescent = {
                 name = "Waxing Crescent",
                 text = {
-                    "",
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
                 }
             },
             c_nic_firstquarter = {
                 name = "First Quarter",
                 text = {
-                    "",
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
                 }
             },
             c_nic_waxinggibbous = {
                 name = "Waxing Gibbous",
                 text = {
-                    "",
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
                 }
             },
             c_nic_fullmoon = {
                 name = "Full Moon",
                 text = {
-                    "",
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
                 }
             },
             c_nic_waninggibbous = {
                 name = "Waning Gibbous",
                 text = {
-                    "",
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
                 }
             },
             c_nic_thirdquarter = {
                 name = "Third Quarter",
                 text = {
-                    "",
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
                 }
             },
             c_nic_waningscrescent = {
                 name = "Waning Crescent",
                 text = {
-                    "",
+                    "({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips",
                 }
             },
             c_nic_bluemoon = {
                 name = "Blue Moon",
                 text = {
-                    "",
+                    {"{C:inactive}Passive Ability",
+                    "smth smth",},
+                    {"{C:inactive}Ability [USE]",
+                    "smth smth",},
                 }
             },
             c_nic_bloodmoon = {
                 name = "Blood Moon",
                 text = {
-                    "",
+                    {"{C:inactive}Passive Ability",
+                    "smth smth",},
+                    {"{C:inactive}Ability [USE]",
+                    "smth smth",},
                 }
             },
-            c_nic_altereclipse = {
-                name = "Alter Eclipse",
+            c_nic_altareclipse = {
+                name = "Altar Eclipse",
                 text = {
-                    "",
+                    {"{C:inactive}Passive Ability",
+                    "smth smth",},
+                    {"{C:inactive}Ability [USE]",
+                    "smth smth",},
+                }
+            },
+
+            -- Hyperfixation
+            c_nic_pinkmoon = {
+                name = "Pink Moon",
+                text = {
+                    {"{C:inactive}Passive Ability",
+                    "smth smth",},
+                    {"{C:inactive}Ability [USE]",
+                    "smth smth",},
                 }
             },
         },
@@ -1279,11 +1339,19 @@ return {
                     "considered a {C:nic_teto}Teto",
                 }
             },
+            nic_teal_seal = {
+                name = "Teal Seal",
+                text = {
+                    "Creates a {C:nic_phases}Phases{} card",
+                    "when {C:attention}played{} and {C:attention}unscored",
+                    "{C:inactive}(Must have room)",
+                },
+            },
             nic_changingphases = {
                 name = "Changing Phases",
                 text = {
                     "Changes {C:nic_phases}Phases",
-                    "{C:attention} End of Round",
+                    "end of round",
                 }
             },
             nic_spades_no_debuff = {
@@ -1338,7 +1406,16 @@ return {
             },
         },
         Planet={},
-        Spectral = {},
+        Spectral = {
+            c_nic_mooncatcher = {
+                name = "Mooncatcher",
+                text = {
+                    "Add a {C:nic_phases}Teal Seal{}",
+                    "to {C:attention}1{} selected",
+                    "card in your hand",
+                },
+            },
+        },
         Stake={},
         Tag={
             tag_nic_teto = {
@@ -1372,6 +1449,14 @@ return {
                     "{C:inactive,s:0.8} Food Jokers turn into Pears",
                 }
             },
+            c_nic_selene = {
+                name = "Selene",
+                text = {
+                    "Creates up to {C:attention}#1#",
+                    "random {C:nic_phases}Phases{} cards",
+                    "{C:inactive}(Must have room)",
+                },
+            },
         },
         Voucher={},
     },
@@ -1396,6 +1481,7 @@ return {
         high_scores={},
         labels = {
             nic_tetosticker = "Teto",
+            nic_teal_seal = "Teal Seal",
         },
         poker_hand_descriptions={},
         poker_hands={},

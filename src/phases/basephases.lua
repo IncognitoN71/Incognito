@@ -1,6 +1,6 @@
 SMODS.Atlas{ -- Phases
     key = "nicphases",
-    path = "scrapped/nicphases.png",
+    path = "phases/nicphases.png",
     px = 71,
     py = 95,
 }
@@ -43,10 +43,32 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 0, y = 0 },
+    config = { mult = 1, chips = 1 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        local lvlhand = "0"
+        local lasthand = "Nothing"
+        local multhand = "0"
+        local chipshand = "0"
+        if G.GAME.last_hand_played then 
+            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
+            lasthand = G.GAME.last_hand_played
+            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
+            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
+        end
+        return { 
+            vars = { 
+                lvlhand, lasthand, multhand, chipshand,
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -115,10 +137,11 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        Incognito.basephaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.GAME.last_hand_played
     end,
 }
 
@@ -129,10 +152,32 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 1, y = 0 },
+    config = { mult = 1, chips = 1.5 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        local lvlhand = "0"
+        local lasthand = "Nothing"
+        local multhand = "0"
+        local chipshand = "0"
+        if G.GAME.last_hand_played then 
+            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
+            lasthand = G.GAME.last_hand_played
+            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
+            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
+        end
+        return { 
+            vars = { 
+                lvlhand, lasthand, multhand, chipshand,
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -201,10 +246,11 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        Incognito.basephaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
 
@@ -215,10 +261,32 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 2, y = 0 },
+    config = { mult = 1, chips = 2 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        local lvlhand = "0"
+        local lasthand = "Nothing"
+        local multhand = "0"
+        local chipshand = "0"
+        if G.GAME.last_hand_played then 
+            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
+            lasthand = G.GAME.last_hand_played
+            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
+            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
+        end
+        return { 
+            vars = { 
+                lvlhand, lasthand, multhand, chipshand,
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -287,10 +355,11 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        Incognito.basephaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
 
@@ -301,10 +370,32 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 3, y = 0 },
+    config = { mult = 1.5, chips = 2 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        local lvlhand = "0"
+        local lasthand = "Nothing"
+        local multhand = "0"
+        local chipshand = "0"
+        if G.GAME.last_hand_played then 
+            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
+            lasthand = G.GAME.last_hand_played
+            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
+            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
+        end
+        return { 
+            vars = { 
+                lvlhand, lasthand, multhand, chipshand,
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -373,10 +464,11 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        Incognito.basephaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
 
@@ -387,10 +479,32 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 0, y = 1 },
+    config = { mult = 2, chips = 2 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        local lvlhand = "0"
+        local lasthand = "Nothing"
+        local multhand = "0"
+        local chipshand = "0"
+        if G.GAME.last_hand_played then 
+            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
+            lasthand = G.GAME.last_hand_played
+            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
+            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
+        end
+        return { 
+            vars = { 
+                lvlhand, lasthand, multhand, chipshand,
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -459,10 +573,11 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        Incognito.basephaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
 
@@ -473,10 +588,32 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 1, y = 1 },
+    config = { mult = 1.5, chips = 2 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        local lvlhand = "0"
+        local lasthand = "Nothing"
+        local multhand = "0"
+        local chipshand = "0"
+        if G.GAME.last_hand_played then 
+            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
+            lasthand = G.GAME.last_hand_played
+            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
+            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
+        end
+        return { 
+            vars = { 
+                lvlhand, lasthand, multhand, chipshand,
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -545,10 +682,11 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        Incognito.basephaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
 
@@ -559,10 +697,32 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 2, y = 1 },
+    config = { mult = 2, chips = 1 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        local lvlhand = "0"
+        local lasthand = "Nothing"
+        local multhand = "0"
+        local chipshand = "0"
+        if G.GAME.last_hand_played then 
+            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
+            lasthand = G.GAME.last_hand_played
+            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
+            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
+        end
+        return { 
+            vars = { 
+                lvlhand, lasthand, multhand, chipshand,
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -631,10 +791,11 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        Incognito.basephaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
 
@@ -645,10 +806,32 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 3, y = 1 },
+    config = { mult = 1.5, chips = 1 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        local lvlhand = "0"
+        local lasthand = "Nothing"
+        local multhand = "0"
+        local chipshand = "0"
+        if G.GAME.last_hand_played then 
+            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
+            lasthand = G.GAME.last_hand_played
+            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
+            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
+        end
+        return { 
+            vars = { 
+                lvlhand, lasthand, multhand, chipshand,
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
@@ -717,9 +900,10 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        Incognito.basephaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }

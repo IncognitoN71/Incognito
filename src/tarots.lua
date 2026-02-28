@@ -63,3 +63,38 @@ SMODS.Consumable {
         return #G.jokers.highlighted > 0 and #G.jokers.highlighted == 1  and G.jokers.highlighted[1].config.center.rarity ~= "nic_teto" and not G.jokers.highlighted[1].ability.nic_tetosticker
     end,
 }
+
+SMODS.Consumable {
+    key = 'selene',
+    set = 'Tarot',
+    cost = 4,
+    atlas = 'nictarots',
+    pos = {x = 1, y = 0 },
+    config = { extra = { phases = 2 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.phases } }
+    end,
+
+    use = function(self, card, area, copier)
+        for i = 1, math.min(card.ability.extra.phases, G.consumeables.config.card_limit - #G.consumeables.cards) do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.4,
+                func = function()
+                    if G.consumeables.config.card_limit > #G.consumeables.cards then
+                        play_sound('timpani')
+                        SMODS.add_card({ set = 'BasePhases', area = G.consumeables })
+                        card:juice_up(0.3, 0.5)
+                    end
+                    return true
+                end
+            }))
+        end
+        delay(0.6)
+    end,
+
+    can_use = function(self, card)
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
+    end
+}

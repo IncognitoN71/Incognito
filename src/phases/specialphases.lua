@@ -79,7 +79,7 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
 
@@ -155,13 +155,13 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
 
 SMODS.Consumable {
     discovered = false,
-    key = 'altereclipse',
+    key = 'altareclipse',
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
@@ -231,6 +231,6 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return (#G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables and not G.booster_pack))
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
     end,
 }
