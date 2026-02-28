@@ -185,13 +185,11 @@ return {
             j_nic_crazytaxi = {
                 name = "Crazy Taxi",
                 text = {
-                    {"When {C:attention}end of round{} is within {C:attention}time,",
-                    "Earns {C:money}$#1#{} and increases {C:money}cash{} by {C:money}#2#{}",
-                    "If {C:red}failed{}, This Joker gets destroyed",
-                    "{s:0.8}Time resets every round"},
-                    {"Each played {C:attention}#3#{} adds {C:attention}+5 Seconds",
-                    "{s:0.8}Rank changes every round"},
-                }
+                    "Earn {C:money}$#1#{} and increases by {C:money}$#2#",
+                    "for each scored {C:attention}#4#{}, resets",
+                    "back to {C:money}$#3#{} if {C:attention}scored different{},",
+                    "rank changes every round",
+                },
             },
             j_nic_strawberrycake = {
                 name = "Strawberry Cake",
@@ -494,7 +492,7 @@ return {
                 name = "[Spamteto]",
                 text = {
                     "Earn {X:money,C:white}[ $#1#% ]{} of current",
-                    "cash at end of round",
+                    "money at end of round",
                     "{C:inactive}(Cash out {C:money}$#2#{C:inactive})",
                     "{C:inactive,s:0.8} [Press F1 For] HELP",
                 }
@@ -658,7 +656,7 @@ return {
                     "Earn {C:money}$#3#{} for",
                     "each played hand,",
                     "every {C:attention}#2#{C:inactive} [#1#]{} hands,",
-                    "double the {C:money}cash{} earn",
+                    "double the {C:money}money{} earn",
                 }
             },
             j_nic_fumeshroom = {
