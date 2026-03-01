@@ -824,3 +824,24 @@ SMODS.Joker{ -- TetOS 4.1
         end
     end
 }
+
+SMODS.Joker{ -- Cadmium Colors
+    key = "cadmiumcolors",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nictetojokers',
+    rarity = "nic_teto",
+    cost = 5,
+    pos = {x = 9, y = 1},
+    config = { extra = {} },
+    pools = { ["Teto"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+
+    calculate = function(self, card, context)
+    end
+}

@@ -574,9 +574,16 @@ return {
                     "Level up {C:attention}Pair{} every time",
                     "{C:tarot}The Wheel of Fortune",
                     "{C:red}unsuccessfully{} triggers"
-
                 }
             },
+
+            j_nic_cadmiumcolors = {
+                name = "Cadmium Colors",
+                text = {
+                    "",
+                }
+            },
+            
 
             -- Plants
 
@@ -1247,7 +1254,9 @@ return {
                     "{C:mult}+#3#{} Mult and",
                     "{C:chips}+#4#{} chips"},
                     {"Gains {X:nic_phases,C:white}X#6#{} Modifier for",
-                    "every used {C:nic_phases}Phases{} card",
+                    "every used {C:nic_phases}Phases{} card,",
+                    "On use permanently",
+                    "modify {C:planet}Planet{} value",
                     "{C:inactive}(Currently {X:nic_phases,C:white} X#5# {C:inactive} Modifier)"},
                 }
             },

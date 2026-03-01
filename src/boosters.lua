@@ -191,7 +191,6 @@ SMODS.Booster{
     },
     kind = 'Phases',
     group_key = "k_nic_lunar_pack",
-    select_card = 'consumeables',
     ease_background_colour = function(self)
         ease_background_colour({ new_colour = G.C.NIC_PHASES})
     end,
@@ -226,7 +225,6 @@ SMODS.Booster{
     },
     kind = 'Phases',
     group_key = "k_nic_lunar_pack",
-    select_card = 'consumeables',
     ease_background_colour = function(self)
         ease_background_colour({ new_colour = G.C.NIC_PHASES})
     end,
