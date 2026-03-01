@@ -43,24 +43,25 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 0, y = 0 },
-    config = { mult = 1, chips = 1 },
+    config = { mult = 1, chips = 1, odds = 100 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
-        local lvlhand = "0"
-        local lasthand = "Nothing"
-        local multhand = "0"
-        local chipshand = "0"
-        if G.GAME.last_hand_played then 
-            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
-            lasthand = G.GAME.last_hand_played
-            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
-            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
-        end
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { 
+            key = "nic_levelupvaluephases", set = "Other", vars = { 
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+            } 
+        }
         return { 
             vars = { 
-                lvlhand, lasthand, multhand, chipshand,
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
                 colours = { 
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
                     (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
@@ -73,7 +74,42 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) ~= 1 then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
+                for i = 1, 2 do
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 0.4,
+                        func = function()
+                            play_sound('tarot2', 1.1, 0.6)
+                            card:juice_up()
+                            return true
+                        end
+                    }))
+                end
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        card:juice_up(0.5, 0.5)
+                        play_sound('nic_glitch', 1.1, 0.6)
+                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
+                        return true
+                    end
+                }))
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
+                        return true
+                    end
+                }))
+                return {
+                    message = "Special Shift!",
+                    colour = G.C.NIC_PHASES
+                }
+            else
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
@@ -97,7 +133,58 @@ SMODS.Consumable {
                     message = "Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            else
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+        Incognito.phaseslevelup(card)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'waxingcrescent',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 1, y = 0 },
+    config = { mult = 1, chips = 1.5, odds = 100 },
+    pools = { ["BasePhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { 
+            key = "nic_levelupvaluephases", set = "Other", vars = { 
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+            } 
+        }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -132,57 +219,7 @@ SMODS.Consumable {
                     message = "Special Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            end
-        end
-    end,
-
-    use = function(self, card, area, copier)
-        Incognito.basephaseslevelup(card)
-    end,
-
-    can_use = function(self, card)
-        return G.GAME.last_hand_played
-    end,
-}
-
-SMODS.Consumable {
-    discovered = false,
-    key = 'waxingcrescent',
-    set = 'Phases',
-    cost = 4,
-    atlas = 'nicphases',
-    pos = {x = 1, y = 0 },
-    config = { mult = 1, chips = 1.5 },
-    pools = { ["BasePhases"] = true },
-
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
-        local lvlhand = "0"
-        local lasthand = "Nothing"
-        local multhand = "0"
-        local chipshand = "0"
-        if G.GAME.last_hand_played then 
-            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
-            lasthand = G.GAME.last_hand_played
-            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
-            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
-        end
-        return { 
-            vars = { 
-                lvlhand, lasthand, multhand, chipshand,
-                colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
-                }
-            } 
-        }
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) ~= 1 then
+            else
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
@@ -206,7 +243,58 @@ SMODS.Consumable {
                     message = "Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            else
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+        Incognito.phaseslevelup(card)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'firstquarter',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 2, y = 0 },
+    config = { mult = 1, chips = 2, odds = 100 },
+    pools = { ["BasePhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { 
+            key = "nic_levelupvaluephases", set = "Other", vars = { 
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+            } 
+        }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -241,57 +329,7 @@ SMODS.Consumable {
                     message = "Special Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            end
-        end
-    end,
-
-    use = function(self, card, area, copier)
-        Incognito.basephaseslevelup(card)
-    end,
-
-    can_use = function(self, card)
-        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
-    end,
-}
-
-SMODS.Consumable {
-    discovered = false,
-    key = 'firstquarter',
-    set = 'Phases',
-    cost = 4,
-    atlas = 'nicphases',
-    pos = {x = 2, y = 0 },
-    config = { mult = 1, chips = 2 },
-    pools = { ["BasePhases"] = true },
-
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
-        local lvlhand = "0"
-        local lasthand = "Nothing"
-        local multhand = "0"
-        local chipshand = "0"
-        if G.GAME.last_hand_played then 
-            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
-            lasthand = G.GAME.last_hand_played
-            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
-            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
-        end
-        return { 
-            vars = { 
-                lvlhand, lasthand, multhand, chipshand,
-                colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
-                }
-            } 
-        }
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) ~= 1 then
+            else
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
@@ -315,7 +353,58 @@ SMODS.Consumable {
                     message = "Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            else
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+        Incognito.phaseslevelup(card)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'waxinggibbous',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 3, y = 0 },
+    config = { mult = 1.5, chips = 2, odds = 100 },
+    pools = { ["BasePhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { 
+            key = "nic_levelupvaluephases", set = "Other", vars = { 
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+            } 
+        }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -350,57 +439,7 @@ SMODS.Consumable {
                     message = "Special Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            end
-        end
-    end,
-
-    use = function(self, card, area, copier)
-        Incognito.basephaseslevelup(card)
-    end,
-
-    can_use = function(self, card)
-        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
-    end,
-}
-
-SMODS.Consumable {
-    discovered = false,
-    key = 'waxinggibbous',
-    set = 'Phases',
-    cost = 4,
-    atlas = 'nicphases',
-    pos = {x = 3, y = 0 },
-    config = { mult = 1.5, chips = 2 },
-    pools = { ["BasePhases"] = true },
-
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
-        local lvlhand = "0"
-        local lasthand = "Nothing"
-        local multhand = "0"
-        local chipshand = "0"
-        if G.GAME.last_hand_played then 
-            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
-            lasthand = G.GAME.last_hand_played
-            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
-            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
-        end
-        return { 
-            vars = { 
-                lvlhand, lasthand, multhand, chipshand,
-                colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
-                }
-            } 
-        }
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) ~= 1 then
+            else
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
@@ -424,7 +463,58 @@ SMODS.Consumable {
                     message = "Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            else
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+        Incognito.phaseslevelup(card)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'fullmoon',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 0, y = 1 },
+    config = { mult = 2, chips = 2, odds = 100 },
+    pools = { ["BasePhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { 
+            key = "nic_levelupvaluephases", set = "Other", vars = { 
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+            } 
+        }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -459,57 +549,7 @@ SMODS.Consumable {
                     message = "Special Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            end
-        end
-    end,
-
-    use = function(self, card, area, copier)
-        Incognito.basephaseslevelup(card)
-    end,
-
-    can_use = function(self, card)
-        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
-    end,
-}
-
-SMODS.Consumable {
-    discovered = false,
-    key = 'fullmoon',
-    set = 'Phases',
-    cost = 4,
-    atlas = 'nicphases',
-    pos = {x = 0, y = 1 },
-    config = { mult = 2, chips = 2 },
-    pools = { ["BasePhases"] = true },
-
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
-        local lvlhand = "0"
-        local lasthand = "Nothing"
-        local multhand = "0"
-        local chipshand = "0"
-        if G.GAME.last_hand_played then 
-            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
-            lasthand = G.GAME.last_hand_played
-            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
-            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
-        end
-        return { 
-            vars = { 
-                lvlhand, lasthand, multhand, chipshand,
-                colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
-                }
-            } 
-        }
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) ~= 1 then
+            else
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
@@ -533,7 +573,58 @@ SMODS.Consumable {
                     message = "Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            else
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+        Incognito.phaseslevelup(card)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'waninggibbous',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 1, y = 1 },
+    config = { mult = 1.5, chips = 2, odds = 100 },
+    pools = { ["BasePhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { 
+            key = "nic_levelupvaluephases", set = "Other", vars = { 
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+            } 
+        }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -568,57 +659,7 @@ SMODS.Consumable {
                     message = "Special Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            end
-        end
-    end,
-
-    use = function(self, card, area, copier)
-        Incognito.basephaseslevelup(card)
-    end,
-
-    can_use = function(self, card)
-        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
-    end,
-}
-
-SMODS.Consumable {
-    discovered = false,
-    key = 'waninggibbous',
-    set = 'Phases',
-    cost = 4,
-    atlas = 'nicphases',
-    pos = {x = 1, y = 1 },
-    config = { mult = 1.5, chips = 2 },
-    pools = { ["BasePhases"] = true },
-
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
-        local lvlhand = "0"
-        local lasthand = "Nothing"
-        local multhand = "0"
-        local chipshand = "0"
-        if G.GAME.last_hand_played then 
-            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
-            lasthand = G.GAME.last_hand_played
-            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
-            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
-        end
-        return { 
-            vars = { 
-                lvlhand, lasthand, multhand, chipshand,
-                colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
-                }
-            } 
-        }
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) ~= 1 then
+            else
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
@@ -642,7 +683,58 @@ SMODS.Consumable {
                     message = "Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            else
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+        Incognito.phaseslevelup(card)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'thirdquarter',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 2, y = 1 },
+    config = { mult = 2, chips = 1, odds = 100 },
+    pools = { ["BasePhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { 
+            key = "nic_levelupvaluephases", set = "Other", vars = { 
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+            } 
+        }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -677,57 +769,7 @@ SMODS.Consumable {
                     message = "Special Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            end
-        end
-    end,
-
-    use = function(self, card, area, copier)
-        Incognito.basephaseslevelup(card)
-    end,
-
-    can_use = function(self, card)
-        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
-    end,
-}
-
-SMODS.Consumable {
-    discovered = false,
-    key = 'thirdquarter',
-    set = 'Phases',
-    cost = 4,
-    atlas = 'nicphases',
-    pos = {x = 2, y = 1 },
-    config = { mult = 2, chips = 1 },
-    pools = { ["BasePhases"] = true },
-
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
-        local lvlhand = "0"
-        local lasthand = "Nothing"
-        local multhand = "0"
-        local chipshand = "0"
-        if G.GAME.last_hand_played then 
-            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
-            lasthand = G.GAME.last_hand_played
-            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
-            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
-        end
-        return { 
-            vars = { 
-                lvlhand, lasthand, multhand, chipshand,
-                colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
-                }
-            } 
-        }
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) ~= 1 then
+            else
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
@@ -751,7 +793,58 @@ SMODS.Consumable {
                     message = "Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            else
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+        Incognito.phaseslevelup(card)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'waningscrescent',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 3, y = 1 },
+    config = { mult = 1.5, chips = 1, odds = 100 },
+    pools = { ["BasePhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { 
+            key = "nic_levelupvaluephases", set = "Other", vars = { 
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+            } 
+        }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
+                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
+                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
+                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
+                }
+            } 
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -786,57 +879,7 @@ SMODS.Consumable {
                     message = "Special Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            end
-        end
-    end,
-
-    use = function(self, card, area, copier)
-        Incognito.basephaseslevelup(card)
-    end,
-
-    can_use = function(self, card)
-        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
-    end,
-}
-
-SMODS.Consumable {
-    discovered = false,
-    key = 'waningscrescent',
-    set = 'Phases',
-    cost = 4,
-    atlas = 'nicphases',
-    pos = {x = 3, y = 1 },
-    config = { mult = 1.5, chips = 1 },
-    pools = { ["BasePhases"] = true },
-
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
-        local lvlhand = "0"
-        local lasthand = "Nothing"
-        local multhand = "0"
-        local chipshand = "0"
-        if G.GAME.last_hand_played then 
-            lvlhand = G.GAME.hands[G.GAME.last_hand_played].level
-            lasthand = G.GAME.last_hand_played
-            multhand = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
-            chipshand = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips
-        end
-        return { 
-            vars = { 
-                lvlhand, lasthand, multhand, chipshand,
-                colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
-                }
-            } 
-        }
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) ~= 1 then
+            else
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'after',
@@ -860,50 +903,15 @@ SMODS.Consumable {
                     message = "Shift!",
                     colour = G.C.NIC_PHASES
                 }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
             end
         end
     end,
 
     use = function(self, card, area, copier)
-        Incognito.basephaseslevelup(card)
+        Incognito.phaseslevelup(card)
     end,
 
     can_use = function(self, card)
-        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
+        return G.GAME.last_hand_played
     end,
 }

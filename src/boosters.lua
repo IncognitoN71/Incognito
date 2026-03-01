@@ -7,19 +7,9 @@ SMODS.Atlas{ -- Boosters
 
 SMODS.Booster{
     key = 'teto_booster',
-    loc_txt = {
-        name = "Teto Pack",
-        text= {
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:nic_teto} Teto{} cards",
-        },
-        group_name = {
-            "Teto Pack"
-        }
-    },
     atlas = 'nicboosters',
-    pos = {x = 0,y = 0},
-    discovered = true,
+    pos = {x = 0, y = 0},
+    discovered = false,
     weight = 0.5,
     cost = 4,
     config = {
@@ -27,6 +17,7 @@ SMODS.Booster{
         choose = 1
     },
     kind = 'Teto',
+    group_key = "k_nic_teto_pack",
     ease_background_colour = function(self)
         ease_background_colour({ new_colour = HEX("e15d73")})
     end,
@@ -58,20 +49,10 @@ SMODS.ObjectType{
 }
 
 SMODS.Booster{
-    key = 'vase_booser1',
-    loc_txt = {
-        name = "Vase Pack",
-        text= {
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:nic_plants} Vase{} cards",
-        },
-        group_name = {
-            "Vase Pack"
-        }
-    },
+    key = 'vase_booster1',
     atlas = 'nicboosters',
-    pos = {x = 0,y = 1},
-    discovered = true,
+    pos = {x = 0, y = 1},
+    discovered = false,
     weight = 0.5,
     cost = 4,
     config = {
@@ -79,6 +60,7 @@ SMODS.Booster{
         choose = 1
     },
     kind = 'Vase',
+    group_key = "k_nic_vase_pack",
     ease_background_colour = function(self)
         ease_background_colour({ new_colour = HEX("96603f")})
     end,
@@ -110,20 +92,10 @@ SMODS.ObjectType{
 }
 
 SMODS.Booster{
-    key = 'vase_booser2',
-    loc_txt = {
-        name = "Vase Pack",
-        text= {
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:nic_plants} Vase{} cards",
-        },
-        group_name = {
-            "Vase Pack"
-        }
-    },
+    key = 'vase_booster2',
     atlas = 'nicboosters',
-    pos = {x = 1,y = 1},
-    discovered = true,
+    pos = {x = 1, y = 1},
+    discovered = false,
     weight = 0.1,
     cost = 4,
     config = {
@@ -131,6 +103,7 @@ SMODS.Booster{
         choose = 1
     },
     kind = 'Vase',
+    group_key = "k_nic_vase_pack",
     ease_background_colour = function(self)
         ease_background_colour({ new_colour = HEX("408c2f")})
     end,
@@ -163,19 +136,9 @@ SMODS.ObjectType{
 
 --[[SMODS.Booster{
     key = 'tools_booster',
-    loc_txt = {
-        name = "Tools Pack",
-        text= {
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:nic_plants} Zen Garden{} cards",
-        },
-        group_name = {
-            "Tools Pack"
-        }
-    },
     atlas = 'nicboosters',
-    pos = {x = 2,y = 1},
-    discovered = true,
+    pos = {x = 2, y = 1},
+    discovered = false,
     weight = 0.5,
     cost = 4,
     config = {
@@ -183,6 +146,7 @@ SMODS.ObjectType{
         choose = 1
     },
     kind = 'Tools',
+    group_key = "k_tools_pack",
     select_card = 'consumeables',
     ease_background_colour = function(self)
         ease_background_colour({ new_colour = HEX("92431c")})
@@ -213,3 +177,73 @@ SMODS.ObjectType{
 		SMODS.ObjectType.inject(self)
 	end,
 }]]
+
+SMODS.Booster{
+    key = 'lunar_booster1',
+    atlas = 'nicboosters',
+    pos = {x = 0, y = 2},
+    discovered = false,
+    weight = 0.5,
+    cost = 4,
+    config = {
+        extra = 3,
+        choose = 1
+    },
+    kind = 'Phases',
+    group_key = "k_nic_lunar_pack",
+    select_card = 'consumeables',
+    ease_background_colour = function(self)
+        ease_background_colour({ new_colour = G.C.NIC_PHASES})
+    end,
+    loc_vars = function(self,info_queue,center)
+        return {
+            vars = {
+                center.ability.choose,
+                center.ability.extra
+            }
+        }
+    end,
+    create_card = function(self, card)
+        return { 
+            set = "BasePhases", 
+            area = G.pack_cards,
+            skip_materialize = true,
+
+        }
+    end,
+}
+
+SMODS.Booster{
+    key = 'lunar_booster2',
+    atlas = 'nicboosters',
+    pos = {x = 1, y = 2},
+    discovered = false,
+    weight = 0.5,
+    cost = 4,
+    config = {
+        extra = 3,
+        choose = 1
+    },
+    kind = 'Phases',
+    group_key = "k_nic_lunar_pack",
+    select_card = 'consumeables',
+    ease_background_colour = function(self)
+        ease_background_colour({ new_colour = G.C.NIC_PHASES})
+    end,
+    loc_vars = function(self,info_queue,center)
+        return {
+            vars = {
+                center.ability.choose,
+                center.ability.extra
+            }
+        }
+    end,
+    create_card = function(self, card)
+        return { 
+            set = "BasePhases", 
+            area = G.pack_cards,
+            skip_materialize = true,
+
+        }
+    end,
+}

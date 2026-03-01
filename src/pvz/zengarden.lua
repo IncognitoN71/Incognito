@@ -51,7 +51,7 @@ SMODS.Consumable { -- Mystery Vase
                 else
                     crazy = 1
                 end
-                local random = pseudorandom('c_nic_mysteryvase', 3 + crazy, 4)
+                local random = pseudorandom('c_nic_mysteryvase', 1 + crazy, 4)
                 play_sound('nic_vasebreak')
 
                 if random == 1 then

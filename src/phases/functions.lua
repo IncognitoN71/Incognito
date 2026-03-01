@@ -1,4 +1,4 @@
-function Incognito.basephaseslevelup(card)
+function Incognito.phaseslevelup(card)
     local hand = G.GAME.last_hand_played
     local mult = G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult
     local chips = G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips

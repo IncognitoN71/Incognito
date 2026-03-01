@@ -2195,17 +2195,36 @@ SMODS.Joker { -- Selenologist
     rarity = 2,
     cost = 6,
     pos = {x = 8, y = 3},
+    config = { extra = { odds = 100 } },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { new_numerator, new_denominator, } }
+        return { vars = { } }
+    end,
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    SMODS.add_card({ set = 'BasePhases', area = G.consumeables })
-                    G.GAME.consumeable_buffer = 0
-                    return true
-                end
-            }))
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.extra.odds) then
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('nic_glitch')
+                        SMODS.add_card({ set = 'SpecialPhases', area = G.consumeables })
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                }))
+            else
+                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.add_card({ set = 'BasePhases', area = G.consumeables })
+                        G.GAME.consumeable_buffer = 0
+                        return true
+                    end
+                }))
+            end
             return {
                 message = localize('k_nic_plus_phases'),
                 colour = G.C.NIC_PHASES

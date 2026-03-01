@@ -9,6 +9,12 @@ return {
                     "and {C:attention}2{} copies of",
                     "{C:nic_plants,T:c_nic_mysteryvase}Mystery Vase{} Card"
                 }
+            },
+            b_nic_selene = {
+                name = "Selene Deck",
+                text = {
+                    "Start run with {C:nic_phases,T:c_nic_selene}Selene",
+                }
             }
         },
         Blind={
@@ -1235,19 +1241,27 @@ return {
             c_nic_bluemoon = {
                 name = "Blue Moon",
                 text = {
-                    {"{C:inactive}Passive Ability",
-                    "smth smth",},
-                    {"{C:inactive}Ability [USE]",
-                    "smth smth",},
+                    {"({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips"},
+                    {"Gains {X:nic_phases,C:white}X#6#{} Modifier for",
+                    "every used {C:nic_phases}Phases{} card",
+                    "{C:inactive}(Currently {X:nic_phases,C:white} X#5# {C:inactive} Modifier)"},
                 }
             },
             c_nic_bloodmoon = {
                 name = "Blood Moon",
                 text = {
-                    {"{C:inactive}Passive Ability",
-                    "smth smth",},
-                    {"{C:inactive}Ability [USE]",
-                    "smth smth",},
+                    {"({V:1}lvl.#1#{}) Level up",
+                    "{C:inactive,s:0.8}last played hand",
+                    "{V:2}#2#",
+                    "{C:mult}+#3#{} Mult and",
+                    "{C:chips}+#4#{} chips"},
+                    {"Gains {C:nic_phases}+#6#{} Reusability for",
+                    "each sold {C:nic_phases}Phases{} card",
+                    "{C:inactive}(Currently {C:nic_phases}#5#{C:inactive} Reusability)"},
                 }
             },
             c_nic_altareclipse = {
@@ -1330,6 +1344,51 @@ return {
             },
         },
         Other = {
+            -- Packs
+            p_nic_teto_booster = {
+                name = "Teto Pack",
+                text= {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:nic_teto} Teto{} cards",
+                },
+            },
+            p_nic_vase_booster1 = {
+                name = "Vase Pack",
+                text= {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:nic_plants} Vase{} cards",
+                },
+            },
+            p_nic_vase_booster2 = {
+                name = "Vase Pack",
+                text= {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:nic_plants} Vase{} cards",
+                },
+            },
+            p_nic_tools_booster = {
+                name = "Tools Pack",
+                text= {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:nic_plants} Zen Garden{} cards",
+                },
+            },
+            p_nic_lunar_booster1 = {
+                name = "Lunar Pack",
+                text= {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:nic_phases} Phases{} cards",
+                },
+            },
+            p_nic_lunar_booster2 = {
+                name = "Lunar Pack",
+                text= {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:nic_phases} Phases{} cards",
+                },
+            },
+            
+            -- Teto
             nic_tetosticker = {
                 name = "Teto",
                 text = {
@@ -1337,6 +1396,8 @@ return {
                     "considered a {C:nic_teto}Teto",
                 }
             },
+
+            -- Phases
             nic_teal_seal = {
                 name = "Teal Seal",
                 text = {
@@ -1345,13 +1406,42 @@ return {
                     "{C:inactive}(Must have room)",
                 },
             },
-            nic_changingphases = {
+            nic_changingbasephases = {
                 name = "Changing Phases",
                 text = {
-                    "Changes {C:nic_phases}Phases",
-                    "end of round",
+                    "Changes {C:nic_phases}Phases{} end of",
+                    "round, {C:green}#1# in #2#{} chance to",
+                    "turn into {C:nic_phases}Special Phases"
                 }
             },
+            nic_changingspecialphases = {
+                name = "Changing Special Phases",
+                text = {
+                    "End of round,",
+                    "{C:green}#1# in #2#{} chance to",
+                    "turn back {C:nic_phases}Phases"
+                }
+            },
+            nic_specialphases = {
+                name = "Special Phases",
+                text = {
+                    "{C:green}#1# in #2#{} chance",
+                    "to turn into",
+                    "{C:nic_phases}Special Phases",
+                }
+            },
+            nic_levelupvaluephases = {
+                name = "Level Up Value",
+                text = {
+                    "Last played hand",
+                    "{C:planet}Planet{} value times",
+                    "{C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:planet}#3#{} x {C:nic_phases}#1#{} Mult and",
+                    "{C:planet}#4#{} x {C:nic_phases}#2#{} chips",
+                }
+            },
+
             nic_spades_no_debuff = {
                 name = " Passive Ability ",
                 text = {
@@ -1469,11 +1559,20 @@ return {
         },
         collabs={},
         dictionary = {
+            -- Rarity
             k_nic_incognito = "Incognito",
             k_nic_teto = "Teto",
             k_nic_plants = "Plants",
             k_nic_scrapped = "Scrapped",
+            -- Packs
+            k_nic_teto_pack = "Teto Pack",
+            k_nic_vase_pack = "Vase Pack",
+            k_nic_tools_pack = "Tools Pack",
+            k_nic_lunar_pack = "Lunar Pack",
+            -- Phases
             k_nic_plus_phases = "+1 Phases",
+            k_nic_special_phases = "Special Phases",
+            -- Death
             ph_nic_technoblade = "TECHNOBLADE NEVER DIES!",
         },
         high_scores={},
