@@ -47,25 +47,16 @@ SMODS.Consumable {
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -144,6 +135,12 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.GAME.last_hand_played
     end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -157,25 +154,16 @@ SMODS.Consumable {
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -254,6 +242,12 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.GAME.last_hand_played
     end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -267,25 +261,16 @@ SMODS.Consumable {
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -364,6 +349,12 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.GAME.last_hand_played
     end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -377,25 +368,16 @@ SMODS.Consumable {
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -474,6 +456,12 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.GAME.last_hand_played
     end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -487,25 +475,16 @@ SMODS.Consumable {
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -584,6 +563,12 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.GAME.last_hand_played
     end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -597,25 +582,16 @@ SMODS.Consumable {
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -694,6 +670,12 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.GAME.last_hand_played
     end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -707,25 +689,16 @@ SMODS.Consumable {
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -804,6 +777,12 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.GAME.last_hand_played
     end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -817,21 +796,25 @@ SMODS.Consumable {
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
-                card.ability.mult, card.ability.chips,
-                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
-                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
+        local planet = nil
+        if G.GAME.last_hand_played then
+            for _, v in pairs(G.P_CENTER_POOLS.Planet) do
+                if v.config.hand_type == G.GAME.last_hand_played then
+                    planet = v.key
+                end
+            end
+        end
+        info_queue[#info_queue+1] = planet and G.P_CENTERS[planet]
         return { 
             vars = { 
                 G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+
                 colours = { 
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
                     (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
@@ -913,5 +896,11 @@ SMODS.Consumable {
 
     can_use = function(self, card)
         return G.GAME.last_hand_played
+    end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
     end,
 }

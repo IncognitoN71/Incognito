@@ -78,6 +78,24 @@ local function reset_nic_crazytaxi_rank()
     end
 end
 
+-- Button
+
+local card_click_ref = Card.click
+function Card:click(...)
+    if self.config.center.key == "j_nic_button" and G.SETTINGS.paused then
+        if pseudorandom('button', 1, 10) ~= 1 then
+            play_sound('nic_click')
+            self:juice_up()
+        else
+            play_sound('nic_explosion')
+            self:start_dissolve({G.C.RED})
+            self:juice_up(10, 10)
+        end
+    else
+        return card_click_ref(self, ...)
+    end
+end
+
 -- Changes Variable
 
 function SMODS.current_mod.reset_game_globals(run_start)

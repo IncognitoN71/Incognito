@@ -5,15 +5,18 @@ return {
                 name = "Plants Deck",
                 text = {
                     "Start run with",
-                    "{C:nic_plants,T:j_nic_crazydave}Crazy Dave{} joker",
+                    "{C:nic_plants,T:j_nic_crazydave}#1#{} joker",
                     "and {C:attention}2{} copies of",
-                    "{C:nic_plants,T:c_nic_mysteryvase}Mystery Vase{} Card"
+                    "{C:nic_plants,T:c_nic_mysteryvase}#2#{} Card"
                 }
             },
-            b_nic_selene = {
-                name = "Selene Deck",
+            b_nic_tidal = {
+                name = "Tidal Deck",
                 text = {
-                    "Start run with {C:nic_phases,T:c_nic_selene}Selene",
+                    "Start run with the",
+                    "{C:tarot,T:v_crystal_ball}#1#{} voucher{},",
+                    "{C:nic_phases,T:c_nic_newmoon}#2#{}, and",
+                    "{C:tarot,T:c_high_priestess}#3#"
                 }
             }
         },
@@ -387,6 +390,12 @@ return {
                     "Create a {C:nic_phases}Phases{} card",
                     "at end of round",
                     "{C:inactive}(Must have room)",
+                }
+            },
+            j_nic_test = {
+                name = "Test",
+                text = {
+                    "#1# #2#"
                 }
             },
 
@@ -1168,118 +1177,155 @@ return {
             c_nic_newmoon = {
                 name = "New Moon",
                 text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips",
                 }
             },
             c_nic_waxingcrescent = {
                 name = "Waxing Crescent",
                 text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips",
                 }
             },
             c_nic_firstquarter = {
                 name = "First Quarter",
                 text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips",
                 }
             },
             c_nic_waxinggibbous = {
                 name = "Waxing Gibbous",
                 text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips",
                 }
             },
             c_nic_fullmoon = {
                 name = "Full Moon",
                 text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips",
                 }
             },
             c_nic_waninggibbous = {
                 name = "Waning Gibbous",
                 text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips",
                 }
             },
             c_nic_thirdquarter = {
                 name = "Third Quarter",
                 text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips",
                 }
             },
             c_nic_waningscrescent = {
                 name = "Waning Crescent",
                 text = {
-                    "({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips",
+                    "Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips",
                 }
             },
             c_nic_bluemoon = {
                 name = "Blue Moon",
                 text = {
-                    {"({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips"},
-                    {"Gains {X:nic_phases,C:white}X#6#{} Modifier for",
+                    {"Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips"},
+                    {"Gains {X:nic_phases,C:white}X#7#{} Modifier for",
                     "every used {C:nic_phases}Phases{} card,",
-                    "On use permanently",
-                    "modify {C:planet}Planet{} value",
-                    "{C:inactive}(Currently {X:nic_phases,C:white} X#5# {C:inactive} Modifier)"},
+                    "{C:inactive}(Currently {X:nic_phases,C:white}X#6#{C:inactive} Modifier)"},
                 }
             },
             c_nic_bloodmoon = {
                 name = "Blood Moon",
                 text = {
-                    {"({V:1}lvl.#1#{}) Level up",
-                    "{C:inactive,s:0.8}last played hand",
-                    "{V:2}#2#",
-                    "{C:mult}+#3#{} Mult and",
-                    "{C:chips}+#4#{} chips"},
-                    {"Gains {C:nic_phases}+#6#{} Reusability for",
+                    {"Permanently modify last",
+                    "played hand {C:planet}Planet{} value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:planet}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:planet}+#5#{} x {C:nic_phases}#3#{} chips"},
+                    {"Gains {C:nic_phases}+#7#{} Reusability for",
                     "each sold {C:nic_phases}Phases{} card",
-                    "{C:inactive}(Currently {C:nic_phases}#5#{C:inactive} Reusability)"},
+                    "{C:inactive}(Currently {C:nic_phases}#6#{C:inactive} Reusability)"},
                 }
             },
-            c_nic_altareclipse = {
-                name = "Altar Eclipse",
+            c_nic_micromoon = {
+                name = "Micromoon",
                 text = {
-                    {"{C:inactive}Passive Ability",
-                    "smth smth",},
-                    {"{C:inactive}Ability [USE]",
-                    "smth smth",},
+                    "",
+                }
+            },
+            c_nic_supermoon = {
+                name = "Supermoon",
+                text = {
+                    "",
+                }
+            },
+            c_nic_solareclipse = {
+                name = "Solar Eclipse",
+                text = {
+                    "",
                 }
             },
 
@@ -1581,6 +1627,9 @@ return {
             -- Phases
             k_nic_plus_phases = "+1 Phases",
             k_nic_special_phases = "Special Phases",
+            k_nic_apogee = "Apogee",
+            k_nic_perigee = "Perigee",
+            k_nic_eclipse = "Eclipse",
             -- Death
             ph_nic_technoblade = "TECHNOBLADE NEVER DIES!",
         },

@@ -2232,3 +2232,36 @@ SMODS.Joker { -- Selenologist
         end
     end,
 }
+
+--[[SMODS.Joker { --
+    key = "test",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicjokers',
+    rarity = 2,
+    cost = 6,
+    pos = {x = 8, y = 3},
+    config = { extra = { planet = nil } },
+
+    loc_vars = function(self, info_queue, card)
+        local planet = nil
+        if G.GAME.last_hand_played then
+            for _, v in pairs(G.P_CENTER_POOLS.Planet) do
+                if v.config.hand_type == G.GAME.last_hand_played then
+                    planet = v.key
+                end
+            end
+        end
+        info_queue[#info_queue+1] = planet and G.P_CENTERS[planet]
+        local last_planet = card.ability.extra.planet and localize { type = 'name_text', key = card.ability.extra.planet, set = "Planet" } or localize('k_none')
+        return { vars = { planet, last_planet } }
+    end,
+
+    calculate = function(self, card, context)
+        if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
+            card.ability.extra.planet = context.consumeable.config.center.key
+        end
+    end,
+}]]

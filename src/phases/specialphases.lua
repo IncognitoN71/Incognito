@@ -19,26 +19,16 @@ SMODS.Consumable {
 
     loc_vars = function(self, info_queue, card)
         local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
-                card.ability.modifier,
-                card.ability.modifier_gain,
+                card.ability.modifier, card.ability.modifier_gain,
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -51,6 +41,13 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.using_consumeable and context.consumeable.ability.set == 'Phases' then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound('nic_glitch', 1.1, 0.6)
+                    card:juice_up()
+                    return true
+                end
+            }))
             card.ability.modifier = card.ability.modifier + card.ability.modifier_gain
             card.ability.mult = card.ability.modifier
             card.ability.chips = card.ability.modifier
@@ -115,11 +112,24 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                play_sound('nic_glitch', 1.1, 0.6)
+                card:juice_up()
+                return true
+            end
+        }))
         Incognito.phaseslevelup(card)
     end,
 
     can_use = function(self, card)
         return G.GAME.last_hand_played
+    end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
     end,
 }
 
@@ -135,26 +145,16 @@ SMODS.Consumable {
 
     loc_vars = function(self, info_queue, card)
         local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { new_numerator, new_denominator, } }
-        info_queue[#info_queue + 1] = { 
-            key = "nic_levelupvaluephases", set = "Other", vars = { 
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
-            } 
-        }
-        return { 
-            vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
-                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or "Nothing", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult * card.ability.mult or "0", 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips * card.ability.chips or "0", 
-                card.ability.reusable,
-                card.ability.reusable_gain,
+                card.ability.reusable, card.ability.reusable_gain,
+
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
@@ -168,6 +168,13 @@ SMODS.Consumable {
     calculate = function(self, card, context)
         if context.selling_card then
             if context.card.ability.set == 'Phases' then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        play_sound('nic_glitch', 1.1, 0.6)
+                        card:juice_up()
+                        return true
+                    end
+                }))
                 card.ability.reusable = card.ability.reusable + card.ability.reusable_gain
                 return {
                     message = "+" .. card.ability.reusable_gain .. " Reusable",
@@ -232,8 +239,16 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         if card.ability.reusable > 0 then
-            card.ability.reusable = card.ability.reusable - card.ability.reusable_gain
             draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
+            card.ability.reusable = card.ability.reusable - card.ability.reusable_gain
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound('nic_glitch', 1.1, 0.6)
+                    card:juice_up()
+                    return true
+                end
+            }))
+            SMODS.calculate_effect({message = card.ability.reusable .. " Left", colour = G.C.NIC_PHASES}, card)
             G.E_MANAGER:add_event(Event({
                 trigger = 'after',
                 delay = 0.9,
@@ -244,6 +259,13 @@ SMODS.Consumable {
                 end
             }))
         else
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound('nic_glitch', 1.1, 0.6)
+                    card:juice_up()
+                    return true
+                end
+            }))
             Incognito.phaseslevelup(card)
         end
     end,
@@ -255,11 +277,17 @@ SMODS.Consumable {
     can_use = function(self, card)
         return G.GAME.last_hand_played
     end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
 }
 
 SMODS.Consumable {
     discovered = false,
-    key = 'altareclipse',
+    key = 'micromoon',
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
@@ -273,7 +301,7 @@ SMODS.Consumable {
     end,
 
     set_card_type_badge = function(self, card, badges)
-        badges[#badges + 1] = create_badge(localize('k_nic_special_phases'), get_type_colour(card.config.center or card.config, card), SMODS.ConsumableTypes.Phases.text_colour, 1.2)
+        badges[#badges + 1] = create_badge(localize('k_nic_apogee'), get_type_colour(card.config.center or card.config, card), SMODS.ConsumableTypes.Phases.text_colour, 1.2)
     end,
 
     calculate = function(self, card, context)
@@ -336,5 +364,189 @@ SMODS.Consumable {
 
     can_use = function(self, card)
         return G.GAME.last_hand_played
+    end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'supermoon',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 3, y = 2 },
+    config = { odds = 100 },
+    pools = { ["SpecialPhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { new_numerator, new_denominator, } }
+
+    end,
+
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_nic_perigee'), get_type_colour(card.config.center or card.config, card), SMODS.ConsumableTypes.Phases.text_colour, 1.2)
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
+                for i = 1, 2 do
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 0.4,
+                        func = function()
+                            play_sound('tarot2', 1.1, 0.6)
+                            card:juice_up()
+                            return true
+                        end
+                    }))
+                end
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        card:juice_up(0.5, 0.5)
+                        play_sound('nic_glitch', 1.1, 0.6)
+                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.BasePhases, 'basephases', {in_pool = function() return true end}).key)
+                        return true
+                    end
+                }))
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
+                        return true
+                    end
+                }))
+                return {
+                    message = "Shift!",
+                    colour = G.C.NIC_PHASES
+                }
+            else
+                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
+                        return true
+                    end
+                }))
+                return {
+                    message = "Nope!",
+                    colour = G.C.NIC_PHASES
+                }
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
+}
+
+SMODS.Consumable {
+    discovered = false,
+    key = 'solareclipse',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 0, y = 3 },
+    config = { odds = 100 },
+    pools = { ["SpecialPhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
+        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { new_numerator, new_denominator, } }
+
+    end,
+
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_nic_eclipse'), get_type_colour(card.config.center or card.config, card), SMODS.ConsumableTypes.Phases.text_colour, 1.2)
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
+                for i = 1, 2 do
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 0.4,
+                        func = function()
+                            play_sound('tarot2', 1.1, 0.6)
+                            card:juice_up()
+                            return true
+                        end
+                    }))
+                end
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        card:juice_up(0.5, 0.5)
+                        play_sound('nic_glitch', 1.1, 0.6)
+                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.BasePhases, 'basephases', {in_pool = function() return true end}).key)
+                        return true
+                    end
+                }))
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
+                        return true
+                    end
+                }))
+                return {
+                    message = "Shift!",
+                    colour = G.C.NIC_PHASES
+                }
+            else
+                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.9,
+                    func = function()
+                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
+                        return true
+                    end
+                }))
+                return {
+                    message = "Nope!",
+                    colour = G.C.NIC_PHASES
+                }
+            end
+        end
+    end,
+
+    use = function(self, card, area, copier)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
     end,
 }
