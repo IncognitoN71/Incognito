@@ -809,16 +809,12 @@ SMODS.Consumable {
         info_queue[#info_queue+1] = planet and G.P_CENTERS[planet]
         return { 
             vars = { 
-                G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].level or "0", 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
                 card.ability.mult, card.ability.chips,
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
                 (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
 
                 colours = { 
-                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or 
-                    (G.GAME.hands[G.GAME.last_hand_played].level == 1 and G.C.UI.TEXT_DARK) or 
-                    (G.C.HAND_LEVELS[math.min(7, G.GAME.hands[G.GAME.last_hand_played].level)])),
                     ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER)
                 }
             } 
