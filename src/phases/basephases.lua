@@ -11,7 +11,7 @@ SMODS.ConsumableType {
     primary_colour = G.C.NIC_PHASES,
     secondary_colour = G.C.NIC_PHASES,
     collection_rows = { 4, 4 },
-    shop_rate = 0,
+    shop_rate = 2,
     loc_txt = {
         name = "Phases",
         collection = "Phases",
@@ -43,12 +43,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 0, y = 0 },
-    config = { mult = 1, chips = 1, odds = 100 },
+    config = { mult = 1, chips = 1 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
-        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -65,7 +64,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -107,7 +106,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('tarot2', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(G.P_CENTERS.c_nic_waxingcrescent)
                         return true
                     end
@@ -150,12 +149,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 1, y = 0 },
-    config = { mult = 1, chips = 1.5, odds = 100 },
+    config = { mult = 1, chips = 1.5 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
-        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -172,7 +170,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -214,7 +212,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('tarot2', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(G.P_CENTERS.c_nic_firstquarter)
                         return true
                     end
@@ -257,12 +255,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 2, y = 0 },
-    config = { mult = 1, chips = 2, odds = 100 },
+    config = { mult = 1, chips = 2 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
-        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -279,7 +276,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -321,7 +318,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('tarot2', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(G.P_CENTERS.c_nic_waxinggibbous)
                         return true
                     end
@@ -364,12 +361,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 3, y = 0 },
-    config = { mult = 1.5, chips = 2, odds = 100 },
+    config = { mult = 1.5, chips = 2 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
-        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -386,7 +382,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -428,7 +424,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('tarot2', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(G.P_CENTERS.c_nic_fullmoon)
                         return true
                     end
@@ -471,12 +467,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 0, y = 1 },
-    config = { mult = 2, chips = 2, odds = 100 },
+    config = { mult = 2, chips = 2 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
-        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -493,7 +488,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -535,7 +530,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('tarot2', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(G.P_CENTERS.c_nic_waninggibbous)
                         return true
                     end
@@ -578,12 +573,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 1, y = 1 },
-    config = { mult = 1.5, chips = 2, odds = 100 },
+    config = { mult = 1.5, chips = 2 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
-        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -600,7 +594,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -642,7 +636,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('tarot2', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(G.P_CENTERS.c_nic_thirdquarter)
                         return true
                     end
@@ -685,12 +679,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 2, y = 1 },
-    config = { mult = 2, chips = 1, odds = 100 },
+    config = { mult = 2, chips = 1 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
-        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -707,7 +700,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -749,7 +742,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('tarot2', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(G.P_CENTERS.c_nic_waningscrescent)
                         return true
                     end
@@ -792,12 +785,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 3, y = 1 },
-    config = { mult = 1.5, chips = 1, odds = 100 },
+    config = { mult = 1.5, chips = 1 },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds)
-        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         local planet = nil
         if G.GAME.last_hand_played then
             for _, v in pairs(G.P_CENTER_POOLS.Planet) do
@@ -823,7 +815,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -865,7 +857,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('tarot2', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(G.P_CENTERS.c_nic_newmoon)
                         return true
                     end

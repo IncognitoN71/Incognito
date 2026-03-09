@@ -21,10 +21,10 @@ function Incognito.phaseslevelup(card)
         return true end }))
 
     update_hand_text({delay = 0}, 
-    {chips = "x" .. xchips, StatusText = true})
+    {chips = "x" .. number_format(xchips), StatusText = true})
 
     update_hand_text({delay = 0}, 
-    {chips = "+" .. chips * xchips})
+    {chips = "+" .. number_format(chips * xchips)})
 
     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.5, func = function()
         play_sound('tarot1')
@@ -32,10 +32,10 @@ function Incognito.phaseslevelup(card)
         return true end }))
 
     update_hand_text({delay = 0}, 
-    {mult = "x" .. xmult, StatusText = true})
+    {mult = "x" .. number_format(xmult), StatusText = true})
 
     update_hand_text({delay = 0}, 
-    {mult = "+" .. mult * xmult})
+    {mult = "+" .. number_format(mult * xmult)})
 
     delay(2)
 

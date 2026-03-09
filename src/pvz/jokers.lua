@@ -19,8 +19,8 @@ SMODS.Joker{ -- Crazy Dave
     config = { extra = { mult = 12 } },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'tag_nic_vase', set = 'Tag' }
-        return { vars = { localize { type = 'name_text', set = 'Tag', key = 'tag_nic_vase' } } }
+        info_queue[#info_queue + 1] = { key = 'tag_nic_vase1', set = 'Tag' }
+        return { vars = { localize { type = 'name_text', set = 'Tag', key = 'tag_nic_vase1' } } }
     end,
 
     add_to_deck = function (self, card, from_debuff)

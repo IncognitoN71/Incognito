@@ -25,6 +25,16 @@ SMODS.ObjectType({
     end,
 })
 
+-- G.GAME
+
+local igo = Game.init_game_object
+function Game:init_game_object()
+    local ret = igo(self)
+    ret.phases_numerator = 1
+    ret.phases_denominator = 100
+    return ret
+end
+
 -- Talisman Bullshit
 
 to_big = to_big or function(num)

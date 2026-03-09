@@ -13,7 +13,6 @@ SMODS.Atlas { -- Icon
 assert(SMODS.load_file("src/jokers.lua"))()
 
 assert(SMODS.load_file("src/backs.lua"))()
-assert(SMODS.load_file("src/blinds.lua"))()
 assert(SMODS.load_file("src/boosters.lua"))()
 assert(SMODS.load_file("src/challenges.lua"))()
 assert(SMODS.load_file("src/draw.lua"))()

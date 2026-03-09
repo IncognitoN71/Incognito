@@ -11,7 +11,7 @@
   "badge_colour": "000000",
   "badge_text_colour": "d0d0d0",
   "dependencies": [
-    "Steamodded (>=1.0.0~BETA-1501a)"
+    "Steamodded (>=1.0.0~BETA-1503a)"
   ],
   "conflicts": [],
   "provides": []

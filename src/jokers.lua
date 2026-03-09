@@ -1564,6 +1564,7 @@ SMODS.Joker { -- Jokrle
                 end
             end
         end
+
         if context.after and not context.blueprint and #context.full_hand == 5 then
             if card.ability.extra.completed == false and card.ability.extra.tries == 6 then
                 SMODS.calculate_effect({message = "FAILED!", colour = G.C.RED}, card)
@@ -1579,6 +1580,7 @@ SMODS.Joker { -- Jokrle
                 card.ability.extra.answer = "[" .. (card.ability.extra.string[1]) .. "] " .. "[" .. (card.ability.extra.string[2]) .. "] " .. "[" .. (card.ability.extra.string[3]) .. "] " .. "[" .. (card.ability.extra.string[4]) .. "] " .. "[" .. (card.ability.extra.string[5]) .. "] "
             end
         end
+
         if context.individual and context.full_hand and context.other_card and #context.full_hand == 5 and not context.blueprint then
             local norank = true
             for i = 1, #context.full_hand do
@@ -1763,6 +1765,7 @@ SMODS.Joker { -- Jokrle
                 end
             end
         end
+
         if context.setting_blind and not context.blueprint then
             if card.ability.extra.completed == true then
                 SMODS.calculate_effect({message = "NEW WORD!", colour = HEX('528d4d')}, card)
@@ -1791,6 +1794,7 @@ SMODS.Joker { -- Jokrle
                 }
             end
         end
+        
         if context.joker_main then
             return {
                 mult = card.ability.extra.mult
@@ -2233,8 +2237,8 @@ SMODS.Joker { -- Selenologist
     end,
 }
 
---[[SMODS.Joker { --
-    key = "test",
+SMODS.Joker { -- Lunation
+    key = "lunation",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
@@ -2242,26 +2246,26 @@ SMODS.Joker { -- Selenologist
     atlas = 'nicjokers',
     rarity = 2,
     cost = 6,
-    pos = {x = 8, y = 3},
-    config = { extra = { planet = nil } },
+    pos = {x = 9, y = 3},
+    config = { extra = { xchips = 1, xchips_gain = 0.1 } },
 
     loc_vars = function(self, info_queue, card)
-        local planet = nil
-        if G.GAME.last_hand_played then
-            for _, v in pairs(G.P_CENTER_POOLS.Planet) do
-                if v.config.hand_type == G.GAME.last_hand_played then
-                    planet = v.key
-                end
-            end
-        end
-        info_queue[#info_queue+1] = planet and G.P_CENTERS[planet]
-        local last_planet = card.ability.extra.planet and localize { type = 'name_text', key = card.ability.extra.planet, set = "Planet" } or localize('k_none')
-        return { vars = { planet, last_planet } }
+        return { vars = { card.ability.extra.xchips, card.ability.extra.xchips_gain } }
     end,
 
     calculate = function(self, card, context)
-        if context.using_consumeable and context.consumeable.ability.set == 'Planet' then
-            card.ability.extra.planet = context.consumeable.config.center.key
+        if context.using_consumeable and not context.blueprint and context.consumeable.ability.set == 'Phases' then
+            card.ability.extra.xchips = card.ability.extra.xchips + card.ability.extra.xchips_gain
+            return {
+                message = "X" .. card.ability.extra.xchips .. " Chips",
+                colour = G.C.NIC_PHASES
+            }
         end
-    end,
-}]]
+
+        if context.joker_main then
+            return {
+                xchips = card.ability.extra.xchips
+            }
+        end
+    end
+}

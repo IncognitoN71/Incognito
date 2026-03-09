@@ -835,13 +835,27 @@ SMODS.Joker{ -- Cadmium Colors
     rarity = "nic_teto",
     cost = 5,
     pos = {x = 9, y = 1},
-    config = { extra = {} },
+    config = { extra = { xmult = 3 } },
     pools = { ["Teto"] = true },
-
+    
     loc_vars = function(self, info_queue, card)
-        return { vars = { } }
+        return { vars = { card.ability.extra.xmult } }
     end,
 
     calculate = function(self, card, context)
+        if context.joker_main then
+            local heartanddiamonds = true
+            for _, playing_card in ipairs(G.hand.cards) do
+                if not playing_card:is_suit('Hearts') and not playing_card:is_suit('Diamonds') then
+                    heartanddiamonds = false
+                    break
+                end
+            end
+            if heartanddiamonds then
+                return {
+                    xmult = card.ability.extra.xmult
+                }
+            end
+        end
     end
 }

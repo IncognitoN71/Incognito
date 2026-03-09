@@ -20,20 +20,7 @@ return {
                 }
             }
         },
-        Blind={
-            bl_nic_monarch = {
-                name = "The Monarch",
-                text = {
-                    "Fuck Your Kings",
-                }
-            },
-            bl_nic_silentshadow = {
-                name = "Silent Shadow",
-                text = {
-                    "Soaring Night"
-                }
-            },
-        },
+        Blind={},
         Edition={},
         Enhanced={},
         Joker = {
@@ -392,11 +379,14 @@ return {
                     "{C:inactive}(Must have room)",
                 }
             },
-            j_nic_test = {
-                name = "Test",
+            j_nic_lunation = {
+                name = "Lunation",
                 text = {
-                    "#1# #2#"
-                }
+                    "This Joker gains",
+                    "{X:chips,C:white}X#2#{} Chips every time",
+                    "a {C:nic_phases}Phases{} card is used",
+                    "{C:inactive}(Currently {X:chips,C:white}X#1#{C:inactive} Chips)",
+                },
             },
 
             j_nic_identity = {
@@ -582,17 +572,19 @@ return {
                 text = {
                     "Level up {C:attention}Pair{} every time",
                     "{C:tarot}The Wheel of Fortune",
-                    "{C:red}unsuccessfully{} triggers"
+                    "{C:red}unsuccessfully{} triggers",
+                    "{C:inactive,s:0.8,E:1}Song By: Jamie Paige",
                 }
             },
-
             j_nic_cadmiumcolors = {
                 name = "Cadmium Colors",
                 text = {
-                    "",
+                    "{X:red,C:white} X#1# {} Mult if all cards",
+                    "held in hand are",
+                    "{C:hearts}Hearts{} or {C:diamonds}Diamonds",
+                    "{C:inactive,s:0.8,E:1}Song By: Jamie Paige",
                 }
             },
-            
 
             -- Plants
 
@@ -1400,43 +1392,57 @@ return {
         },
         Other = {
             -- Packs
-            p_nic_teto_booster = {
+            p_nic_teto_normal = {
                 name = "Teto Pack",
                 text= {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:nic_teto} Teto{} cards",
                 },
             },
-            p_nic_vase_booster1 = {
+            p_nic_vase_normal_1 = {
                 name = "Vase Pack",
                 text= {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:nic_plants} Vase{} cards",
                 },
             },
-            p_nic_vase_booster2 = {
+            p_nic_vase_normal_2 = {
                 name = "Vase Pack",
                 text= {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:nic_plants} Vase{} cards",
                 },
             },
-            p_nic_tools_booster = {
+            p_nic_tools_normal = {
                 name = "Tools Pack",
                 text= {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:nic_plants} Zen Garden{} cards",
                 },
             },
-            p_nic_lunar_booster1 = {
+            p_nic_lunar_normal_1 = {
                 name = "Lunar Pack",
                 text= {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:nic_phases} Phases{} cards",
                 },
             },
-            p_nic_lunar_booster2 = {
+            p_nic_lunar_normal_2 = {
                 name = "Lunar Pack",
+                text= {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:nic_phases} Phases{} cards",
+                },
+            },
+            p_nic_lunar_jumbo = {
+                name = "Jumbo Lunar Pack",
+                text= {
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:nic_phases} Phases{} cards",
+                },
+            },
+            p_nic_lunar_mega = {
+                name = "Mega Lunar Pack",
                 text= {
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2#{C:nic_phases} Phases{} cards",
@@ -1474,14 +1480,14 @@ return {
                 text = {
                     "End of round,",
                     "{C:green}#1# in #2#{} chance to",
-                    "turn back {C:nic_phases}Phases"
+                    "turn into {C:nic_phases}Phases"
                 }
             },
             nic_specialphases = {
                 name = "Special Phases",
                 text = {
                     "{C:green}#1# in #2#{} chance",
-                    "to turn into",
+                    "to create a",
                     "{C:nic_phases}Special Phases",
                 }
             },
@@ -1575,11 +1581,25 @@ return {
                     "{C:nic_teto}Teto Pack",
                 }
             },
-            tag_nic_vase = {
+            tag_nic_vase1 = {
                 name = "Vase Tag",
                 text = {
                     "Gives a free",
                     "{C:nic_plants}Vase Pack",
+                }
+            },
+            tag_nic_vase2 = {
+                name = "Vase Tag",
+                text = {
+                    "Gives a free",
+                    "{C:nic_plants}Vase Pack",
+                }
+            },
+            tag_nic_lunar = {
+                name = "Lunar Tag",
+                text = {
+                    "Gives a free",
+                    "{C:nic_phases}Mega Lunar Pack",
                 }
             },
         },
