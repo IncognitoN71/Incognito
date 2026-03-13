@@ -9,6 +9,7 @@ function Card:set_sprites(_center, _front)
     self.children.plant_select.states.click.can = false
 end
 
+SMODS.draw_ignore_keys.plant_select = true
 SMODS.DrawStep({ -- (ThunderEdge)
     key = "plant_select",
     order = 201,
@@ -28,7 +29,7 @@ SMODS.DrawStep({ -- (ThunderEdge)
             card.children.plant_select:draw_shader('dissolve', nil, nil, nil, card.children.center, nil, nil)
         end
     end,
-    conditions = { vortex = false },
+	conditions = { vortex = false, facing = "front" },
 })
 
 -- Set Cost

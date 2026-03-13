@@ -678,10 +678,9 @@ SMODS.Joker{ -- The Thing
                 local eval = function(card) return G.GAME.current_round.hands_played == 0 and not card.REMOVED end
                 juice_card_until(card, eval, true)
             end
-            local counter = card.ability.extra.counter
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    for i = 1, counter do
+                    for i = 1, card.ability.extra.counter do
                         local stone_card = SMODS.create_card { set = "Base", enhancement = "m_stone", seal = SMODS.poll_seal({ guaranteed = true }), area = G.discard }
                         G.playing_card = (G.playing_card and G.playing_card + 1) or 1
                         stone_card.playing_card = G.playing_card
@@ -689,7 +688,7 @@ SMODS.Joker{ -- The Thing
                         
                         stone_card:start_materialize()
                         G.play:emplace(stone_card)
-                        draw_card(G.play, G.deck, 90, 'up')
+                        draw_card(G.play, G.deck, 1, 'up', true, stone_card, nil, mute)
                     end
                     return true
                 end

@@ -8,6 +8,8 @@ SMODS.Atlas{ -- Spectrals
 SMODS.Consumable {
     key = 'mooncatcher',
     set = 'Spectral',
+    unlocked = true,
+    discovered = false,
     cost = 4,
     atlas = 'nicspectrals',
     pos = {x = 0, y = 0 },

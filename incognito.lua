@@ -15,7 +15,7 @@ assert(SMODS.load_file("src/jokers.lua"))()
 assert(SMODS.load_file("src/backs.lua"))()
 assert(SMODS.load_file("src/boosters.lua"))()
 assert(SMODS.load_file("src/challenges.lua"))()
-assert(SMODS.load_file("src/draw.lua"))()
+assert(SMODS.load_file("src/enhancements.lua"))()
 assert(SMODS.load_file("src/functions.lua"))()
 assert(SMODS.load_file("src/music.lua"))()
 assert(SMODS.load_file("src/quips.lua"))()
@@ -28,6 +28,10 @@ assert(SMODS.load_file("src/tags.lua"))()
 assert(SMODS.load_file("src/tarots.lua"))()
 assert(SMODS.load_file("src/texturedeck.lua"))()
 assert(SMODS.load_file("src/ui.lua"))()
+
+-- STS
+assert(SMODS.load_file("src/sts/jokers.lua"))()
+assert(SMODS.load_file("src/sts/functions.lua"))()
 
 -- Teto
 assert(SMODS.load_file("src/teto/jokers.lua"))()

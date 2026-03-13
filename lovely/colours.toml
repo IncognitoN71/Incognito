@@ -14,6 +14,9 @@ NIC_INVERT = HEX("2f2f2f"),
 NIC_TETO = HEX("e15d73"),
 NIC_PLANTS = HEX("33cc00"),
 NIC_PHASES = HEX("5e9794"),
+NIC_NECROBINDER = HEX("994866"),
+NIC_SOUL = HEX("14f4af"),
+
 """
 overwrite = true
 match_indent = true
@@ -28,6 +31,8 @@ G.ARGS.LOC_COLOURS['nic_incognito'] = G.C.NIC_INCOGNITO
 G.ARGS.LOC_COLOURS['nic_teto'] = G.C.NIC_TETO
 G.ARGS.LOC_COLOURS['nic_plants'] = G.C.NIC_PLANTS
 G.ARGS.LOC_COLOURS['nic_phases'] = G.C.NIC_PHASES
+G.ARGS.LOC_COLOURS['nic_necrobinder'] = G.C.NIC_NECROBINDER
+G.ARGS.LOC_COLOURS['nic_soul'] = G.C.NIC_SOUL
 """
 overwrite = true
 match_indent = true

@@ -22,7 +22,17 @@ return {
         },
         Blind={},
         Edition={},
-        Enhanced={},
+        Enhanced={
+            m_nic_soul = {
+                name = "Soul Card",
+                text = {
+                    "When {C:attention}discarded{},",
+                    "draw #1# cards and",
+                    "{C:red,E:2}self destructs{}.",
+                    "{C:inactive,s:0.8}no rank or suit"
+                }
+            }
+        },
         Joker = {
             j_nic_technoblade = {
                 name = "Technoblade",
@@ -386,7 +396,38 @@ return {
                     "{X:chips,C:white}X#2#{} Chips every time",
                     "a {C:nic_phases}Phases{} card is used",
                     "{C:inactive}(Currently {X:chips,C:white}X#1#{C:inactive} Chips)",
-                },
+                }
+            },
+            j_nic_unleash = {
+                name = "Unleash",
+                text = {
+                    "{C:attention}Osty{} deals {C:mult}+#1#{} Mult. Plus",
+                    "Mult equal to {C:attention}Osty's{} HP.",
+                }
+            },
+            j_nic_dirge = {
+                name = "Dirge",
+                text = {
+                    "{C:attention}Summon {C:nic_necrobinder}#1#{} and add one",
+                    "{C:nic_soul}Soul Card{} to deck per {C:attention}hand",
+                    "{C:attention}remaining{} at end of round.",
+                    "{C:inactive}(Currently {C:nic_necrobinder}+#2#{C:inactive} Summon)",
+                }
+            },
+            j_nic_callofthevoid = {
+                name = "Call of the Void",
+                text = {
+                    "Start of your turn,",
+                    "add one {C:attention}Enhanced card",
+                    "into your {C:attention}hand{}.",
+                }
+            },
+            j_nic_thescythe = {
+                name = "The Scythe",
+                text = {
+                    "On {C:attention}first hand{}, {C:mult}+#1#{} Mult.",
+                    "Gain {C:mult}+#2#{} Mult at end of round.",
+                }
             },
 
             j_nic_identity = {
@@ -1502,7 +1543,15 @@ return {
                     "{C:planet}#4#{} x {C:nic_phases}#2#{} chips",
                 }
             },
+            -- STS
+            nic_ostyhp = {
+                name = "Osty's HP",
+                text = {
+                    "{C:inactive}#1# HP"
+                }
+            },
 
+            -- Other
             nic_spades_no_debuff = {
                 name = " Passive Ability ",
                 text = {

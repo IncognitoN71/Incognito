@@ -8,6 +8,8 @@ SMODS.Atlas{ -- Tarots
 SMODS.Consumable {
     key = 'tetotarot',
     set = 'Tarot',
+    unlocked = true,
+    discovered = false,
     cost = 4,
     atlas = 'nictarots',
     pos = {x = 0, y = 0 },
