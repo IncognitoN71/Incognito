@@ -16,6 +16,8 @@ local igo = Game.init_game_object
 function Game:init_game_object()
     local ret = igo(self)
     ret.osty_hp = 0
+    ret.osty_maxhp = 0
+    ret.lethality = 1
     return ret
 end
 
@@ -89,7 +91,7 @@ SMODS.DrawStep({ -- The Scythe
         love.graphics.push()
         love.graphics.origin()
         sprite.canvas:renderTo(love.graphics.clear, 0, 0, 0, 0)
-        local str = number_format(math.floor(self.ability.extra.mult)):gsub("%,", "")
+        local str = number_format(math.floor(self.ability.extra.total)):gsub("%,", "")
         local len = string.len(str)
         mult_sprite(sprite.canvas, (2 * (len - 1)) - 20, 64, {x = 0, y = math.min(len-1, 10)})
         local char_map = {

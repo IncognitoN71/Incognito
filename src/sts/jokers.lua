@@ -18,12 +18,12 @@ SMODS.Joker { -- Unleash
     config = { extra = { mult = 6, total = 6 } },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_ostyhp", set = "Other", vars = { G.GAME.osty_hp } }
-        return { vars = { card.ability.extra.mult + G.GAME.osty_hp } }
+        info_queue[#info_queue + 1] = { key = "nic_ostyhp", set = "Other", vars = { G.GAME.osty_hp, G.GAME.osty_maxhp } }
+        return { vars = { (card.ability.extra.mult + G.GAME.osty_hp) * G.GAME.lethality } }
     end,
 
     update = function(self, card)
-        card.ability.extra.total = card.ability.extra.mult + G.GAME.osty_hp
+        card.ability.extra.total = (card.ability.extra.mult + G.GAME.osty_hp) * G.GAME.lethality
     end,
 
     calculate = function(self, card, context)
@@ -49,7 +49,7 @@ SMODS.Joker { -- Dirge
     
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_nic_soul
-        info_queue[#info_queue + 1] = { key = "nic_ostyhp", set = "Other", vars = { G.GAME.osty_hp } }
+        info_queue[#info_queue + 1] = { key = "nic_ostyhp", set = "Other", vars = { G.GAME.osty_hp, G.GAME.osty_maxhp } }
         return { vars = { card.ability.extra.summon, G.GAME.current_round.hands_left * card.ability.extra.summon } }
     end,
 
@@ -60,6 +60,7 @@ SMODS.Joker { -- Dirge
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval then
             G.GAME.osty_hp = G.GAME.osty_hp + (G.GAME.current_round.hands_left * card.ability.extra.summon)
+            G.GAME.osty_maxhp = G.GAME.osty_maxhp + (G.GAME.current_round.hands_left * card.ability.extra.summon)
 
             for i = 1, G.GAME.current_round.hands_left do 
                 G.E_MANAGER:add_event(Event({
@@ -140,16 +141,20 @@ SMODS.Joker { -- The Scythe
     rarity = 2,
     cost = 6,
     pos = {x = 3, y = 0},
-    config = { extra = { mult = 13, mult_gain = 3 } },
+    config = { extra = { mult = 13, mult_gain = 3, total = 13 } },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.mult, card.ability.extra.mult_gain } }
+        return { vars = { (card.ability.extra.mult * G.GAME.lethality), card.ability.extra.mult_gain } }
+    end,
+
+    update = function(self, card)
+        card.ability.extra.total = card.ability.extra.mult * G.GAME.lethality
     end,
 
     calculate = function(self, card, context)
         if context.joker_main and G.GAME.current_round.hands_played == 0 then 
             return {
-                mult = card.ability.extra.mult
+                mult = card.ability.extra.mult * G.GAME.lethality
             }
         end
 
@@ -159,6 +164,45 @@ SMODS.Joker { -- The Scythe
                 message = "+" .. card.ability.extra.mult .. " Mult",
                 colour = G.C.NIC_NECROBINDER
             }
+        end
+    end,
+}
+
+SMODS.Joker { -- Lethality
+    key = "lethality",
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicstsjokers',
+    rarity = 2,
+    cost = 6,
+    pos = {x = 4, y = 0},
+    config = { extra = { increase = 50 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.increase } }
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+        local increase = ( 1 + (card.ability.extra.increase/100) )
+        if G.GAME.current_round.hands_played == 0 then
+            G.GAME.lethality = G.GAME.lethality / increase
+        end
+    end,
+
+    calculate = function(self, card, context)
+        local increase = ( 1 + (card.ability.extra.increase/100) )
+        if context.setting_blind and not context.blueprint_compat then 
+            G.GAME.lethality = G.GAME.lethality * increase
+            return {
+                message = "Increase by X" .. increase,
+                colour = G.C.NIC_NECROBINDER
+            }
+        end
+
+        if context.after and G.GAME.current_round.hands_played == 0 then 
+            G.GAME.lethality = G.GAME.lethality / increase
         end
     end,
 }

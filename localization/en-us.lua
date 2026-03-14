@@ -429,6 +429,13 @@ return {
                     "Gain {C:mult}+#2#{} Mult at end of round.",
                 }
             },
+            j_nic_lethality = {
+                name = "Lethality",
+                text = {
+                    "On {C:attention}first hand{}, {C:attention}increase{} STS",
+                    "Joker's Mult value by {C:attention}#1#%",
+                }
+            },
 
             j_nic_identity = {
                 name = "Identity",
@@ -1547,7 +1554,7 @@ return {
             nic_ostyhp = {
                 name = "Osty's HP",
                 text = {
-                    "{C:inactive}#1# HP"
+                    "{C:inactive}#1#/#2# HP"
                 }
             },
 
