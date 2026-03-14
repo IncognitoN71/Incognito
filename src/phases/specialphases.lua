@@ -60,7 +60,7 @@ SMODS.Consumable {
             }
         end
 
-        if context.end_of_round and context.game_over == false and context.main_eval then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
             if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
@@ -189,7 +189,7 @@ SMODS.Consumable {
             end
         end
 
-        if context.end_of_round and context.game_over == false and context.main_eval then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
             if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.odds) then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
@@ -314,7 +314,7 @@ SMODS.Consumable {
     end,
 
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
             if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
@@ -405,7 +405,7 @@ SMODS.Consumable {
     end,
 
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
             if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
@@ -496,7 +496,7 @@ SMODS.Consumable {
     end,
 
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
             if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do

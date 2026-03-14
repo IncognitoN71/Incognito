@@ -116,12 +116,20 @@ SMODS.Consumable {
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingphases", set = "Other" }
+        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+    end,
+
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_nic_apogee'), get_type_colour(card.config.center or card.config, card), SMODS.ConsumableTypes.Phases.text_colour, 1.2)
+    end,
+
+    in_pool = function(self, args)
+        return false
     end,
 
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval then
-            if pseudorandom('special_card', 1, 100) == 1 then
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
                 for i = 1, 2 do
                     G.E_MANAGER:add_event(Event({
@@ -139,7 +147,7 @@ SMODS.Consumable {
                     delay = 0.9,
                     func = function()
                         card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
+                        play_sound('xchips', 1.1, 0.6)
                         card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.BasePhases, 'basephases', {in_pool = function() return true end}).key)
                         return true
                     end
@@ -178,7 +186,13 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
+        return G.GAME.last_hand_played
+    end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
     end,
 }
 
