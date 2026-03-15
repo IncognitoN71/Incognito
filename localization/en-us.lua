@@ -832,9 +832,9 @@ return {
             j_nic_tetoxko = {
                 name = "{C:nic_teto}Teto{}Xko",
                 text = {
-                    "{C:dark_edition}Misprint{} one random {C:attention}Joker",
-                    "or card {C:attention}held in hand",
-                    "for each {C:nic_teto}Teto{} Joker {C:inactive}(#1#)",
+                    "{C:dark_edition}Misprint{} one random",
+                    "card {C:attention}held in hand{} for",
+                    "each {C:nic_teto}Teto{} Joker {C:inactive}(#1#)",
                     "at the end of round",
                 }
             },

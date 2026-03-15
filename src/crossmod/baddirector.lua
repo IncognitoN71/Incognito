@@ -58,11 +58,6 @@ SMODS.Joker{ -- Niko Teto
 
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
             local pool = {}
-            for i = 1, #G.jokers.cards do
-                if not G.jokers.cards[i].edition then
-                    pool[#pool + 1] = G.jokers.cards[i]
-                end
-            end
             for i = 1, #G.hand.cards do
                 if not G.hand.cards[i].edition then
                     pool[#pool + 1] = G.hand.cards[i]
