@@ -96,15 +96,19 @@ SMODS.Joker { -- Call of the Void
     rarity = 2,
     cost = 6,
     pos = {x = 2, y = 0},
-    config = { extra = { discard = true} },
+    config = { extra = { discard = false} },
 
     calculate = function(self, card, context)
-        if context.pre_discard then
+        if context.pre_discard and not context.blueprint_compat then
             card.ability.extra.discard = false
         end
 
-        if context.press_play or context.setting_blind then 
+        if context.press_play or context.setting_blind and not context.blueprint_compat then 
             card.ability.extra.discard = true
+        end
+
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint_compat then
+            card.ability.extra.discard = false
         end
 
         if context.drawing_cards and card.ability.extra.discard == true then

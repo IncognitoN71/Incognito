@@ -781,12 +781,18 @@ return {
             -- Crossmod
 
             -- MoreFluff
-            j_nic_triteto = {
+            j_nic_triteto = { -- Main
                 name = "Tri{C:nic_teto}Teto",
                 text = {
                     "{C:attention}Retrigger{} played {C:attention}4s",
                     "if played hand is",
                     "a {C:attention}Three of a Kind",
+                }
+            },
+            j_nic_tritetorewritten = { -- Rewritten
+                name = "Tri{C:nic_teto}Teto",
+                text = {
+                    "",
                 }
             },
 
@@ -830,6 +836,18 @@ return {
                     "or card {C:attention}held in hand",
                     "for each {C:nic_teto}Teto{} Joker {C:inactive}(#1#)",
                     "at the end of round",
+                }
+            },
+
+            -- Entropy 
+            j_nic_rubteto = {
+                name = "Rub{C:nic_teto}Teto{}",
+                text = {
+                    "Level up {C:attention}Pair{} by",
+                    "{C:gold}+1{} Ascension Power for",
+                    "each {C:nic_teto}Teto{} Joker {C:inactive}(#1#)",
+                    "at end of round or",
+                    "when {C:attention}Blind{} is selected"
                 }
             },
 
@@ -1390,6 +1408,15 @@ return {
                     "for every {C:attention}#4#{} rounds",
                     "this has been held",
                     "{C:inactive}(Currently {C:attention}#1#{C:inactive}, {}[{C:attention}#2#{C:inactive}#3#{}]{C:inactive})"
+                }
+            },
+            c_nic_tetorewritten = {
+                name = "Teto",
+                text = {
+                    "Create a {C:dark_edition}Negative {C:nic_teto}Pear{}",
+                    "for every {C:attention}#4#{} rounds",
+                    "this has been held",
+                    "{C:inactive}(Currently {C:attention}#1#{C:inactive}, {}[{C:attention,f:mf_emoji}#2#{C:inactive,f:mf_emoji}#3#{}]{C:inactive})"
                 }
             }
         },

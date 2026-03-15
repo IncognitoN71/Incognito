@@ -69,9 +69,9 @@ SMODS.Consumable({
     key = "teto",
     pos = { x = 2, y = 0 },
     config = {
-      val = 0,
-      partial_rounds = 0,
-      upgrade_rounds = 2,
+        val = 0,
+        partial_rounds = 0,
+        upgrade_rounds = 2,
     },
     cost = 4,
     atlas = "nicmorefluff",
@@ -79,9 +79,17 @@ SMODS.Consumable({
     discovered = false,
     display_size = { w = 71, h = 87 },
     pixel_size = { w = 71, h = 87 },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS["j_nic_pear"]
+        local val, max = progressbar(card.ability.partial_rounds, card.ability.upgrade_rounds)
+        return { vars = {card.ability.val, val, max, card.ability.upgrade_rounds} }
+    end,
+
     can_use = function(self, card)
         return true
     end,
+
     use = function(self, card, area, copier)
         for i = 1, card.ability.val do
             G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
@@ -94,11 +102,6 @@ SMODS.Consumable({
             return true end }))
         end
         delay(0.6)
-    end,
-    loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS["j_nic_pear"]
-        local val, max = progressbar(card.ability.partial_rounds, card.ability.upgrade_rounds)
-        return { vars = {card.ability.val, val, max, card.ability.upgrade_rounds} }
     end
 })
 
@@ -114,9 +117,11 @@ SMODS.Consumable({
     unlocked = true,
     discovered = false,
     display_size = { w = 107, h = 107 },
+
     can_use = function (self, card) 
         return #G.jokers.highlighted > 0 and #G.jokers.highlighted == 1  and G.jokers.highlighted[1].config.center.rarity ~= "nic_teto" and not G.jokers.highlighted[1].ability.nic_tetosticker
     end,
+    
     use = function(self, card, area, copier)
         if (G.jokers.highlighted[1].config.center.pools or {}).Food then
             G.E_MANAGER:add_event(Event({

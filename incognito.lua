@@ -9,7 +9,6 @@ SMODS.Atlas { -- Icon
 }
 
 -- Base Stuff
-
 assert(SMODS.load_file("src/jokers.lua"))()
 
 assert(SMODS.load_file("src/backs.lua"))()
@@ -47,49 +46,48 @@ assert(SMODS.load_file("src/phases/basephases.lua"))()
 assert(SMODS.load_file("src/phases/specialphases.lua"))()
 
 -- Poopoo
-
 if Incognito.config.not_finished then
 	SMODS.load_file("src/scrapped/scrapped.lua")()
 end
 
--- MoreFluff
-
-if MoreFluff then
-    SMODS.load_file("src/crossmod/morefluff.lua")()
-end
-
--- Alloy
-
-if ALLOY then
-    SMODS.load_file("src/crossmod/alloy.lua")()
-end
-
--- LobotomyCorp
-
-if next(SMODS.find_mod("LobotomyCorp")) then
-    SMODS.load_file("src/crossmod/lobotomycorp.lua")()
-end
-
--- Bad Director
-
-if next(SMODS.find_mod("baddirector")) then
-    SMODS.load_file("src/crossmod/baddirector.lua")()
-end
-
--- Ijiraq
-
+-- Hyperfixation
 if Hyperfixation then
     SMODS.load_file("src/crossmod/hyperfixation.lua")()
 end
 
--- JokerDisplay
+-- MoreFluff (notMario)
+if MoreFluff then -- Main
+    SMODS.load_file("src/crossmod/morefluff/main.lua")()
+elseif FLUFF then -- Rewritten
+    SMODS.load_file("src/crossmod/morefluff/rewritten.lua")()
+end
 
+-- Alloy (Corobo)
+if ALLOY then
+    SMODS.load_file("src/crossmod/alloy.lua")()
+end
+
+-- LobotomyCorp (Myst)
+if next(SMODS.find_mod("LobotomyCorp")) then
+    SMODS.load_file("src/crossmod/lobotomycorp.lua")()
+end
+
+-- Bad Director (Niko)
+if next(SMODS.find_mod("baddirector")) then
+    SMODS.load_file("src/crossmod/baddirector.lua")()
+end
+
+-- Entropy (Ruby)
+if next(SMODS.find_mod("entr")) then
+    SMODS.load_file("src/crossmod/entropy.lua")()
+end
+
+-- JokerDisplay
 if JokerDisplay then
     SMODS.load_file("src/crossmod/jokerdisplay.lua")()
 end
 
 -- Partner
-
 if next(SMODS.find_mod("partner")) then
     SMODS.load_file("src/crossmod/partners.lua")()
 end
