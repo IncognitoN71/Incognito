@@ -218,6 +218,29 @@ SMODS.Booster{
         }
     end,
 
+    particles = function(self)
+        G.booster_pack_stars = Particles(1, 1, 0, 0, {
+            timer = 0.07,
+            scale = 0.1,
+            initialize = true,
+            lifespan = 15,
+            speed = 0.1,
+            padding = -4,
+            attach = G.ROOM_ATTACH,
+            colours = { G.C.WHITE, HEX('c88444'), HEX('1e316b') },
+            fill = true
+        })
+        G.booster_pack_meteors = Particles(1, 1, 0, 0, {
+            timer = 2,
+            scale = 0.05,
+            lifespan = 1.5,
+            speed = 4,
+            attach = G.ROOM_ATTACH,
+            colours = { G.C.WHITE },
+            fill = true
+        })
+    end,
+
     create_card = function(self, card, center)
         local phases
         if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
@@ -263,6 +286,29 @@ SMODS.Booster{
                 center.ability.extra
             }
         }
+    end,
+
+    particles = function(self)
+        G.booster_pack_stars = Particles(1, 1, 0, 0, {
+            timer = 0.07,
+            scale = 0.1,
+            initialize = true,
+            lifespan = 15,
+            speed = 0.1,
+            padding = -4,
+            attach = G.ROOM_ATTACH,
+            colours = { G.C.WHITE, HEX('c88444'), HEX('1e316b') },
+            fill = true
+        })
+        G.booster_pack_meteors = Particles(1, 1, 0, 0, {
+            timer = 2,
+            scale = 0.05,
+            lifespan = 1.5,
+            speed = 4,
+            attach = G.ROOM_ATTACH,
+            colours = { G.C.WHITE },
+            fill = true
+        })
     end,
     
     create_card = function(self, card)
@@ -310,6 +356,29 @@ SMODS.Booster{
                 center.ability.extra
             }
         }
+    end,
+
+    particles = function(self)
+        G.booster_pack_stars = Particles(1, 1, 0, 0, {
+            timer = 0.07,
+            scale = 0.1,
+            initialize = true,
+            lifespan = 15,
+            speed = 0.1,
+            padding = -4,
+            attach = G.ROOM_ATTACH,
+            colours = { G.C.WHITE, HEX('c88444'), HEX('1e316b') },
+            fill = true
+        })
+        G.booster_pack_meteors = Particles(1, 1, 0, 0, {
+            timer = 2,
+            scale = 0.05,
+            lifespan = 1.5,
+            speed = 4,
+            attach = G.ROOM_ATTACH,
+            colours = { G.C.WHITE },
+            fill = true
+        })
     end,
 
     create_card = function(self, card)

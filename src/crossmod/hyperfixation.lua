@@ -12,9 +12,9 @@ SMODS.Atlas{ -- Ijiraq Jokers
     py = 95,
 }
 
-SMODS.Atlas{ -- Hyperfixation Phases
-    key = "nichyperfixationphases",
-    path = "crossmod/hyperfixation/nichyperfixationphases.png",
+SMODS.Atlas{ -- Hyperfixation
+    key = "nichyperfixation",
+    path = "crossmod/hyperfixation/nichyperfixation.png",
     px = 71,
     py = 95,
 }
@@ -105,13 +105,45 @@ SMODS.Joker({
     end
 })
 
+SMODS.Joker{ -- Jolyne Teto
+    key = "tetolyne",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nichyperfixation',
+    rarity = "nic_teto",
+    cost = 5,
+    pos = { x = 1, y = 0 },
+    soul_pos = {
+        x = 0,
+        y = 0,
+        draw = function(card, scale_mod, rotate_mod)
+            scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) +
+                0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) *
+                    math.pi * 14) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
+            rotate_mod = 0.3 * math.sin(10 * G.TIMERS.REAL) +
+                0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) *
+                (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
+
+            card.children.floating_sprite:draw_shader('dissolve',
+                0, nil, nil, card.children.center, scale_mod, rotate_mod , nil, 0.1)
+            card.children.floating_sprite:draw_shader('dissolve',
+                nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+        end
+    },
+    config = { extra = { } },
+    pools = { ["Teto"] = true },
+    dependencies = { 'hyperfixation_mod' },
+}
+
 SMODS.Consumable {
     discovered = false,
     key = 'pinkmoon',
     set = 'Phases',
     cost = 4,
-    atlas = 'nichyperfixationphases',
-    pos = {x = 0, y = 0 },
+    atlas = 'nichyperfixation',
+    pos = {x = 2, y = 0 },
     dependencies = { 'hyperfixation_mod' },
     pools = { ["SpecialPhases"] = true },
 
@@ -1056,18 +1088,13 @@ SMODS.Joker{ -- Fake Human Torch
             } 
         }
     end,
-    
-    calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
-            local eval = function(card) return G.GAME.current_round.hands_played == 0 and not card.REMOVED end
-            juice_card_until(card, eval, true)
-        end
 
+    calculate = function(self, card, context)
         if context.before and not context.blueprint then 
             card.ability.extra.randomizer = pseudorandom('nic_humantorch', 1, 5)
         end
 
-        if context.cardarea == G.play and not context.blueprint and context.destroy_card == context.full_hand[card.ability.extra.randomizer] and G.GAME.current_round.hands_played == 0 and #context.full_hand == 5 then
+        if context.cardarea == G.play and not context.blueprint and context.destroy_card == context.full_hand[card.ability.extra.randomizer] and #context.full_hand == 5 then
             if context.scoring_name == "Five of a Kind" then
                 return {
                     remove = true
@@ -1075,20 +1102,32 @@ SMODS.Joker{ -- Fake Human Torch
             end
         end
 
-        if context.before and context.main_eval then
-            if context.scoring_name == "Five of a Kind" and G.GAME.current_round.hands_played == 0 and #context.full_hand == 5 then
-                G.E_MANAGER:add_event(Event({
+        if context.remove_playing_cards and not context.blueprint then
+            local cards = 0
+            for _, removed_card in ipairs(context.removed) do
+                cards = cards + 1
+            end
+            if cards > 0 then
+                card.ability.extra.levels = card.ability.extra.levels + (card.ability.extra.levels_gain * cards)
+                return {
+                    message = "Level Increased!",
+                    colour = G.C.BLUE,
+                }
+            end
+        end
+
+        if context.before and context.scoring_name == "Five of a Kind" and #context.full_hand == 5 then
+            G.E_MANAGER:add_event(Event({
                     func = function()
                         hpfx_Transform(card, context)
                         return true
                     end
                 }))
-                return {
-                    level_up = card.ability.extra.levels, level_up_hand = "Five of a Kind", 
-                    message = "FLAME ON",
-                    colour = G.C.BLUE,
-                }
-            end
+            return {
+                level_up = card.ability.extra.levels, level_up_hand = "Five of a Kind", 
+                message = "FLAME ON",
+                colour = G.C.BLUE,
+            }
         end
     end,
 
@@ -1134,35 +1173,26 @@ SMODS.Joker{ --  Fake Invisible Woman
     end,
 
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
-            local eval = function(card) return G.GAME.current_round.hands_played == 0 and not card.REMOVED end
-            juice_card_until(card, eval, true)
-        end
-
-        if context.before and context.main_eval and not context.blueprint then
-            if context.scoring_name == "Five of a Kind" and #context.full_hand == 5 and #context.full_hand == 5 then
-                if G.GAME.current_round.hands_played == 0 then 
-                    for _, other_card in ipairs(context.scoring_hand) do
-                        other_card:set_ability('m_glass', nil, true)
-                        G.E_MANAGER:add_event(Event({
-                            func = function()
-                                other_card:juice_up()
-                                return true
-                            end
-                        }))
+        if context.before and context.scoring_name == "Five of a Kind" and #context.full_hand == 5 and not context.blueprint then
+            for _, other_card in ipairs(context.scoring_hand) do
+                other_card:set_ability('m_glass', nil, true)
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        return true
                     end
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            hpfx_Transform(card, context)
-                            return true
-                        end
-                    }))
-                    return {
-                        message = "DISAPPEAR",
-                        colour = G.C.BLUE
-                    }
-                end
+                }))
             end
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    hpfx_Transform(card, context)
+                    return true
+                end
+            }))
+            return {
+                message = "DISAPPEAR",
+                colour = G.C.BLUE
+            }
         end
     end,
 
@@ -1210,10 +1240,6 @@ SMODS.Joker{ -- Fake The Thing
 
     calculate = function(self, card, context)
         if context.setting_blind then
-            if not context.blueprint then
-                local eval = function(card) return G.GAME.current_round.hands_played == 0 and not card.REMOVED end
-                juice_card_until(card, eval, true)
-            end
             local counter = card.ability.extra.counter
             G.E_MANAGER:add_event(Event({
                 func = function()
@@ -1235,7 +1261,7 @@ SMODS.Joker{ -- Fake The Thing
                 colour = G.C.BLUE
             }
         end
-        if context.before and context.scoring_name == "Five of a Kind" and G.GAME.current_round.hands_played == 0 and #context.full_hand == 5 and not context.blueprint then
+        if context.before and context.scoring_name == "Five of a Kind" and #context.full_hand == 5 and not context.blueprint then
             card.ability.extra.counter = card.ability.extra.counter + card.ability.extra.counter_gain
             G.E_MANAGER:add_event(Event({
                 func = function()
@@ -1302,8 +1328,8 @@ SMODS.Joker{ -- Fake Mister Fantastic
                 add_to_hand = true
             }
         end
-        if context.scoring_name and not context.blueprint and #context.full_hand == 5 then
-            if context.evaluate_poker_hand then
+        if context.scoring_name and not context.blueprint then
+            if context.evaluate_poker_hand and #context.full_hand == 5 then
                 return {
                     replace_scoring_name = "High Card"
                 }

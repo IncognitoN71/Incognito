@@ -574,16 +574,11 @@ SMODS.Joker{ -- Human Torch
     end,
     
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
-            local eval = function(card) return G.GAME.current_round.hands_played == 0 and not card.REMOVED end
-            juice_card_until(card, eval, true)
-        end
-
         if context.before and not context.blueprint then 
             card.ability.extra.randomizer = pseudorandom('nic_humantorch', 1, 4)
         end
 
-        if context.cardarea == G.play and not context.blueprint and context.destroy_card == context.full_hand[card.ability.extra.randomizer] and G.GAME.current_round.hands_played == 0 and #context.full_hand == 4 then
+        if context.cardarea == G.play and not context.blueprint and context.destroy_card == context.full_hand[card.ability.extra.randomizer] and #context.full_hand == 4 then
             if context.scoring_name == "Four of a Kind" then
                 return {
                     remove = true
@@ -591,15 +586,26 @@ SMODS.Joker{ -- Human Torch
             end
         end
 
-        if context.before then
-            if context.scoring_name == "Four of a Kind" and G.GAME.current_round.hands_played == 0 and #context.full_hand == 4 then
-                card.ability.extra.levels = card.ability.extra.levels + card.ability.extra.levels_gain
+        if context.remove_playing_cards and not context.blueprint then
+            local cards = 0
+            for _, removed_card in ipairs(context.removed) do
+                cards = cards + 1
+            end
+            if cards > 0 then
+                card.ability.extra.levels = card.ability.extra.levels + (card.ability.extra.levels_gain * cards)
                 return {
-                    level_up = card.ability.extra.levels, level_up_hand = "Four of a Kind", 
-                    message = "FLAME ON",
+                    message = "Level Increased!",
                     colour = G.C.BLUE,
                 }
             end
+        end
+
+        if context.before and context.scoring_name == "Four of a Kind" and #context.full_hand == 4 then
+            return {
+                level_up = card.ability.extra.levels, level_up_hand = "Four of a Kind", 
+                message = "FLAME ON",
+                colour = G.C.BLUE,
+            }
         end
     end
 }
@@ -622,35 +628,26 @@ SMODS.Joker{ --  Invisible Woman
     end,
 
     calculate = function(self, card, context)
-        if context.setting_blind and not context.blueprint then
-            local eval = function(card) return G.GAME.current_round.hands_played == 0 and not card.REMOVED end
-            juice_card_until(card, eval, true)
-        end
-
         --[[if context.mod_probability and not context.blueprint and context.identifier == "glass" then
 			return {
 				denominator = 2
 			}
         end]]
 
-        if context.before and not context.blueprint then
-            if context.scoring_name == "Four of a Kind" and #context.full_hand == 4 and #context.full_hand == 4 then
-                if G.GAME.current_round.hands_played == 0 then 
-                    for _, other_card in ipairs(context.scoring_hand) do
-                        other_card:set_ability('m_glass', nil, true)
-                        G.E_MANAGER:add_event(Event({
-                            func = function()
-                                other_card:juice_up()
-                                return true
-                            end
-                        }))
+        if context.before and context.scoring_name == "Four of a Kind" and #context.full_hand == 4 and not context.blueprint then
+            for _, other_card in ipairs(context.scoring_hand) do
+                other_card:set_ability('m_glass', nil, true)
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        other_card:juice_up()
+                        return true
                     end
-                    return {
-                        message = "DISAPPEAR",
-                        colour = G.C.BLUE
-                    }
-                end
+                }))
             end
+            return {
+                message = "DISAPPEAR",
+                colour = G.C.BLUE
+            }
         end
     end
 }
@@ -674,10 +671,6 @@ SMODS.Joker{ -- The Thing
 
     calculate = function(self, card, context)
         if context.setting_blind then
-            if not context.blueprint then
-                local eval = function(card) return G.GAME.current_round.hands_played == 0 and not card.REMOVED end
-                juice_card_until(card, eval, true)
-            end
             G.E_MANAGER:add_event(Event({
                 func = function()
                     for i = 1, card.ability.extra.counter do
@@ -698,7 +691,7 @@ SMODS.Joker{ -- The Thing
                 colour = G.C.BLUE
             }
         end
-        if context.before and context.scoring_name == "Four of a Kind" and G.GAME.current_round.hands_played == 0 and #context.full_hand == 4 and not context.blueprint then
+        if context.before and context.scoring_name == "Four of a Kind" and #context.full_hand == 4 and not context.blueprint then
             card.ability.extra.counter = card.ability.extra.counter + card.ability.extra.counter_gain
             return {
                 message = "CLOBBERIN' TIME",
@@ -726,10 +719,10 @@ SMODS.Joker{ -- Mister Fantastic
                 add_to_hand = true
             }
         end
-        if context.scoring_name and not context.blueprint and #context.full_hand == 4 then
-            if context.evaluate_poker_hand then
+        if context.scoring_name and not context.blueprint then
+            if context.evaluate_poker_hand and #context.full_hand == 4 then
                 return {
-                    replace_scoring_name = "Four of a Kind"
+                    replace_scoring_name = "Four of a Kind",
                 }
             end
         end
@@ -1815,8 +1808,6 @@ SMODS.Joker{ -- Solar Eclipse
     config = { extra = { sun = 0, moon = 0, mult = 0, chips = 0, mult_gain = 2, chips_gain = 10 } },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.c_sun
-        info_queue[#info_queue + 1] = G.P_CENTERS.c_moon
         return { vars = { card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.mult_gain, card.ability.extra.chips_gain } }
     end,
 
@@ -1830,6 +1821,59 @@ SMODS.Joker{ -- Solar Eclipse
             end
             if card.ability.extra.sun < card.ability.extra.moon then
                 card.children.center:set_sprite_pos({x = 2, y = 3})
+            end
+        end
+    end,
+
+    generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+        if self.discovered then
+            full_UI_table.main = {}
+            if card.ability.extra.sun == card.ability.extra.moon then
+                info_queue[#info_queue + 1] = G.P_CENTERS.c_sun
+                info_queue[#info_queue + 1] = G.P_CENTERS.c_moon
+                full_UI_table.name = localize {
+                    type = 'name',
+                    key = self.key, 
+                    set = self.set, 
+                    nodes = {}
+                }
+                localize{
+                    type = 'descriptions', 
+                    key = self.key, 
+                    set = self.set, 
+                    nodes = full_UI_table.main, 
+                    vars = { card.ability.extra.mult, card.ability.extra.chips, card.ability.extra.mult_gain, card.ability.extra.chips_gain } 
+                }
+            elseif card.ability.extra.sun > card.ability.extra.moon then
+                info_queue[#info_queue + 1] = G.P_CENTERS.c_sun
+                full_UI_table.name = localize {
+                    type = 'name',
+                    key = self.key .. "_sun", 
+                    set = self.set, 
+                    nodes = {}
+                }
+                localize{
+                    type = 'descriptions', 
+                    key = self.key .. "_sun", 
+                    set = self.set, 
+                    nodes = full_UI_table.main, 
+                    vars = { card.ability.extra.mult, card.ability.extra.mult_gain } 
+                }
+            elseif card.ability.extra.sun < card.ability.extra.moon then
+                info_queue[#info_queue + 1] = G.P_CENTERS.c_moon
+                full_UI_table.name = localize {
+                    type = 'name',
+                    key = self.key .. "_moon", 
+                    set = self.set, 
+                    nodes = {}
+                }
+                localize{
+                    type = 'descriptions', 
+                    key = self.key .. "_moon", 
+                    set = self.set, 
+                    nodes = full_UI_table.main, 
+                    vars = { card.ability.extra.chips, card.ability.extra.chips_gain } 
+                }
             end
         end
     end,
@@ -1884,7 +1928,7 @@ SMODS.Joker{ -- Invert
 
     loc_vars = function(self, info_queue, card)
         local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds) 
-        return {vars = {new_numerator, new_denominator, card.ability.extra.handsize}}
+        return { vars = { new_numerator, new_denominator, card.ability.extra.handsize } }
     end,
 
     add_to_deck = function(self, card, from_debuff)

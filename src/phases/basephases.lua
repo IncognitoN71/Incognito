@@ -43,7 +43,7 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 0, y = 0 },
-    config = { mult = 1, chips = 1 },
+    config = { mult = 1, chips = 1, moon = "c_nic_waxingcrescent" },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
@@ -64,66 +64,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
-            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('xchips', 1.1, 0.6)
-                        card:set_ability(G.P_CENTERS.c_nic_waxingcrescent)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            end
+            Incognito.normalshift(card)
         end
     end,
 
@@ -149,7 +90,7 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 1, y = 0 },
-    config = { mult = 1, chips = 1.5 },
+    config = { mult = 1, chips = 1.5, moon = "c_nic_firstquarter" },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
@@ -170,66 +111,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
-            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('xchips', 1.1, 0.6)
-                        card:set_ability(G.P_CENTERS.c_nic_firstquarter)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            end
+            Incognito.normalshift(card)
         end
     end,
 
@@ -255,7 +137,7 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 2, y = 0 },
-    config = { mult = 1, chips = 2 },
+    config = { mult = 1, chips = 2, moon = "c_nic_waxinggibbous" },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
@@ -276,66 +158,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
-            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('xchips', 1.1, 0.6)
-                        card:set_ability(G.P_CENTERS.c_nic_waxinggibbous)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            end
+            Incognito.normalshift(card)
         end
     end,
 
@@ -361,7 +184,7 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 3, y = 0 },
-    config = { mult = 1.5, chips = 2 },
+    config = { mult = 1.5, chips = 2, moon = "c_nic_fullmoon" },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
@@ -382,66 +205,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
-            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('xchips', 1.1, 0.6)
-                        card:set_ability(G.P_CENTERS.c_nic_fullmoon)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            end
+            Incognito.normalshift(card)
         end
     end,
 
@@ -467,7 +231,7 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 0, y = 1 },
-    config = { mult = 2, chips = 2 },
+    config = { mult = 2, chips = 2, moon = "c_nic_waninggibbous" },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
@@ -488,66 +252,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
-            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('xchips', 1.1, 0.6)
-                        card:set_ability(G.P_CENTERS.c_nic_waninggibbous)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            end
+            Incognito.normalshift(card)
         end
     end,
 
@@ -573,7 +278,7 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 1, y = 1 },
-    config = { mult = 1.5, chips = 2 },
+    config = { mult = 1.5, chips = 2, moon = "c_nic_thirdquarter" },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
@@ -594,66 +299,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
-            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('xchips', 1.1, 0.6)
-                        card:set_ability(G.P_CENTERS.c_nic_thirdquarter)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            end
+            Incognito.normalshift(card)
         end
     end,
 
@@ -679,7 +325,7 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 2, y = 1 },
-    config = { mult = 2, chips = 1 },
+    config = { mult = 2, chips = 1, moon = "c_nic_waningscrescent" },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
@@ -700,66 +346,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
-            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('xchips', 1.1, 0.6)
-                        card:set_ability(G.P_CENTERS.c_nic_waningscrescent)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            end
+            Incognito.normalshift(card)
         end
     end,
 
@@ -785,20 +372,11 @@ SMODS.Consumable {
     cost = 4,
     atlas = 'nicphases',
     pos = {x = 3, y = 1 },
-    config = { mult = 1.5, chips = 1 },
+    config = { mult = 1.5, chips = 1, moon = "c_nic_newmoon" },
     pools = { ["BasePhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "nic_changingbasephases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
-        local planet = nil
-        if G.GAME.last_hand_played then
-            for _, v in pairs(G.P_CENTER_POOLS.Planet) do
-                if v.config.hand_type == G.GAME.last_hand_played then
-                    planet = v.key
-                end
-            end
-        end
-        info_queue[#info_queue+1] = planet and G.P_CENTERS[planet]
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -815,66 +393,7 @@ SMODS.Consumable {
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
-            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                for i = 1, 2 do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.4,
-                        func = function()
-                            play_sound('tarot2', 1.1, 0.6)
-                            card:juice_up()
-                            return true
-                        end
-                    }))
-                end
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('nic_glitch', 1.1, 0.6)
-                        card:set_ability(pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Special Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            else
-                draw_card(G.consumeables, G.play, 1, 'up', true, card, nil, mute)
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        card:juice_up(0.5, 0.5)
-                        play_sound('xchips', 1.1, 0.6)
-                        card:set_ability(G.P_CENTERS.c_nic_newmoon)
-                        return true
-                    end
-                }))
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    delay = 0.9,
-                    func = function()
-                        draw_card(G.play, G.consumeables, 1, 'up', true, card, nil, mute)
-                        return true
-                    end
-                }))
-                return {
-                    message = "Shift!",
-                    colour = G.C.NIC_PHASES
-                }
-            end
+            Incognito.normalshift(card)
         end
     end,
 

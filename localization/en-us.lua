@@ -142,19 +142,22 @@ return {
             j_nic_humantorch = {
                 name = "Human Torch",
                 text = {
-                    "If {C:attention}first played{} hand is a {C:attention}Four",
-                    "{C:attention}of a Kind{} with exactly {C:attention}4{} cards,",
-                    "level up the {C:attention}hand{} by {C:attention}#1#{}, increase",
-                    "the amount by {C:attention}#2#{}, and destroy",
-                    "a {C:attention}random played card",
+                    {"Played {C:attention}Four of a Kind",
+                    "with exactly {C:attention}4{} cards,",
+                    "levels up {C:attention}hand{} by {C:attention}#1#",
+                    "and destroys a",
+                    "{C:attention}random played card"},
+                    {"Increase the level",
+                    "amount by {C:attention}#2#{} when",
+                    "a {C:attention}card{} is destroyed"},
                 }
             },
             j_nic_invisiblewoman = {
                 name = "Invisible Woman",
                 text = {
-                    "If {C:attention}first played{} hand is a",
-                    "{C:attention}Four of a Kind{} with exactly {C:attention}4",
-                    "cards, turn all cards into glass",
+                    "Played {C:attention}Four of a Kind",
+                    "with exactly {C:attention}4{} cards,",
+                    "turn all cards into glass",
                 }
             },
             j_nic_thething = {
@@ -163,10 +166,10 @@ return {
                     {"When round begins, add",
                     "{C:attention}#1# Stone{} cards with a",
                     "random {C:attention}seal{} to your deck"},
-                    {"If {C:attention}first played{} hand is a",
-                    "{C:attention}Four of a Kind{} with exactly {C:attention}4",
-                    "cards, increase the amount",
-                    "of {C:attention}Stone{} cards by {C:attention}#2#"},
+                    {"Played {C:attention}Four of a Kind",
+                    "with exactly {C:attention}4{} cards,",
+                    "increase the amount of",
+                    "{C:attention}Stone{} cards by {C:attention}#2#"},
                 }
             },
             j_nic_misterfantastic = {
@@ -321,15 +324,33 @@ return {
             j_nic_solareclipse = {
                 name = "Solar Eclipse",
                 text = {
-                    {"Scored based on",
-                    "most used {C:tarot}Tarot{},",
-                    "If tied uses both"},
-                    {"Gains {C:mult}+#3#{} Mult every",
+                    "Gains {C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
+                    "every time {C:tarot}The Sun{} and",
+                    "{C:tarot}The Moon{} is used respectively",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)",
+                }
+            },
+            j_nic_solareclipse_sun = {
+                name = {
+                    "Solar Eclipse",
+                    "{C:mult,s:0.5}Sun Variant",
+                },
+                text = {
+                    "Gains {C:mult}+#2#{} Mult every",
                     "time {C:tarot}The Sun{} is used",
-                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)"},
-                    {"Gains {C:chips}+#4#{} Chips every",
+                    "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
+                }
+            },
+            j_nic_solareclipse_moon = {
+                name = {
+                    "Solar Eclipse",
+                    "{C:chips,s:0.5}Moon Variant",
+                },
+                text = {
+                    "Gains {C:chips}+#2#{} Chips every",
                     "time {C:tarot}The Moon{} is used",
-                    "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips)"},
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
             j_nic_invert = {
@@ -792,7 +813,11 @@ return {
             j_nic_tritetorewritten = { -- Rewritten
                 name = "Tri{C:nic_teto}Teto",
                 text = {
-                    "",
+                    "Create a {C:colourcard}Teto Colour{} and",
+                    "a {C:rotarot}Tetarot!{} if played hand",
+                    "is a {C:attention}Three of a Kind",
+                    "{C:inactive}(Doesn't need room",
+                    "{C:inactive}if you have Triangle)",
                 }
             },
 
@@ -815,7 +840,7 @@ return {
 
             -- LobotomyCorp
             j_nic_mysteto = {
-                name = "Mys{C:nic_teto}Teto{}",
+                name = "Mys{C:nic_teto}Teto",
                 text = {
                     {"{C:attention}Played hand{} containing a {C:attention}Pair",
                     "upgrades level of played {C:attention}poker hand{}"},
@@ -841,7 +866,7 @@ return {
 
             -- Entropy 
             j_nic_rubteto = {
-                name = "Rub{C:nic_teto}Teto{}",
+                name = "Rub{C:nic_teto}Teto",
                 text = {
                     "Level up {C:attention}Pair{} by",
                     "{C:gold}+1{} Ascension Power for",
@@ -851,7 +876,14 @@ return {
                 }
             },
 
-            -- Hyperfixation
+            -- Hyperfixation 
+            j_nic_tetolyne = {
+                name = "{C:nic_teto}Teto{}lyne",
+                text = {
+                    ""
+                }
+            },
+
             j_nic_faketechnoblade = {
                 name = "Technoblade",
                 text = {
@@ -1075,38 +1107,44 @@ return {
             j_nic_fakehumantorch = {
                 name = "Human Torch",
                 text = {
-                    "If {C:attention}first played{} hand is a {C:attention}#3#",
-                    "{C:attention}of a Kind{} with exactly {C:attention}#4#{} cards,",
-                    "level up the {C:attention}hand{} by {C:attention}#1#{}, increase",
-                    "the amount by {C:attention}#2#{}, and destroy",
-                    "a {C:attention}random played card{C:hpfx_IjiGray}#5#{}",
+                    {"Played {C:attention}#3# of a Kind",
+                    "with exactly {C:attention}#4#{} cards,",
+                    "levels up {C:attention}hand{} by {C:attention}#1#",
+                    "and destroys a",
+                    "{C:attention}random played card{C:hpfx_IjiGray}#5#{}"},
+                    {"Increase the level",
+                    "amount by {C:attention}#2#{} when",
+                    "a {C:attention}card{} is destroyed"},
                 }
             },
             j_nic_fakehumantorch_alt = {
                 name = "Human Torch{C:hpfx_IjiGray}...?{}",
                 text = {
-                    "If {C:attention}first played{} hand is a {C:attention}#3#",
-                    "{C:attention}of a Kind{} with exactly {C:attention}#4#{} cards,",
-                    "level up the {C:attention}hand{} by {C:attention}#1#{}, increase",
-                    "the amount by {C:attention}#2#{}, and destroy",
-                    "a {C:attention}random played card{C:hpfx_IjiGray}#5#{}",
+                    {"Played {C:attention}#3# of a Kind",
+                    "with exactly {C:attention}#4#{} cards,",
+                    "levels up {C:attention}hand{} by {C:attention}#1#",
+                    "and destroys a",
+                    "{C:attention}random played card{C:hpfx_IjiGray}#5#{}"},
+                    {"Increase the level",
+                    "amount by {C:attention}#2#{} when",
+                    "a {C:attention}card{} is destroyed"},
                 }
             },
 
             j_nic_fakeinvisiblewoman = {
                 name = "Invisible Woman",
                 text = {
-                    "If {C:attention}first played{} hand is a",
-                    "{C:attention}#1# of a Kind{} with exactly {C:attention}#2#",
-                    "cards, turn all cards into glass{C:hpfx_IjiGray}#3#{}",
+                    "Played {C:attention}#1# of a Kind",
+                    "with exactly {C:attention}#2#{} cards,",
+                    "turn all cards into glass{C:hpfx_IjiGray}#3#{}",
                 }
             },
             j_nic_fakeinvisiblewoman_alt = {
                 name = "Invisible Woman{C:hpfx_IjiGray}...?{}",
                 text = {
-                    "If {C:attention}first played hand{} is a",
-                    "{C:attention}#1# of a Kind{} with exactly {C:attention}#2#",
-                    "cards, turn all cards into glass{C:hpfx_IjiGray}#3#{}",
+                    "Played {C:attention}#1# of a Kind",
+                    "with exactly {C:attention}#2#{} cards,",
+                    "turn all cards into glass{C:hpfx_IjiGray}#3#{}",
                 }
             },
 
@@ -1116,10 +1154,10 @@ return {
                     {"When round begins, add",
                     "{C:attention}#1# Stone{} cards with a",
                     "random {C:attention}seal{} to your deck"},
-                    {"If {C:attention}first played hand{} is a",
-                    "{C:attention}#3# of a Kind{} with exactly {C:attention}#4#",
-                    "cards, increase the amount",
-                    "of {C:attention}Stone{} cards by {C:attention}#2#{C:hpfx_IjiGray}#5#{}"},
+                    {"Played {C:attention}#3# of a Kind",
+                    "with exactly {C:attention}#4#{} cards,",
+                    "increase the amount of",
+                    "{C:attention}Stone{} cards by {C:attention}#2#{C:hpfx_IjiGray}#5#{}"},
                 }
             },
             j_nic_fakethething_alt = {
@@ -1128,10 +1166,10 @@ return {
                     {"When round begins, add",
                     "{C:attention}#1# Stone{} cards with a",
                     "random {C:attention}seal{} to your deck"},
-                    {"If {C:attention}first played hand{} is a",
-                    "{C:attention}#3# of a Kind{} with exactly {C:attention}#4#",
-                    "cards, increase the amount",
-                    "of {C:attention}Stone{} cards by {C:attention}#2#{C:hpfx_IjiGray}#5#{}"},
+                    {"Played {C:attention}#3# of a Kind",
+                    "with exactly {C:attention}#4#{} cards,",
+                    "increase the amount of",
+                    "{C:attention}Stone{} cards by {C:attention}#2#{C:hpfx_IjiGray}#5#{}"},
                 }
             },
 
@@ -1371,19 +1409,91 @@ return {
             c_nic_micromoon = {
                 name = "Micromoon",
                 text = {
-                    "",
+                    {"Permanently modify last",
+                    "played hand type value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:mult}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:chips}+#5#{} x {C:nic_phases}#3#{} chips"},
+                    {"Spend {C:money}$#6#{} to reuse and",
+                    "doubles cost required by {C:money}#7#",
+                    "{C:inactive,s:0.8}lack of money won't be spent,",
+                    "{C:inactive,s:0.8}will be used up instead, and",
+                    "{C:inactive,s:0.8}modifier values change every use"},
                 }
             },
             c_nic_supermoon = {
                 name = "Supermoon",
                 text = {
-                    "",
+                    {"Permanently modify last",
+                    "played hand type value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:mult}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:chips}+#5#{} x {C:nic_phases}#3#{} chips"},
+                    {"Modify last played hand type",
+                    "value if played hand triggers",
+                    "the {C:attention}Boss Blind{} ability",
+                    "{C:inactive,s:0.8}Same modify value as Supermoon and",
+                    "{C:inactive,s:0.8}modifier values change every use"},
                 }
             },
             c_nic_solareclipse = {
                 name = "Solar Eclipse",
                 text = {
-                    "",
+                    {"Permanently modify last",
+                    "played hand type value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:mult}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:chips}+#5#{} x {C:nic_phases}#3#{} chips"},
+                    {"Any {C:attention}used consumable{} has",
+                    "a {C:green}#6# in #7#{} chance to modify",
+                    "last played hand type value",
+                    "{C:inactive,s:0.8}Same modify value as Solar Eclipse and",
+                    "{C:inactive,s:0.8}modifier values change every use"},
+                }
+            },
+            c_nic_moonring = {
+                name = "Moon Ring",
+                text = {
+                    {"Permanently modify last",
+                    "played hand type value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:mult}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:chips}+#5#{} x {C:nic_phases}#3#{} chips"},
+                    {"Each discarded {C:attention}#6#{} of",
+                    "{V:2}#7#{} modifies last",
+                    "played hand type value",
+                    "{C:inactive,s:0.8}Same modify value as Moon Ring,",
+                    "{C:inactive,s:0.8}card changes every round, and",
+                    "{C:inactive,s:0.8}modifier values change every use"},
+                }
+            },
+            c_nic_nullmoon = {
+                name = "Null Moon",
+                text = {
+                    {"Permanently modify last",
+                    "played hand type value",
+                    "by {C:nic_phases}Phases{} modifier",
+                    "{s:0.2} ",
+                    "{C:inactive}( {V:1}#1#{C:inactive} )",
+                    "{s:0.2} ",
+                    "{C:mult}+#4#{} x {C:nic_phases}#2#{} Mult and",
+                    "{C:chips}+#5#{} x {C:nic_phases}#3#{} chips"},
+                    {"Randomizes {C:nic_phases}Phases{} order,",
+                    "creates a {C:dark_edition}Negative{} copy",
+                    "if it turns to the next",
+                    "correct {C:nic_phases}Phases"},
                 }
             },
 
@@ -1418,7 +1528,7 @@ return {
                     "this has been held",
                     "{C:inactive}(Currently {C:attention}#1#{C:inactive}, {}[{C:attention,f:mf_emoji}#2#{C:inactive,f:mf_emoji}#3#{}]{C:inactive})"
                 }
-            }
+            },
         },
         Rotarot = {
             c_nic_rot_teto = {
@@ -1428,7 +1538,25 @@ return {
                     "into a {C:nic_teto}Teto{} Joker",
                     "{C:inactive,s:0.8} Food Jokers turn into Pears",
                 }
-            }
+            },
+
+            c_nic_rot_tetorewritten = {
+                name = "{E:mf_rotarot_title}Tetarot!",
+                text = {
+                    "Turns selected Joker",
+                    "into a {C:nic_teto}Teto{} Joker",
+                    "{C:inactive,s:0.8} Food Jokers turn into Pears",
+                }
+            },
+            c_nic_rot_selenerewritten = {
+                name = "{E:mf_rotarot_title}Selene!",
+                text = {
+                    "Creates up to {C:attention}#1#",
+                    "{C:nic_phases}Full Moon{} cards",
+                    "{C:inactive}(Must have room)",
+                },
+            },
+            
         },
 
         Partner = {
@@ -1729,10 +1857,15 @@ return {
             k_nic_lunar_pack = "Lunar Pack",
             -- Phases
             k_nic_plus_phases = "+1 Phases",
+            k_nic_shift_ex = "Shift!",
+            k_nic_shift_qu = "Shift?",
+            k_nic_special_shift_ex = "Special Shift!",
             k_nic_special_phases = "Special Phases",
             k_nic_apogee = "Apogee",
             k_nic_perigee = "Perigee",
             k_nic_eclipse = "Eclipse",
+            k_nic_halo = "22° Halo",
+            k_nic_null = "???",
             -- Death
             ph_nic_technoblade = "TECHNOBLADE NEVER DIES!",
         },

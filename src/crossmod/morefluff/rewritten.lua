@@ -38,9 +38,43 @@ SMODS.Joker{ -- Triangle Teto
 
     loc_vars = function(self, info_queue, center) 
 		info_queue[#info_queue+1] = G.P_CENTERS["j_mf_triangle"]
+        info_queue[#info_queue+1] = G.P_CENTERS["c_nic_tetorewritten"]
+        info_queue[#info_queue+1] = G.P_CENTERS["c_nic_rot_tetorewritten"]
 	end,
 
     calculate = function(self, card, context)
+        if context.before and context.scoring_name == "Three of a Kind" then
+            if next(SMODS.find_card("j_mf_triangle")) then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.add_card({ key = 'c_nic_tetorewritten' })
+                        SMODS.add_card({ key = 'c_nic_rot_tetorewritten' })
+                        return true
+                    end
+                }))
+            else
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.add_card({ key = 'c_nic_tetorewritten' })
+                            G.GAME.consumeable_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            SMODS.add_card({ key = 'c_nic_rot_tetorewritten' })
+                            G.GAME.consumeable_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            end
+        end
     end
 }
 
@@ -52,7 +86,7 @@ FLUFF.Colour {
     config = {
         val = 0,
         partial_rounds = 0,
-        upgrade_rounds = 2
+        upgrade_rounds = 4
     },
 
     loc_vars = function(self, info_queue, card)
@@ -84,3 +118,113 @@ FLUFF.Colour {
         delay(0.6)
     end,
 }
+
+SMODS.Consumable({
+    set = "Rotarot",
+    name = "rot_Teto",
+    key = "rot_tetorewritten",
+    pos = { x = 3, y = 0 },
+    config = {},
+    cost = 3,
+    atlas = "nicmorefluff",
+    unlocked = true,
+    discovered = false,
+    mf_rotate_by = math.pi / 4,
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = "nic_tetosticker", set = "Other" }
+        info_queue[#info_queue+1] = G.P_CENTERS["j_nic_pear"]
+        return { vars = { } }
+    end, 
+
+    use = function(self, card, area, copier)
+        if (G.jokers.highlighted[1].config.center.pools or {}).Food then
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.4,
+                func = function()
+                    G.jokers.highlighted[1]:juice_up()
+                    G.jokers.highlighted[1]:set_ability(G.P_CENTERS.j_nic_pear)
+                    play_sound('gold_seal', 1.2, 0.4)
+                    G.jokers:unhighlight_all()
+                    return true
+                end
+            }))
+        elseif G.jokers.highlighted[1].config.center.key == 'j_hpfx_ijiraq' then
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.4,
+                func = function()
+                    G.jokers.highlighted[1]:juice_up()
+                    G.jokers.highlighted[1]:set_ability(G.P_CENTERS.j_nic_tetoraq)
+                    play_sound('gold_seal', 1.2, 0.4)
+                    G.jokers:unhighlight_all()
+                    return true
+                end
+            }))
+        else
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.4,
+                func = function() 
+                    G.jokers.highlighted[1]:juice_up()
+                    G.jokers.highlighted[1]:set_ability(pseudorandom_element(G.P_CENTER_POOLS.Teto, 'teto').key)
+                    play_sound('gold_seal', 1.2, 0.4)
+                    G.jokers:unhighlight_all()
+                    return true 
+                end 
+            }))
+        end
+        delay(0.6)
+    end,
+
+    can_use = function (self, card) 
+        return #G.jokers.highlighted > 0 and #G.jokers.highlighted == 1  and G.jokers.highlighted[1].config.center.rarity ~= "nic_teto" and not G.jokers.highlighted[1].ability.nic_tetosticker
+    end,
+})
+
+SMODS.Consumable({
+    set = "Rotarot",
+    name = "rot_Selene",
+    key = "rot_selenerewritten",
+    pos = { x = 4, y = 0 },
+    config = { extra = { phases = 2 } },
+    cost = 3,
+    atlas = "nicmorefluff",
+    unlocked = true,
+    discovered = false,
+    mf_rotate_by = math.pi / 4,
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue+1] = G.P_CENTERS["c_nic_fullmoon"]
+        return { vars = { card.ability.extra.phases } }
+    end,
+
+    use = function(self, card, area, copier)
+        for i = 1, math.min(card.ability.extra.phases, G.consumeables.config.card_limit - #G.consumeables.cards) do
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.4,
+                func = function()
+                    if G.consumeables.config.card_limit > #G.consumeables.cards then
+                        if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
+                            play_sound('nic_glitch')
+                            SMODS.add_card({ key = (pseudorandom_element(G.P_CENTER_POOLS.SpecialPhases, 'specialphases', {in_pool = function() return true end}).key), area = G.consumeables })
+                        else
+                            play_sound('timpani')
+                            SMODS.add_card({ key = 'c_nic_fullmoon', area = G.consumeables })
+                        end
+                        card:juice_up(0.3, 0.5)
+                    end
+                    return true
+                end
+            }))
+        end
+        delay(0.6)
+    end,
+
+    can_use = function(self, card)
+        return G.consumeables and #G.consumeables.cards < G.consumeables.config.card_limit or (card.area == G.consumeables)
+    end
+})

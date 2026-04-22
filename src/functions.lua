@@ -88,6 +88,12 @@ local function reset_nic_crazytaxi_rank()
     end
 end
 
+-- Changes Variable
+
+function SMODS.current_mod.reset_game_globals(run_start)
+    reset_nic_crazytaxi_rank() -- Crazy Taxi
+end
+
 -- Button
 
 local card_click_ref = Card.click
@@ -104,12 +110,6 @@ function Card:click(...)
     else
         return card_click_ref(self, ...)
     end
-end
-
--- Changes Variable
-
-function SMODS.current_mod.reset_game_globals(run_start)
-    reset_nic_crazytaxi_rank() -- Crazy Taxi
 end
 
 -- Vouchers/Boosters
