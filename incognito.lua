@@ -53,6 +53,26 @@ end
 -- Hyperfixation
 if Hyperfixation then
     SMODS.load_file("src/crossmod/hyperfixation.lua")()
+    if Hyperfixation.hypercross then
+        if type(Hyperfixation) == "table" and type(Hyperfixation.hypercross) == "function" then
+            Hyperfixation.hypercross('Incognito', 'j_nic_technoblade', 'j_nic_faketechnoblade', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_machinedramon', 'j_nic_fakemachinedramon', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_button', 'j_nic_fakebutton', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_slycooper', 'j_nic_fakeslycooper', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_stalagmite', 'j_nic_fakestalagmite', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_dalgonacookie', 'j_nic_fakedalgonacookie', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_dalgonacircle', 'j_nic_fakedalgonacircle', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_dalgonatriangle', 'j_nic_fakedalgonatriangle', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_dalgonastar', 'j_nic_fakedalgonastar', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_dalgonaumbrella', 'j_nic_fakedalgonaumbrella', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_humantorch', 'j_nic_fakehumantorch', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_invisiblewoman', 'j_nic_fakeinvisiblewoman', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_thething', 'j_nic_fakethething', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_misterfantastic', 'j_nic_fakemisterfantastic', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_incognito', 'j_nic_fakeincognito', false)
+            Hyperfixation.hypercross('Incognito', 'j_nic_crazytaxi', 'j_nic_fakecrazytaxi', false)
+        end
+    end
 end
 
 -- MoreFluff (notMario)

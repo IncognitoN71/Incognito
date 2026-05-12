@@ -44,7 +44,6 @@ SMODS.Joker{ -- Corobo Teto
     config = { 
         extra = { 
             click = 0, 
-            click_display = 0,
             click_gain = 1,
 
             mood = 30,
@@ -74,7 +73,7 @@ SMODS.Joker{ -- Corobo Teto
         info_queue[#info_queue + 1] = { key = "nic_tetorobo_moodmeter", set = "Other", vars = { colours = { colour1, colour2, colour3, colour4, colour5, colour6, colour7, colour8, colour9, colour10 }, hashtag, card.ability.extra.mood } }
         info_queue[#info_queue + 1] = { key = "nic_tetorobo_shieldbonus", set = "Other", vars = { math.ceil(shieldbonus) } }
         info_queue[#info_queue + 1] = { key = "nic_tetorobo_xmult", set = "Other", vars = { xmult } }
-        return { vars = { card.ability.extra.click_display, card.ability.extra.click, card.ability.extra.sadness } }
+        return { vars = { card.ability.extra.click, card.ability.extra.sadness } }
 	end,
 
     add_to_deck = function (self, card, from_debuff)
@@ -82,7 +81,6 @@ SMODS.Joker{ -- Corobo Teto
             func = function()
                 card.ability.extra.mood = 30
                 card.ability.extra.click = 0
-                card.ability.extra.click_display = 0
                 return true
             end
         }))
@@ -101,7 +99,6 @@ SMODS.Joker{ -- Corobo Teto
     end,
 
     calculate = function(self, card, context)
-        -- Shield Gain by Winning First Hand
         if context.end_of_round and context.game_over == false and context.main_eval then
             if G.GAME.current_round.hands_played == 1 then
                 local shieldbonus = (card.ability.extra.mood / 100) * 25
@@ -117,63 +114,23 @@ SMODS.Joker{ -- Corobo Teto
 			end
 		end
 
-        -- Setting Blind, Sadness
         if context.setting_blind and not context.blueprint_compat then
-            -- Sadness
             local sadness = card.ability.extra.sadness
             card.ability.extra.mood = card.ability.extra.mood - sadness
             SMODS.calculate_effect({message = "-" .. sadness .. " Sadness", colour = G.C.CHIPS}, card)
             card.ability.extra.click = 0
         end
 
-        -- End of round, Happiness or Sadness
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint_compat then
-            -- Happiness
-            if card.ability.extra.click > 0 and card.ability.extra.click <= 100 then
-                local happiness = card.ability.extra.click * 0.1
-                card.ability.extra.mood = card.ability.extra.mood + math.floor(happiness)
-                SMODS.calculate_effect({message = "+" .. math.floor(happiness) .. " Happiness", colour = G.C.RED}, card)
-            else
-                local sadness = card.ability.extra.sadness
-                card.ability.extra.mood = card.ability.extra.mood - sadness
-                SMODS.calculate_effect({message = "-" .. sadness .. " Sadness", colour = G.C.CHIPS}, card)
+            if G.GAME.blind.boss then
+                card.ability.extra.sadness = card.ability.extra.sadness * 2
             end
+            local happiness = card.ability.extra.click * 0.1
+            card.ability.extra.mood = card.ability.extra.mood + math.floor(happiness)
+            SMODS.calculate_effect({message = "+" .. math.floor(happiness) .. " Happiness", colour = G.C.RED}, card)
             card.ability.extra.click = 0
         end
 
-        if context.key_press_1 and card.states.hover.is == true then
-            card.ability.extra.mood = 10
-        end
-        if context.key_press_2 and card.states.hover.is == true then
-            card.ability.extra.mood = 20
-        end
-        if context.key_press_3 and card.states.hover.is == true then
-            card.ability.extra.mood = 40
-        end
-        if context.key_press_4 and card.states.hover.is == true then
-            card.ability.extra.mood = 60
-        end
-        if context.key_press_5 and card.states.hover.is == true then
-            card.ability.extra.mood = 95
-        end
-        if context.key_press_6 and card.states.hover.is == true then
-            card.ability.extra.mood = 100
-        end
-
-        -- Clicking
-        if context.cry_press and card.states.hover.is == true and not context.blueprint_compat then
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    card.ability.extra.click = card.ability.extra.click + card.ability.extra.click_gain
-                    card.ability.extra.click_display = card.ability.extra.click_display + card.ability.extra.click_gain
-                    card:juice_up()
-                    return true
-                end
-            }))
-            return { play_sound("nic_meow") }
-        end
-
-        -- Xmult
         if context.joker_main then
             if context.scoring_name == "Pair" then
                 return {
@@ -183,3 +140,91 @@ SMODS.Joker{ -- Corobo Teto
         end
     end
 }
+
+local card_highlighted_ref = Card.highlight
+function Card:highlight(is_highlighted)
+	self.highlighted = is_highlighted
+	if self.highlighted and string.find(self.ability.name, "j_nic_tetorobo") and self.area == G.jokers then
+		if self.children.use_button then
+			self.children.use_button:remove()
+			self.children.use_button = nil
+		end
+
+		self.children.use_button = UIBox({
+			definition = Incognito.tetorobo(self, {
+				sell = true,
+				use = true,
+			}),
+			config = {
+				align = "cr",
+				offset = {
+					x = -0.4,
+					y = 0,
+				},
+				parent = self,
+			},
+		})
+    else
+		card_highlighted_ref(self, is_highlighted)
+	end
+end
+
+Incognito.tetorobo = function(card, args)
+	local args = args or {}
+	local sell = nil
+	local use = nil
+
+	if args.sell then
+		sell = { n = G.UIT.C, config = { align = "cr", },
+		nodes = { { n = G.UIT.C, config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, 
+		one_press = true, button = "sell_card", func = "can_sell_card", },
+
+		nodes = { { n = G.UIT.B, config = { w = 0.1, h = 0.6, }, }, { n = G.UIT.C, config = { align = "tm", },
+		nodes = { { n = G.UIT.R, config = { align = "cm", maxw = 1.25, },
+		nodes = { { n = G.UIT.T, config = { text = localize("b_sell"), colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true, }, }, }, }, { n = G.UIT.R, config = { align = "cm", },
+		nodes = { { n = G.UIT.T, config = { text = localize("$"), colour = G.C.WHITE, scale = 0.4, shadow = true, }, }, { n = G.UIT.T, config = { ref_table = card, ref_value = "sell_cost_label", colour = G.C.WHITE, scale = 0.55, shadow = true, }, }, }, }, }, }, }, }, }, 
+		}
+	end
+
+	if args.use then
+		use = { n = G.UIT.C, config = { align = "cr", }, 
+		nodes = { { n = G.UIT.C, config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 0, minh = 0.8, hover = true, shadow = true, colour = G.C.RED,
+		button = "nic_tetorobo", func = "nic_can_tetorobo", },
+		
+		nodes = { { n = G.UIT.B, config = { w = 0.1, h = 0, }, }, { n = G.UIT.C, config = { align = "tm", },
+		nodes = { { n = G.UIT.R, config = { align = "cm", maxw = 1.25, },
+		nodes = { { n = G.UIT.T, config = { text = "PET", colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true, }, }, }, }, }, }, }, }, }, 
+		}
+	end
+
+	return { n = G.UIT.ROOT, config = { align = "cr", padding = 0, colour = G.C.CLEAR, },
+	nodes = { { n = G.UIT.C, config = { padding = 0.15, align = "cl", },
+	nodes = {
+		sell and { n = G.UIT.R, config = { align = "cl", }, nodes = { sell }, } or nil,
+		use and { n = G.UIT.R, config = { align = "cl", }, nodes = { use }, } or nil, 
+	}, }, },
+	}
+end
+
+G.FUNCS.nic_tetorobo = function(e)
+    local card = e.config.ref_table
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            card.ability.extra["click"] = card.ability.extra["click"] + card.ability.extra["click_gain"]
+            card:juice_up()
+            return true
+        end
+    }))
+    return { play_sound("nic_meow") }
+end
+
+G.FUNCS.nic_can_tetorobo = function(e)
+    local card = e.config.ref_table
+	if G.STATE == G.STATES.SELECTING_HAND then
+		e.config.colour = G.C.RED
+		e.config.button = "nic_tetorobo"
+	else
+		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+		e.config.button = nil
+	end
+end

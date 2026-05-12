@@ -19,6 +19,8 @@ SMODS.Joker{ -- Kasane Jokto
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "NeatoJokers"
+        info_queue[#info_queue + 1] = { key = "nic_inspired_by_en", set = "Other", vars = { name } }
         return { vars = { card.ability.extra.repetitions } }
     end,
 
@@ -49,6 +51,9 @@ SMODS.Joker{ -- Ambassador Teto
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "アンバサダー"
+        local artist = "dada"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_jp", set = "Other", vars = { name, artist } }
         return { vars = { card.ability.extra.xmult } }
     end,
 
@@ -124,7 +129,7 @@ SMODS.Joker{ -- Pear
 SMODS.Joker{ -- Pearto
     key = "pearto",
     blueprint_compat = true,
-    eternal_compat = true,
+    eternal_compat = false,
     unlocked = true,
     discovered = false,
     atlas = 'nictetojokers',
@@ -179,11 +184,18 @@ SMODS.Joker{ -- Doctor Kidori
     rarity = "nic_teto",
     cost = 8,
     pos = {x = 4, y = 0},
-    config = { extra = {} },
+    config = { extra = { } },
     pools = { ["Teto"] = true },
 
+    loc_vars = function(self, info_queue, card)
+        local name = "イガク"
+        local artist = "原口沙輔"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_jp", set = "Other", vars = { name, artist } }
+        return { vars = { } }
+    end,
+
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play and context.other_card:get_id() == 4 then
+        if context.individual and context.cardarea == G.play and context.other_card:get_id() == 4 and not context.blueprint then
             if G.jokers.cards[1] == card then
                 local other_card = context.other_card
                 G.E_MANAGER:add_event(Event({
@@ -210,17 +222,24 @@ SMODS.Joker{ -- Birdbrain Teto
     rarity = "nic_teto",
     cost = 5,
     pos = {x = 5, y = 0},
-    config = { extra = { mult = 0, mult_gain = 5} },
+    config = { extra = { mult = 0, mult_gain = 5 } },
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "BIRDBRAIN"
+        local artist = "Jamie Paige"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
         return { vars = { card.ability.extra.mult, card.ability.extra.mult_gain } }
     end,
 
     calculate = function(self, card, context)
         if context.before and not context.blueprint and not context.retrigger_joker then
             if context.scoring_name == "Pair" then
-                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "mult", 
+                    scalar_value = "mult_gain",
+                })
             else
                 card.ability.extra.mult = 0
                 return {
@@ -251,6 +270,9 @@ SMODS.Joker{ -- Tenebre Rosso Sangue Teto
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "Tenebre Rosso Sangue [Cover]"
+        local artist = "Sandwich"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
         return { vars = { card.ability.extra.dollars } }
     end,
 
@@ -287,6 +309,9 @@ SMODS.Joker{ -- Spoken For Teto
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "Spoken For"
+        local artist = "FLAVOR FOLEY"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
         return { vars = { card.ability.extra.xmult } }
     end, 
 
@@ -374,6 +399,9 @@ SMODS.Joker{ -- Mesmerizer Teto
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "メズマライザー"
+        local artist = "32ki"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_jp", set = "Other", vars = { name, artist } }
         if card.area and card.area == G.jokers then
             local compatible = G.jokers.cards[1] and G.jokers.cards[1] ~= card and
                 (G.jokers.cards[1].config.center.rarity == "nic_teto" or G.jokers.cards[1].ability.nic_tetosticker) and G.jokers.cards[1].config.center.blueprint_compat
@@ -430,6 +458,8 @@ SMODS.Joker{ -- Spamteto
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "Koasha Spamteto"
+        info_queue[#info_queue + 1] = { key = "nic_inspired_by_en", set = "Other", vars = { name } }
         return { vars = { card.ability.extra.dollars, card.ability.extra.dollars_final } }
     end,
 
@@ -488,6 +518,9 @@ SMODS.Joker{ -- Tetoris
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "テトリス"
+        local artist = "柊マグネタイト"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_jp", set = "Other", vars = { name, artist } }
         return { vars = { card.ability.extra.hearts, card.ability.extra.hearts_needed } }
     end, 
 
@@ -538,6 +571,9 @@ SMODS.Joker{ -- Minimum Rage Teto
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "MINIMUM RAGE"
+        local artist = "MonochroMenace"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
         return { vars = { card.ability.extra.mult } }
     end, 
 
@@ -570,10 +606,13 @@ SMODS.Joker{ -- Teto Territory
     rarity = "nic_teto",
     cost = 5,
     pos = {x = 3, y = 1},
-    config = { extra = {} },
+    config = { extra = { } },
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "oxi"
+        local artist = "重音territory"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_jp", set = "Other", vars = { name, artist } }
         return { vars = {  } }
     end, 
 
@@ -588,7 +627,7 @@ SMODS.Joker{ -- Teto Territory
             local joker_to_teto = pseudorandom_element(teto_jokers, 'nic_tetoterritory')
 
             if joker_to_teto then
-                if (joker_to_teto.config.center.pools or {}).Food then
+                if ((joker_to_teto.config.center.pools or {}).Food) or joker_to_teto:has_attribute('food') then
                     G.E_MANAGER:add_event(Event({
                         func = function()
                             joker_to_teto:juice_up(0.5, 0.5)
@@ -623,11 +662,14 @@ SMODS.Joker{ -- Contradictions Teto
     rarity = "nic_teto",
     cost = 5,
     pos = {x = 4, y = 1},
-    config = { extra = {} },
+    config = { extra = { } },
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = {} }
+        local name = "CONTRADICTIONS"
+        local artist = "Darkbluecat"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
+        return { vars = { } }
     end, 
 
     calculate = function(self, card, context)
@@ -763,6 +805,9 @@ SMODS.Joker{ -- Log Off Teto
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "LOG OFF"
+        local artist = "Staircatte"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
         return { vars = { card.ability.extra.xmult, card.ability.extra.xmult_loss }, }
     end,
 
@@ -770,7 +815,13 @@ SMODS.Joker{ -- Log Off Teto
         if context.individual and context.cardarea == G.play and not context.blueprint and not context.other_card:is_suit("Hearts") then
             if card.ability.extra.xmult - card.ability.extra.xmult_loss < 1 then
             else
-                card.ability.extra.xmult = card.ability.extra.xmult - card.ability.extra.xmult_loss
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "xmult", 
+                    scalar_value = "xmult_loss",
+                    no_message = true,
+                    operation = "-",
+                })
                 return {
                     message = "-X" .. card.ability.extra.xmult_loss .. " Mult",
                     colour = G.C.NIC_TETO,
@@ -811,6 +862,9 @@ SMODS.Joker{ -- TetOS 4.1
     pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
+        local name = "Machine Love"
+        local artist = "Jamie Paige"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
         return { vars = { }, }
     end,
 
@@ -839,6 +893,9 @@ SMODS.Joker{ -- Cadmium Colors
     pools = { ["Teto"] = true },
     
     loc_vars = function(self, info_queue, card)
+        local name = "Cadmium Colors"
+        local artist = "Jamie Paige"
+        info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
         return { vars = { card.ability.extra.xmult } }
     end,
 

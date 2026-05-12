@@ -461,7 +461,9 @@ SMODS.Consumable {
     end,
 
     calculate = function(self, card, context)
-        if context.discard and not context.other_card.debuff and context.other_card:get_id() == G.GAME.current_round.nic_moonring_card.id and context.other_card:is_suit(G.GAME.current_round.nic_moonring_card.suit) and G.GAME.last_hand_played then
+        if context.discard and not context.other_card.debuff and G.GAME.last_hand_played and
+        context.other_card:get_id() == G.GAME.current_round.nic_moonring_card.id and 
+        context.other_card:is_suit(G.GAME.current_round.nic_moonring_card.suit) then
             Incognito.cardlevelup(card, context.other_card)
             card.ability.mult = 1 + (pseudorandom('mult', 0, 4) * 0.25)
             card.ability.chips = 1 + (pseudorandom('chips', 0, 4) * 0.25)
@@ -543,12 +545,92 @@ SMODS.Consumable {
     end,
 }
 
---[[local planet = nil
-if G.GAME.last_hand_played then
-    for _, v in pairs(G.P_CENTER_POOLS.Planet) do
-        if v.config.hand_type == G.GAME.last_hand_played then
-            planet = v.key
+SMODS.Consumable {
+    discovered = false,
+    key = 'mineralmoon',
+    set = 'Phases',
+    cost = 4,
+    atlas = 'nicphases',
+    pos = {x = 3, y = 3 },
+    config = { mult = 1.5, chips = 1.5 },
+    pools = { ["SpecialPhases"] = true },
+
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+
+        local planet = nil
+        if G.GAME.last_hand_played then
+            for _, v in pairs(G.P_CENTER_POOLS.Planet) do
+                if v.config.hand_type == G.GAME.last_hand_played then
+                    planet = v.key
+                end
+            end
         end
-    end
-end
-info_queue[#info_queue+1] = planet and G.P_CENTERS[planet]]
+        info_queue[#info_queue+1] = planet and G.P_CENTERS[planet]
+        return { 
+            vars = { 
+                G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
+                card.ability.mult, card.ability.chips,
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_mult) or "0",
+                (G.GAME.last_hand_played and G.GAME.hands[G.GAME.last_hand_played].l_chips) or "0",
+                G.GAME.last_hand_played and localize{type = "name_text", set = "Planet", key = planet} or localize('k_none'),
+
+                colours = { 
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.FILTER),
+                    ((not G.GAME.last_hand_played and G.C.UI.TEXT_INACTIVE) or G.C.SECONDARY_SET.Planet)
+                }
+            } 
+        }
+    end,
+
+    set_card_type_badge = function(self, card, badges)
+        badges[#badges + 1] = create_badge(localize('k_nic_special_phases'), get_type_colour(card.config.center or card.config, card), SMODS.ConsumableTypes.Phases.text_colour, 1.2)
+    end,
+
+    in_pool = function(self, args)
+        return false
+    end,
+
+    calculate = function(self, card, context)
+        local planet = nil
+        if G.GAME.last_hand_played then
+            for _, v in pairs(G.P_CENTER_POOLS.Planet) do
+                if v.config.hand_type == G.GAME.last_hand_played then
+                    planet = v.key
+                end
+            end
+        end
+        if context.setting_blind and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit and G.GAME.last_hand_played then
+            G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    SMODS.add_card({ set = 'Planet', key = planet, })
+                    G.GAME.consumeable_buffer = 0
+                    return true
+                end
+            }))
+            return {
+                message = localize('k_plus_planet'),
+                colour = G.C.SECONDARY_SET.Planet
+            }
+        end
+        
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.retrigger_joker then
+            Incognito.specialshift(card)
+        end
+    end,
+
+    use = function(self, card, area, copier)
+        Incognito.phaseslevelup(card)
+    end,
+
+    can_use = function(self, card)
+        return G.GAME.last_hand_played
+    end,
+
+    draw = function(self, card, layer)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+        end
+    end,
+}

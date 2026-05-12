@@ -21,7 +21,7 @@ SMODS.Consumable {
     end, 
 
     use = function(self, card, area, copier)
-        if (G.jokers.highlighted[1].config.center.pools or {}).Food then
+        if ((G.jokers.highlighted[1].config.center.pools or {}).Food) or G.jokers.highlighted[1]:has_attribute('food') then
             G.E_MANAGER:add_event(Event({
                 trigger = 'after',
                 delay = 0.4,

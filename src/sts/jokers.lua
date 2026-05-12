@@ -174,7 +174,7 @@ SMODS.Joker { -- The Scythe
 
 SMODS.Joker { -- Lethality
     key = "lethality",
-    blueprint_compat = true,
+    blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
@@ -197,7 +197,7 @@ SMODS.Joker { -- Lethality
 
     calculate = function(self, card, context)
         local increase = ( 1 + (card.ability.extra.increase/100) )
-        if context.setting_blind and not context.blueprint_compat then 
+        if context.setting_blind then 
             G.GAME.lethality = G.GAME.lethality * increase
             return {
                 message = "Increase by X" .. increase,

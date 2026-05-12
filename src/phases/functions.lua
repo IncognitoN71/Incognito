@@ -94,27 +94,7 @@ function Incognito.cardlevelup(card, shake)
     { mult = 0, chips = 0, handname = "", level = "" })
 end
 
--- Moon Ring
-
-local function reset_nic_moonring_card()
-    G.GAME.current_round.nic_moonring_card = { rank = 'Ace', suit = 'Spades' }
-    local valid_moonring_cards = {}
-    for _, playing_card in ipairs(G.playing_cards) do
-        if not SMODS.has_no_suit(playing_card) and not SMODS.has_no_rank(playing_card) then
-            valid_moonring_cards[#valid_moonring_cards + 1] = playing_card
-        end
-    end
-    local moonring_card = pseudorandom_element(valid_moonring_cards, 'nic_moonring' .. G.GAME.round_resets.ante)
-    if moonring_card then
-        G.GAME.current_round.nic_moonring_card.rank = moonring_card.base.value
-        G.GAME.current_round.nic_moonring_card.suit = moonring_card.base.suit
-        G.GAME.current_round.nic_moonring_card.id = moonring_card.base.id
-    end
-end
-
-function SMODS.current_mod.reset_game_globals(run_start)
-    reset_nic_moonring_card()
-end
+-- Moon Ring Function is in the Main Function cause resetting variables in different files def WORKS
 
 -- Base Phases Shifting
 
