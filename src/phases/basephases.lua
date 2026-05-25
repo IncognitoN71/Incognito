@@ -27,6 +27,13 @@ SMODS.ConsumableType {
     },
 }
 
+SMODS.UndiscoveredSprite {
+  key = "Phases",
+  atlas = "nicphases",
+  pos = { x = 0, y = 2 },
+  overlay_pos = { x = 1, y = 2 },
+}
+
 SMODS.ObjectType{
     key = "BasePhases",
     cards = {},
@@ -230,7 +237,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 0, y = 1 },
+    pos = {x = 4, y = 0 },
     config = { mult = 2, chips = 2, moon = "c_nic_waninggibbous" },
     pools = { ["BasePhases"] = true },
 
@@ -277,7 +284,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 1, y = 1 },
+    pos = {x = 5, y = 0 },
     config = { mult = 1.5, chips = 2, moon = "c_nic_thirdquarter" },
     pools = { ["BasePhases"] = true },
 
@@ -324,7 +331,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 2, y = 1 },
+    pos = {x = 6, y = 0 },
     config = { mult = 2, chips = 1, moon = "c_nic_waningscrescent" },
     pools = { ["BasePhases"] = true },
 
@@ -371,7 +378,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 3, y = 1 },
+    pos = {x = 7, y = 0 },
     config = { mult = 1.5, chips = 1, moon = "c_nic_newmoon" },
     pools = { ["BasePhases"] = true },
 

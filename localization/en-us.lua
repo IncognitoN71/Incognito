@@ -639,9 +639,11 @@ return {
             j_nic_cadmiumcolors = {
                 name = "Cadmium Colors",
                 text = {
-                    "{X:red,C:white}X#1#{} Mult if all cards",
-                    "held in hand are",
-                    "{C:hearts}Hearts{} or {C:diamonds}Diamonds",
+                    "{X:red,C:white}X#1#{} Mult if all played",
+                    "cards are {V:1}#2#{}",
+                    "and all cards held",
+                    "in hand are {V:2}#3#",
+                    "{C:inactive,s:0.8}Suits switches at end of round",
                 }
             },
 

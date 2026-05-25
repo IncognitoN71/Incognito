@@ -313,31 +313,18 @@ function Card:click(...)
     end
 end
 
--- Vouchers/Boosters
+-- Boosters
 
 buyingcard = {}
-
-function nic_ctx(context)
-    if context.nic_buying_voucher then return 'buy a voucher' end
-    if context.nic_buying_booster then return 'buy a booster pack' end
-end
 
 buyingcard.hooks = {}
 
 buyingcard.hooks.Card_open = Card.open
 function Card:open()
     if self.ability.set == "Booster" then
-        SMODS.calculate_context({nic_buying_booster = true, card = self})
+        SMODS.calculate_context({buying_booster = true, card = self})
     end
     return buyingcard.hooks.Card_open(self)
-end
-
-buyingcard.hooks.Card_redeem = Card.redeem
-function Card:redeem()
-    if self.ability.set == "Voucher" then
-        SMODS.calculate_context({nic_buying_voucher = true, card = self})
-    end
-    return buyingcard.hooks.Card_redeem(self)
 end
 
 -- Press Card (Cryptid)

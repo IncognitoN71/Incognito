@@ -13,7 +13,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 0, y = 2 },
+    pos = {x = 0, y = 1 },
     config = { mult = 1, chips = 1, modifier = 1, modifier_gain = 0.2 },
     pools = { ["SpecialPhases"] = true },
 
@@ -93,7 +93,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 1, y = 2 },
+    pos = {x = 1, y = 1 },
     config = { mult = 1.5, chips = 1.5, reusable = 0, reusable_gain = 1 },
     pools = { ["SpecialPhases"] = true },
 
@@ -199,7 +199,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 2, y = 2 },
+    pos = {x = 2, y = 1 },
     config = { mult = 1.5, chips = 1.5, cost = 1, cost_gain = 2 },
     pools = { ["SpecialPhases"] = true },
 
@@ -296,7 +296,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 3, y = 2 },
+    pos = {x = 3, y = 1 },
     config = { mult = 1.5, chips = 1.5 },
     pools = { ["SpecialPhases"] = true },
 
@@ -359,7 +359,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 0, y = 3 },
+    pos = {x = 4, y = 1 },
     config = { mult = 1.5, chips = 1.5, odds = 4 },
     pools = { ["SpecialPhases"] = true },
 
@@ -429,7 +429,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 1, y = 3 },
+    pos = {x = 5, y = 1 },
     config = { mult = 1.5, chips = 1.5 },
     pools = { ["SpecialPhases"] = true },
 
@@ -496,7 +496,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 2, y = 3 },
+    pos = {x = 6, y = 1 },
     config = { mult = 1.5, chips = 1.5, extra_slots_used = -1, },
     pools = { ["SpecialPhases"] = true },
 
@@ -551,7 +551,7 @@ SMODS.Consumable {
     set = 'Phases',
     cost = 4,
     atlas = 'nicphases',
-    pos = {x = 3, y = 3 },
+    pos = {x = 7, y = 1 },
     config = { mult = 1.5, chips = 1.5 },
     pools = { ["SpecialPhases"] = true },
 

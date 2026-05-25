@@ -44,7 +44,7 @@ SMODS.Joker{ -- Corobo Teto
     config = { 
         extra = { 
             click = 0, 
-            click_gain = 1,
+            click_gain = 100,
 
             mood = 30,
 
@@ -126,6 +126,9 @@ SMODS.Joker{ -- Corobo Teto
                 card.ability.extra.sadness = card.ability.extra.sadness * 2
             end
             local happiness = card.ability.extra.click * 0.1
+            if card.ability.extra.mood + happiness > 100 then
+                happiness = happiness - card.ability.extra.mood
+            end
             card.ability.extra.mood = card.ability.extra.mood + math.floor(happiness)
             SMODS.calculate_effect({message = "+" .. math.floor(happiness) .. " Happiness", colour = G.C.RED}, card)
             card.ability.extra.click = 0

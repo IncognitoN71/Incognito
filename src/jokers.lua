@@ -135,6 +135,7 @@ SMODS.Joker{ -- Button
     atlas = 'nicjokers',
     rarity = 1,
     cost = 3,
+    attributes = { 'xmult', },
     pos = {x = 2, y = 0 },
     config = { extra = { xmult = 0.5, xmult_gain = 0.05 , odds = 100 } },
 

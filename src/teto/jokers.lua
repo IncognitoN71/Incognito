@@ -578,7 +578,7 @@ SMODS.Joker{ -- Minimum Rage Teto
     end, 
 
     calculate = function(self, card, context)
-        if (context.buying_card or context.nic_buying_booster) and not context.blueprint and context.card.cost > 0 then
+        if (context.buying_card or context.buying_booster) and not context.blueprint and context.card.cost > 0 then
             card.ability.extra.mult = card.ability.extra.mult + context.card.cost
             return { message = ("SMILE +" .. context.card.cost), colour = G.C.NIC_TETO }
         end
@@ -889,30 +889,51 @@ SMODS.Joker{ -- Cadmium Colors
     rarity = "nic_teto",
     cost = 5,
     pos = {x = 9, y = 1},
-    config = { extra = { xmult = 3 } },
+    config = { extra = { xmult = 3, suit1 = "Hearts", suit2 = "Diamonds" } },
     pools = { ["Teto"] = true },
     
     loc_vars = function(self, info_queue, card)
         local name = "Cadmium Colors"
         local artist = "Jamie Paige"
         info_queue[#info_queue + 1] = { key = "nic_song_by_en", set = "Other", vars = { name, artist } }
-        return { vars = { card.ability.extra.xmult } }
+        return { 
+            vars = { 
+                card.ability.extra.xmult, card.ability.extra.suit1, card.ability.extra.suit2, 
+                colours = { G.C.SUITS[card.ability.extra.suit1], G.C.SUITS[card.ability.extra.suit2] } 
+            } 
+        }
     end,
 
     calculate = function(self, card, context)
         if context.joker_main then
-            local heartanddiamonds = true
-            for _, playing_card in ipairs(G.hand.cards) do
-                if not playing_card:is_suit('Hearts') and not playing_card:is_suit('Diamonds') then
-                    heartanddiamonds = false
-                    break
+            local suit1 = false
+            local suit2 = false
+            for i = 1, #context.scoring_hand do
+                if context.scoring_hand[i]:is_suit(card.ability.extra.suit1) then
+                    suit1 = true
                 end
             end
-            if heartanddiamonds then
+            for i = 1, #G.hand.cards do
+                if G.hand.cards[i]:is_suit(card.ability.extra.suit2) then
+                    suit2 = true
+                end
+            end
+            if suit1 and suit2 then
                 return {
                     xmult = card.ability.extra.xmult
                 }
             end
+        end
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+            local suit1 = card.ability.extra.suit1
+            local suit2 = card.ability.extra.suit2
+            card.ability.extra.suit1 = suit2
+            card.ability.extra.suit2 = suit1
+            card:juice_up()
+            return {
+                message = "SWITCH!",
+                colour = G.C.NIC_TETO
+            }
         end
     end
 }
