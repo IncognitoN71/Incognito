@@ -758,7 +758,6 @@ return {
                     "Create {C:attention}#2#{} random {C:attention}Enhanced",
                     "copies of up to {C:attention}#1#{} selected",
                     "cards in your hand",
-                    "{C:inactive,s:0.8}doesn't work on stones",
                     "{C:red,E:2}self destructs",
                 }
             },
@@ -788,6 +787,51 @@ return {
                     "Destroy {C:attention}all cards",
                     "held in hand",
                     "{C:red,E:2}self destructs",
+                }
+            },
+            j_nic_lilypad = {
+                name = "Lily Pad",
+                text = {
+                }
+            },
+            j_nic_squash = {
+                name = "Squash",
+                text = {
+                }
+            },
+            j_nic_threepeater = {
+                name = "Threepeater",
+                text = {
+                }
+            },
+            j_nic_tanglekelp = {
+                name = "Tangle Kelp",
+                text = {
+                }
+            },
+            j_nic_jalapeno = {
+                name = "Jalapeno",
+                text = {
+                }
+            },
+            j_nic_spikewood = {
+                name = "Spidewood",
+                text = {
+                }
+            },
+            j_nic_torchwood = {
+                name = "Torchwood",
+                text = {
+                }
+            },
+            j_nic_tallnut = {
+                name = "Tall-nut",
+                text = {
+                }
+            },
+            j_nic_seashroom = {
+                name = "Sea-shroom",
+                text = {
                 }
             },
 

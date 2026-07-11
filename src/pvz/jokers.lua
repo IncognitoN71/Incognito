@@ -14,8 +14,7 @@ SMODS.Joker{ -- Crazy Dave
     atlas = 'nicpvzjokers',
     rarity = 2,
     cost = 5,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 0, y = 6},
+    pos = {x = 0, y = 5},
     config = { extra = { mult = 12 } },
 
     loc_vars = function(self, info_queue, card)
@@ -99,8 +98,7 @@ SMODS.Joker{ -- Peashooter
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 4,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 0, y = 0},
+    pos = {x = 0, y = 0},
     config = { extra = { chips = 50 } },
 
     loc_vars = function(self, info_queue, card)
@@ -131,8 +129,7 @@ SMODS.Joker{ -- Sunflower
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 2,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 1, y = 0},
+    pos = {x = 1, y = 0},
     config = { extra = { dollars = 1 } },
 
     loc_vars = function(self, info_queue, card)
@@ -163,8 +160,7 @@ SMODS.Joker{ -- Cherry Bomb
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 6,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 2, y = 0},
+    pos = {x = 2, y = 0},
     config = { extra = { max_highlighted = 3 } },
 
     loc_vars = function(self, info_queue, card)
@@ -186,8 +182,7 @@ SMODS.Joker{ -- Wall-nut
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 2,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 3, y = 0},
+    pos = {x = 3, y = 0},
     config = { extra = { hand = 1, discard = 1 } },
 
     loc_vars = function(self, info_queue, card)
@@ -238,8 +233,7 @@ SMODS.Joker{ -- Potato Mine
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 1,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 4, y = 0},
+    pos = {x = 4, y = 0},
     config = { extra = { max_highlighted = 3, countdown = 0, countdown_needed = 3 } },
 
     loc_vars = function(self, info_queue, card)
@@ -277,8 +271,7 @@ SMODS.Joker{ -- Snow Pea
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 7,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 5, y = 0},
+    pos = {x = 5, y = 0},
     config = { extra = { chips = 50, hand = 1 } },
 
     loc_vars = function(self, info_queue, card)
@@ -319,8 +312,7 @@ SMODS.Joker{ -- Chomper
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 6,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 6, y = 0},
+    pos = {x = 6, y = 0},
     config = { extra = { max_highlighted = 1, countdown = 3, countdown_needed = 3, mult = 0, mult_gain = 10 } },
 
     loc_vars = function(self, info_queue, card)
@@ -369,8 +361,7 @@ SMODS.Joker{ -- Repeater
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 8,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 7, y = 0},
+    pos = {x = 7, y = 0},
     config = { extra = { chips = 50 } },
 
     loc_vars = function(self, info_queue, card)
@@ -404,8 +395,7 @@ SMODS.Joker{ -- Puff-shroom
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 0,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 8, y = 0},
+    pos = {x = 8, y = 0},
     config = { extra = { chips = 50 } },
 
     loc_vars = function(self, info_queue, card)
@@ -438,8 +428,7 @@ SMODS.Joker{ -- Sun-shroom
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 1,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 9, y = 0},
+    pos = {x = 9, y = 0},
     config = { extra = { countdown = 0, countdown_needed = 10, dollars = 0.5 } },
 
     loc_vars = function(self, info_queue, card)
@@ -482,8 +471,7 @@ SMODS.Joker{ -- Fume-shroom
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 3,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 0, y = 1},
+    pos = {x = 0, y = 1},
     config = { extra = { chips = 50, blind = 5 } },
 
     loc_vars = function(self, info_queue, card)
@@ -527,8 +515,7 @@ SMODS.Joker{ -- Grave Buster
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 3,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 1, y = 1},
+    pos = {x = 1, y = 1},
     config = { extra = { max_highlighted = 3, amount = 3 } },
 
     loc_vars = function(self, info_queue, card)
@@ -550,8 +537,7 @@ SMODS.Joker{ -- Hypno-shroom
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 3,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 2, y = 1},
+    pos = {x = 2, y = 1},
     config = { extra = { max_highlighted = 3, amount = 2 } },
 
     loc_vars = function(self, info_queue, card)
@@ -579,8 +565,7 @@ SMODS.Joker{ -- Scaredy-shroom
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 1,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 3, y = 1},
+    pos = {x = 3, y = 1},
     config = { extra = { chips = 50, rounds = 1, hand = 1 } },
 
     loc_vars = function(self, info_queue, card)
@@ -630,8 +615,7 @@ SMODS.Joker{ -- Ice-shroom
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 3,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 4, y = 1},
+    pos = {x = 4, y = 1},
     config = { extra = { max_highlighted = 5, hand = 1 } },
 
     loc_vars = function(self, info_queue, card)
@@ -653,8 +637,7 @@ SMODS.Joker{ -- Doom-shroom
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 0, y = 7},
-    soul_pos = {x = 5, y = 1},
+    pos = {x = 5, y = 1},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -665,4 +648,158 @@ SMODS.Joker{ -- Doom-shroom
         local eval = function(card) return not card.REMOVED end
         juice_card_until(card, eval, true)
     end
+}
+
+SMODS.Joker{ -- Lily Pad
+    key = "lilypad",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 6, y = 1},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+}
+
+SMODS.Joker{ -- Squash
+    key = "squash",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 7, y = 1},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+}
+
+SMODS.Joker{ -- Threepeater
+    key = "threepeater",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 8, y = 1},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+}
+
+SMODS.Joker{ -- Tangle Kelp
+    key = "tanglekelp",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 9, y = 1},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+}
+
+SMODS.Joker{ -- Jalapeno
+    key = "jalapeno",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 0, y = 2},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+}
+
+SMODS.Joker{ -- Spikeweed
+    key = "spikeweed",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 1, y = 2},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+}
+
+
+SMODS.Joker{ -- Torchwood
+    key = "torchwood",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 2, y = 2},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+}
+
+SMODS.Joker{ -- Tall-Nut
+    key = "tallnut",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 3, y = 2},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+}
+
+SMODS.Joker{ -- Sea-Shroom
+    key = "seashroom",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 5,
+    pos = {x = 4, y = 2},
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
 }

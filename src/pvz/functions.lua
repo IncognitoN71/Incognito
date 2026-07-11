@@ -726,22 +726,9 @@ end
 
 G.FUNCS.nic_can_hypnoshroom = function(e)
     local card = e.config.ref_table
-	local stone = false
 	if #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra["max_highlighted"] then
-		for i = 1, #G.hand.highlighted do
-			for _, playing_card in ipairs(G.hand.highlighted) do
-				if SMODS.has_enhancement(playing_card, 'm_stone') then
-					stone = true
-				end
-			end
-		end
-		if stone then
-			e.config.colour = G.C.UI.BACKGROUND_INACTIVE
-			e.config.button = nil
-		else
-			e.config.colour = G.C.RED
-			e.config.button = "nic_hypnoshroom"
-		end
+		e.config.colour = G.C.RED
+		e.config.button = "nic_hypnoshroom"
 	else
 		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
 		e.config.button = nil
