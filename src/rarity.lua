@@ -9,5 +9,5 @@ SMODS.Rarity{
 	key = "plants",
 	badge_colour = HEX("33cc00"),
 	pools = { ["Joker"] = { rate = 0 } },
-	default_weight = 0,
+	default_weight = 2,
 }

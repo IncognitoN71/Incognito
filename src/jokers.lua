@@ -228,11 +228,9 @@ SMODS.Joker{ -- Stalagmite
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_stone
         local stone_tally = 0
-        if G.hand then
-            if G.hand.cards then
-                for k, v in ipairs(G.hand.cards) do
-                    if SMODS.has_enhancement(v, 'm_stone') then stone_tally = stone_tally + 1 end
-                end
+        if G.playing_cards then
+            for k, v in ipairs(G.hand.cards) do
+                if SMODS.has_enhancement(v, 'm_stone') then stone_tally = stone_tally + 1 end
             end
         end
         return { vars = { card.ability.extra.chips, card.ability.extra.chips_gain, card.ability.extra.chips * stone_tally } }

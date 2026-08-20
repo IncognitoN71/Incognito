@@ -699,7 +699,8 @@ return {
                 name = "Snow Pea",
                 text = {
                     "{C:chips}+#1#{} Chips",
-                    "{C:blue}+#2#{} Hand",
+                    "{C:blue}+#2#{} Hand every {C:attention}#4#",
+                    "{C:inactive} [#3#]{} hands played",
                 }
             },
             j_nic_chomper = {
@@ -775,7 +776,7 @@ return {
                 text = {
                     "Enhances up to {C:attention}#1#",
                     "selected cards",
-                    "into {C:attention}Glass Cards",
+                    "into {C:attention}#3#",
                     "{C:blue}+#2#{} Hand",
                     "{C:red,E:2}self destructs",
                 }
@@ -892,17 +893,6 @@ return {
                     {"If this Abnormality is {C:attention}sold{},",
                     "immediately {C:attention}lose{} the game",
                     "{C:inactive,s:0.8}chirp chirp?"},
-                }
-            },
-
-            -- Bad Director
-            j_nic_tetoxko = {
-                name = "{C:nic_teto}Teto{}Xko",
-                text = {
-                    "{C:dark_edition}Misprint{} one random",
-                    "card {C:attention}held in hand{} for",
-                    "each {C:nic_teto}Teto{} Joker {C:inactive}(#1#)",
-                    "at the end of round",
                 }
             },
 

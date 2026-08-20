@@ -125,14 +125,24 @@ SMODS.Sound{ -- Ice-shroom
     path = "pvz/iceshroom.ogg",
 }
 
-SMODS.Sound{ -- Potato Mine
-    key = "potatomine",
-    path = "pvz/potatomine.ogg",
+SMODS.Sound{ -- Potato Mine Explode
+    key = "potatomineexplode",
+    path = "pvz/potatomineexplode.ogg",
+}
+
+SMODS.Sound{ -- Potato Mine Rise
+    key = "potatominerise",
+    path = "pvz/potatominerise.ogg",
 }
 
 SMODS.Sound{ -- Shovel
     key = "shovel",
     path = "pvz/shovel.ogg",
+}
+
+SMODS.Sound{ -- Sun-shroom
+    key = "sunshroom",
+    path = "pvz/sunshroom.ogg",
 }
 
 SMODS.Sound{ -- Vase Break

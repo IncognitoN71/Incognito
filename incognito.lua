@@ -37,7 +37,7 @@ assert(SMODS.load_file("src/teto/jokers.lua"))()
 
 -- Pvz
 assert(SMODS.load_file("src/pvz/functions.lua"))()
-assert(SMODS.load_file("src/pvz/jokers.lua"))()
+assert(SMODS.load_file("src/pvz/plants.lua"))()
 assert(SMODS.load_file("src/pvz/zengarden.lua"))()
 
 -- Phases
@@ -75,12 +75,12 @@ if Hyperfixation then
     end
 end
 
--- MoreFluff (notMario)
+--[[ MoreFluff (notMario)
 if MoreFluff then -- Main
     SMODS.load_file("src/crossmod/morefluff/main.lua")()
 elseif FLUFF then -- Rewritten
     SMODS.load_file("src/crossmod/morefluff/rewritten.lua")()
-end
+end]]
 
 -- Alloy (Corobo)
 if ALLOY then
@@ -90,11 +90,6 @@ end
 -- LobotomyCorp (Myst)
 if next(SMODS.find_mod("LobotomyCorp")) then
     SMODS.load_file("src/crossmod/lobotomycorp.lua")()
-end
-
--- Bad Director (Niko)
-if next(SMODS.find_mod("baddirector")) then
-    SMODS.load_file("src/crossmod/baddirector.lua")()
 end
 
 -- Entropy (Ruby)
