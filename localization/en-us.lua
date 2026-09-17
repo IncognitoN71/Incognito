@@ -69,7 +69,7 @@ return {
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)",
                 }
             },
-            j_nic_slycooper = {
+            j_nic_sly_cooper = {
                 name = "Sly Cooper",
                 text = {
                     "When {C:attention}Blind{} is defeated, Buy",
@@ -90,7 +90,7 @@ return {
                     "{C:inactive}(Currently {C:chips}+#3#{C:inactive} Chips)"},
                 }
             },
-            j_nic_dalgonacookie = {
+            j_nic_dalgona_cookie = {
                 name = "Dalgona Cookie",
                 text = {
                     "When {C:attention}Blind{} is selected,",
@@ -98,7 +98,7 @@ return {
                     "{C:attention}Opened Dalgona Cookies",
                 }
             },
-            j_nic_dalgonacircle = {
+            j_nic_dalgona_circle = {
                 name = "Dalgona Circle",
                 text = {
                     "This Joker gains {C:mult}+#2#{} Mult",
@@ -108,7 +108,7 @@ return {
                     "{C:inactive,s:0.8}This Joker breaks if failed {C:attention,s:0.8}#4#{C:inactive,s:0.8} [#3#]{C:attention,s:0.8} times",
                 }
             },
-            j_nic_dalgonatriangle = {
+            j_nic_dalgona_triangle = {
                 name = "Dalgona Triangle",
                 text = {
                     "This Joker gains {C:mult}+#2#{} Mult",
@@ -118,7 +118,7 @@ return {
                     "{C:inactive,s:0.8}This Joker breaks if failed {C:attention,s:0.8}#4#{C:inactive,s:0.8} [#3#]{C:attention,s:0.8} times",
                 }
             },
-            j_nic_dalgonastar = {
+            j_nic_dalgona_star = {
                 name = "Dalgona Star",
                 text = {
                     "This Joker gains {X:mult,C:white}X#2#{} Mult",
@@ -128,7 +128,7 @@ return {
                     "{C:inactive,s:0.8}This Joker breaks if failed {C:attention,s:0.8}#4#{C:inactive,s:0.8} [#3#]{C:attention,s:0.8} times",
                 }
             },
-            j_nic_dalgonaumbrella = {
+            j_nic_dalgona_umbrella = {
                 name = "Dalgona Umbrella",
                 text = {
                     "This Joker gains {X:mult,C:white}X#2#{} Mult",
@@ -138,7 +138,7 @@ return {
                     "{C:inactive,s:0.8}This Joker breaks if failed {C:attention,s:0.8}#4#{C:inactive,s:0.8} [#3#]{C:attention,s:0.8} times",
                 }
             },
-            j_nic_humantorch = {
+            j_nic_human_torch = {
                 name = "Human Torch",
                 text = {
                     {"Played {C:attention}Four of a Kind",
@@ -151,7 +151,7 @@ return {
                     "a {C:attention}card{} is destroyed"},
                 }
             },
-            j_nic_invisiblewoman = {
+            j_nic_invisible_woman = {
                 name = "Invisible Woman",
                 text = {
                     "Played {C:attention}Four of a Kind",
@@ -159,7 +159,7 @@ return {
                     "turn all cards into glass",
                 }
             },
-            j_nic_thething = {
+            j_nic_the_thing = {
                 name = "The Thing",
                 text = {
                     {"When round begins, add",
@@ -171,7 +171,7 @@ return {
                     "{C:attention}Stone{} cards by {C:attention}#2#"},
                 }
             },
-            j_nic_misterfantastic = {
+            j_nic_mister_fantastic = {
                 name = "Mister Fantastic",
                 text = {
                     "All {C:attention}played hands{} with exactly {C:attention}4",
@@ -190,7 +190,7 @@ return {
                     "{C:spades}Spade{} cards held in hand gives Mult"},
                 }
             },
-            j_nic_crazytaxi = {
+            j_nic_crazy_taxi = {
                 name = "Crazy Taxi",
                 text = {
                     "Earn {C:money}$#1#{}, increase by {C:money}$#2#",
@@ -199,27 +199,24 @@ return {
                     "rank changes every round",
                 },
             },
-            j_nic_strawberrycake = {
+            j_nic_strawberry_cake = {
                 name = "Strawberry Cake",
                 text = {
-                    {"{C:attention}First hand{} of round turns all",
-                    "{C:attention}played cards{} into {C:hearts}Hearts"},
-                    {"Each {C:attention}card{} in played {C:attention}Flush",
-                    "after {C:attention}first hand{} permanently",
-                    "gains {C:mult}+#1#{} Mult when scored"},
+                    "Every {C:attention}card{} that converts",
+                    "into {C:hearts}Hearts{} permanently",
+                    "gains {C:mult}+#1#{} Mult"
                 }
             },
-            j_nic_ratiotechnique = {
+            j_nic_ratio_technique = {
                 name = "Ratio Technique",
                 text = {
                     "Card located at the {C:attention}7:3{} ratio",
                     "mark {C:attention}held in hand{} gets destroyed",
                     "when the {C:attention}first hand is played",
                     "{C:inactive,s:0.8}| - | - | - | - | - | - | - o - | - | - |",
-                    "{C:inactive}(Currently #1##2#)",
                 }
             },
-            j_nic_invertedspearofheaven = {
+            j_nic_inverted_spear_of_heaven = {
                 name = "Inverted Spear of Heaven",
                 text = {
                     {"When {C:attention}Blind{} is selected, destroy adjacent",
@@ -284,7 +281,7 @@ return {
                     "into the discard pile",
                 }
             },
-            j_nic_calligramjoker = {
+            j_nic_calligram_joker = {
                 name = "Calligram Joker",
                 text = {
                     "{C:mult}+#1#{} Mult for each",
@@ -293,7 +290,7 @@ return {
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 }
             },
-            j_nic_cloverpit = {
+            j_nic_clover_pit = {
                 name = "Clover Pit",
                 text = {
                     "Spend {C:money}$#1#{} and get",
@@ -309,7 +306,9 @@ return {
                     {"This Joker gains {C:mult}+#32#{} Mult per",
                     "remaining guess when solved",
                     "{C:inactive}(Currently {C:mult}+#31#{C:inactive} Mult)"},
-                    {"{V:1}[#1#]{} {V:2}[#2#]{} {V:3}[#3#]{} {V:4}[#4#]{} {V:5}[#5#]",
+                    {"Select {C:attention}5{} cards and use",
+                    "to {C:attention}insert{} the {C:attention}guess",
+                    "{V:1}[#1#]{} {V:2}[#2#]{} {V:3}[#3#]{} {V:4}[#4#]{} {V:5}[#5#]",
                     "{V:6}[#6#]{} {V:7}[#7#]{} {V:8}[#8#]{} {V:9}[#9#]{} {V:10}[#10#]",
                     "{V:11}[#11#]{} {V:12}[#12#]{} {V:13}[#13#]{} {V:14}[#14#]{} {V:15}[#15#]",
                     "{V:16}[#16#]{} {V:17}[#17#]{} {V:18}[#18#]{} {V:19}[#19#]{} {V:20}[#20#]",
@@ -417,6 +416,24 @@ return {
                     "{X:chips,C:white}X#2#{} Chips every time",
                     "a {C:nic_phases}Phases{} card is used",
                     "{C:inactive}(Currently {X:chips,C:white}X#1#{C:inactive} Chips)",
+                }
+            },
+            j_nic_ti108 = {
+                name = "TI-108",
+                text = {
+                    "",
+                }
+            },
+            j_nic_themoonandback = {
+                name = "The Moon and Back",
+                text = {
+                    "",
+                }
+            },
+            j_nic_auroraborealis = {
+                name = "Aurora Borealis",
+                text = {
+                    "",
                 }
             },
 
@@ -682,8 +699,10 @@ return {
             j_nic_wallnut = {
                 name = "Wall-nut",
                 text = {
-                    "When {C:attention}Blind{} is selected,",
-                    "gain {C:blue}+#1#{} Hand or {C:red}+#2#{} Discard"
+                    "When {C:attention}Blind{} is selected",
+                    "gain {C:red}+#1#{} Discard or {C:blue}+#2#",
+                    "Hand, after {C:attention}#4# {C:inactive}[#3#]{} rounds",
+                    "{C:red,E:2}self destructs",
                 }
             },
             j_nic_potatomine = {
@@ -698,9 +717,9 @@ return {
             j_nic_snowpea = {
                 name = "Snow Pea",
                 text = {
-                    "{C:chips}+#1#{} Chips",
-                    "{C:blue}+#2#{} Hand every {C:attention}#4#",
-                    "{C:inactive} [#3#]{} hands played",
+                    "{C:chips}+#1#{} Chips,",
+                    "gain {C:blue}+#2#{} Hand every",
+                    "{C:attention}#4#{C:inactive} [#3#]{} hands played",
                 }
             },
             j_nic_chomper = {
@@ -739,16 +758,16 @@ return {
                 name = "Fume-shroom",
                 text = {
                     "{C:attention}First played hand{} decreases",
-                    "Blind Requirement by {X:attention,C:white}#2#%{}",
+                    "Blind Requirement by {X:attention,C:white}#2#%{},",
                     "{C:chips}+#1#{} Chips for {C:attention}other hands",
                 }
             },
             j_nic_gravebuster = {
                 name = "Grave Buster",
                 text = {
-                    "Destroys up to {C:attention}#1#{} selected",
-                    "{C:attention}Stone{} cards, each card",
-                    "adds {C:attention}#2#{} random {C:attention}Enhanced",
+                    "Destroy {C:attention}#1#{} selected",
+                    "{C:attention}Stone{} card, and add",
+                    "{C:attention}#2#{} random {C:attention}Enhanced",
                     "{C:attention}cards{} to your hand",
                     "{C:red,E:2}self destructs",
                 }
@@ -757,7 +776,7 @@ return {
                 name = "Hypno-shroom",
                 text = {
                     "Create {C:attention}#2#{} random {C:attention}Enhanced",
-                    "copies of up to {C:attention}#1#{} selected",
+                    "copy of up to {C:attention}#1#{} selected",
                     "cards in your hand",
                     "{C:red,E:2}self destructs",
                 }
@@ -765,8 +784,8 @@ return {
             j_nic_scaredyshroom = {
                 name = "Scaredy-shroom",
                 text = {
-                    "{C:chips}+#1#{} Chips",
-                    "However on {C:attention}final played",
+                    "{C:chips}+#1#{} Chips,",
+                    "on {C:attention}final played",
                     "{C:attention}hand{} gain {C:blue}+#2#{} Hand",
                     "{C:inactive,s:0.8}only once",
                 }
@@ -776,8 +795,8 @@ return {
                 text = {
                     "Enhances up to {C:attention}#1#",
                     "selected cards",
-                    "into {C:attention}#3#",
-                    "{C:blue}+#2#{} Hand",
+                    "into {C:attention}#3#{},",
+                    "gain {C:blue}+#2#{} Hand",
                     "{C:red,E:2}self destructs",
                 }
             },
@@ -785,8 +804,15 @@ return {
                 name = "Doom-shroom",
                 text = {
                     "Instantly win {C:attention}Blind{},",
-                    "Destroy {C:attention}all cards",
+                    "destroy {C:attention}all cards",
                     "held in hand",
+                    "{C:red,E:2}creates a crater",
+                }
+            },
+            j_nic_crater = {
+                name = "Crater",
+                text = {
+                    "After {C:attention}#2# {C:inactive}[#1#]{} rounds",
                     "{C:red,E:2}self destructs",
                 }
             },
@@ -813,10 +839,13 @@ return {
             j_nic_jalapeno = {
                 name = "Jalapeno",
                 text = {
+                    "Destroy {C:attention}all cards",
+                    "held in hand",
+                    "{C:red,E:2}self destructs",
                 }
             },
-            j_nic_spikewood = {
-                name = "Spidewood",
+            j_nic_spikeweed = {
+                name = "Spideweed",
                 text = {
                 }
             },
@@ -1951,6 +1980,34 @@ return {
         },
         collabs={},
         dictionary = {
+            -- Base Jokers
+            k_nic_assemble_ex = "Assemble!",
+            k_nic_boom_ex = "Boom!",
+            k_nic_active_ex = "Active!",
+            k_nic_inactive_ex = "Inactive!",
+            k_nic_caught_ex = "Caught!",
+            k_nic_snatch_ex = "Snatch!",
+            k_nic_impaled_ex = "Impaled!",
+            k_nic_success_ex = "Success!",
+            k_nic_failure_ex = "Failure!",
+            k_nic_cracked = "Cracked...",
+            k_nic_flame_on_ex = "Flame On!",
+            k_nic_disappear_ex = "Dispear!",
+            k_nic_clobberin_time_ex = "Clobberin' Time!",
+            k_nic_fantastic_ex = "Fantastic!",
+            k_nic_swoon_ex = "Swoon!",
+            k_nic_love_heart = "Love <3",
+            k_nic_ratio = "|-|-|-|-|-|-o-|-|-|",
+            k_nic_focus_up_ex = "Focus Up!",
+            k_nic_this_is_war_ex = "This Is War!",
+            k_nic_lets_go_gambling_ex = "Lets Go Gambling!",
+            k_nic_new_word_ex = "New Word!",
+            k_nic_genius_ex = "Genius!",
+            k_nic_magnificent_ex = "Magnificent!",
+            k_nic_impressive_ex = "Impressive!",
+            k_nic_splendid_ex = "Splendid!",
+            k_nic_great_ex = "Great!",
+            k_nic_phew_ex = "Phew!",
             -- Rarity
             k_nic_incognito = "Incognito",
             k_nic_teto = "Teto",

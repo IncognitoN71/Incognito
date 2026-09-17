@@ -1,11 +1,3 @@
--- Debuff
-
---[[SMODS.current_mod.set_debuff = function(card)
-    if next(SMODS.find_card("j_nic_incognito")) and card.playing_card and card:is_suit("Spades") then
-        return "prevent_debuff"
-    end
-end]]
-
 -- Object Type
 
 SMODS.ObjectType({
@@ -24,16 +16,6 @@ SMODS.ObjectType({
         self:inject_card(G.P_CENTERS.j_selzer)
     end,
 })
-
--- G.GAME
-
-local igo = Game.init_game_object
-function Game:init_game_object()
-    local ret = igo(self)
-    ret.phases_numerator = 1
-    ret.phases_denominator = 100
-    return ret
-end
 
 -- Talisman Bullshit
 
@@ -54,37 +36,20 @@ function new_round()
     G.GAME.death_texture = nil
 end
 
--- Cards are Considered Rank (TGOI)
-
---[[local getiduse = false
-local getidref = Card.get_id
-function Card:get_id()
-	if not getiduse then
-		getiduse = true
-		local id = getidref(self) or self.base.id
-		if next(SMODS.find_card('j_nic_doctorkidori')) then id = 4 end
-		getiduse = false
-		return id
-	else
-		getiduse = false
-		return getidref(self)
-	end
-end]]
-
 -- Crazy Taxi
 
-local function reset_nic_crazytaxi_rank()
-    G.GAME.current_round.nic_crazytaxi_card = { rank = 'Ace' }
-    local valid_crazytaxi_cards = {}
+local function reset_nic_crazy_taxi_rank()
+    G.GAME.current_round.nic_crazy_taxi_card = { rank = 'Ace' }
+    local valid_crazy_taxi_cards = {}
     for _, playing_card in ipairs(G.playing_cards) do
         if not SMODS.has_no_rank(playing_card) then
-            valid_crazytaxi_cards[#valid_crazytaxi_cards + 1] = playing_card
+            valid_crazy_taxi_cards[#valid_crazy_taxi_cards + 1] = playing_card
         end
     end
-    local crazytaxi_card = pseudorandom_element(valid_crazytaxi_cards, 'nic_crazytaxi' .. G.GAME.round_resets.ante)
-    if crazytaxi_card then
-        G.GAME.current_round.nic_crazytaxi_card.rank = crazytaxi_card.base.value
-        G.GAME.current_round.nic_crazytaxi_card.id = crazytaxi_card.base.id
+    local crazy_taxi_card = pseudorandom_element(valid_crazy_taxi_cards, 'nic_crazy_taxi' .. G.GAME.round_resets.ante)
+    if crazy_taxi_card then
+        G.GAME.current_round.nic_crazy_taxi_card.rank = crazy_taxi_card.base.value
+        G.GAME.current_round.nic_crazy_taxi_card.id = crazy_taxi_card.base.id
     end
 end
 
@@ -109,190 +74,181 @@ end
 -- Resetting Every Round
 
 function SMODS.current_mod.reset_game_globals(run_start)
-    reset_nic_crazytaxi_rank() -- Crazy Taxi
+    reset_nic_crazy_taxi_rank() -- Crazy Taxi
     reset_nic_moonring_card() -- Moon Ring (What are you doing here bruh)
 end
 
--- Use in Jokers
+-- Ratio Card Location (ThunderEdge)
 
-local card_highlighted_ref = Card.highlight
-function Card:highlight(is_highlighted)
-	self.highlighted = is_highlighted
-	if self.highlighted and string.find(self.ability.name, "j_nic_button") and self.area == G.jokers then
-		if self.children.use_button then
-			self.children.use_button:remove()
-			self.children.use_button = nil
-		end
-
-		self.children.use_button = UIBox({
-			definition = Incognito.button(self, {
-				sell = true,
-				use = true,
-			}),
-			config = {
-				align = "cr",
-				offset = {
-					x = -0.4,
-					y = 0,
-				},
-				parent = self,
-			},
-		})
-    elseif self.highlighted and string.find(self.ability.name, "j_nic_cloverpit") and self.area == G.jokers then
-		if self.children.use_button then
-			self.children.use_button:remove()
-			self.children.use_button = nil
-		end
-
-		self.children.use_button = UIBox({
-			definition = Incognito.cloverpit(self, {
-				sell = true,
-				use = true,
-			}),
-			config = {
-				align = "cr",
-				offset = {
-					x = -0.4,
-					y = 0,
-				},
-				parent = self,
-			},
-		})
-    else
-		card_highlighted_ref(self, is_highlighted)
-	end
+local set_sprites_hook = Card.set_sprites
+function Card:set_sprites(_center, _front)
+    set_sprites_hook(self, _center, _front)
+    self.children.ratio_select = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["nic_nicjokers"], { x = 9, y = 1 })
+    self.children.ratio_select.role.draw_major = self
+    self.children.ratio_select.states.hover.can = false
+    self.children.ratio_select.states.click.can = false
 end
 
--- Button Joker
-
-Incognito.button = function(card, args)
-	local args = args or {}
-	local sell = nil
-	local use = nil
-
-	if args.sell then
-		sell = { n = G.UIT.C, config = { align = "cr", },
-		nodes = { { n = G.UIT.C, config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, 
-		one_press = true, button = "sell_card", func = "can_sell_card", },
-
-		nodes = { { n = G.UIT.B, config = { w = 0.1, h = 0.6, }, }, { n = G.UIT.C, config = { align = "tm", },
-		nodes = { { n = G.UIT.R, config = { align = "cm", maxw = 1.25, },
-		nodes = { { n = G.UIT.T, config = { text = localize("b_sell"), colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true, }, }, }, }, { n = G.UIT.R, config = { align = "cm", },
-		nodes = { { n = G.UIT.T, config = { text = localize("$"), colour = G.C.WHITE, scale = 0.4, shadow = true, }, }, { n = G.UIT.T, config = { ref_table = card, ref_value = "sell_cost_label", colour = G.C.WHITE, scale = 0.55, shadow = true, }, }, }, }, }, }, }, }, }, 
-		}
-	end
-
-	if args.use then
-		use = { n = G.UIT.C, config = { align = "cr", }, 
-		nodes = { { n = G.UIT.C, config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 0, minh = 0.8, hover = true, shadow = true, colour = G.C.RED,
-		button = "nic_button", func = "nic_can_button", },
-		
-		nodes = { { n = G.UIT.B, config = { w = 0.1, h = 0, }, }, { n = G.UIT.C, config = { align = "tm", },
-		nodes = { { n = G.UIT.R, config = { align = "cm", maxw = 1.25, },
-		nodes = { { n = G.UIT.T, config = { text = "PRESS", colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true, }, }, }, }, }, }, }, }, }, 
-		}
-	end
-
-	return { n = G.UIT.ROOT, config = { align = "cr", padding = 0, colour = G.C.CLEAR, },
-	nodes = { { n = G.UIT.C, config = { padding = 0.15, align = "cl", },
-	nodes = {
-		sell and { n = G.UIT.R, config = { align = "cl", }, nodes = { sell }, } or nil,
-		use and { n = G.UIT.R, config = { align = "cl", }, nodes = { use }, } or nil, 
-	}, }, },
-	}
-end
-
-G.FUNCS.nic_button = function(e)
-    local card = e.config.ref_table
-    G.E_MANAGER:add_event(Event({
-        func = function()
-            if SMODS.pseudorandom_probability(card, ('j_nic_button'),  1, card.ability.extra["odds"]) then
-                card:start_dissolve({G.C.RED})
-                card:juice_up(10, 10)
-                SMODS.calculate_effect({message = "BOOM!", colour = G.C.RED}, card)
-                return { play_sound("nic_explosion") }
-            else
-                SMODS.scale_card(card, {
-                    ref_table = card.ability.extra,
-                    ref_value = "xmult", 
-                    scalar_value = "xmult_gain",
-                    no_message = true,
-                })
-                card:juice_up()
-                return { play_sound("nic_click") }
+SMODS.draw_ignore_keys.ratio_select = true
+SMODS.DrawStep({
+    key = "ratio_select",
+    order = 201,
+    func = function(card, layer)
+        if not G.jokers then
+            return
+        end
+        local ratio = false
+        for _, v in ipairs(G.jokers.cards) do
+            if v.config.center.key == "j_nic_ratio_technique" then
+                ratio = true
+                break
             end
-            return true
         end
-    }))
-end
 
-G.FUNCS.nic_can_button = function(e)
-    local card = e.config.ref_table
-	e.config.colour = G.C.RED
-	e.config.button = "nic_button"
-end
-
--- Cloverpit Joker
-
-Incognito.cloverpit = function(card, args)
-	local args = args or {}
-	local sell = nil
-	local use = nil
-
-	if args.sell then
-		sell = { n = G.UIT.C, config = { align = "cr", },
-		nodes = { { n = G.UIT.C, config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, 
-		one_press = true, button = "sell_card", func = "can_sell_card", },
-
-		nodes = { { n = G.UIT.B, config = { w = 0.1, h = 0.6, }, }, { n = G.UIT.C, config = { align = "tm", },
-		nodes = { { n = G.UIT.R, config = { align = "cm", maxw = 1.25, },
-		nodes = { { n = G.UIT.T, config = { text = localize("b_sell"), colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true, }, }, }, }, { n = G.UIT.R, config = { align = "cm", },
-		nodes = { { n = G.UIT.T, config = { text = localize("$"), colour = G.C.WHITE, scale = 0.4, shadow = true, }, }, { n = G.UIT.T, config = { ref_table = card, ref_value = "sell_cost_label", colour = G.C.WHITE, scale = 0.55, shadow = true, }, }, }, }, }, }, }, }, }, 
-		}
-	end
-
-	if args.use then
-		use = { n = G.UIT.C, config = { align = "cr", }, 
-		nodes = { { n = G.UIT.C, config = { ref_table = card, align = "cr", padding = 0.1, r = 0.08, minw = 0, minh = 0.8, hover = true, shadow = true, colour = G.C.RED,
-		button = "nic_cloverpit", func = "nic_can_cloverpit", },
-		
-		nodes = { { n = G.UIT.B, config = { w = 0.1, h = 0, }, }, { n = G.UIT.C, config = { align = "tm", },
-		nodes = { { n = G.UIT.R, config = { align = "cm", maxw = 1.25, },
-		nodes = { { n = G.UIT.T, config = { text = "$" .. card.ability.extra["dollars_loss"], colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true, }, }, }, }, }, }, }, }, }, 
-		}
-	end
-
-	return { n = G.UIT.ROOT, config = { align = "cr", padding = 0, colour = G.C.CLEAR, },
-	nodes = { { n = G.UIT.C, config = { padding = 0.15, align = "cl", },
-	nodes = {
-		sell and { n = G.UIT.R, config = { align = "cl", }, nodes = { sell }, } or nil,
-		use and { n = G.UIT.R, config = { align = "cl", }, nodes = { use }, } or nil, 
-	}, }, },
-	}
-end
-
-G.FUNCS.nic_cloverpit = function(e)
-    local card = e.config.ref_table
-    G.E_MANAGER:add_event(Event({
-        func = function()
-            ease_dollars(-card.ability.extra.dollars_loss, true)
-            card.ability.extra["mult"] = pseudorandom('j_nic_cloverpit', card.ability.extra["min"], card.ability.extra["max"])
-            card:juice_up()
-            SMODS.calculate_effect({message = "LETS GO GAMBLING!", colour = G.C.RED}, card)
-            return true
+        local location = 0
+        local ratio_location = {}
+        for i = 1, #G.hand.cards do
+            if not G.hand.cards[i].highlighted then
+                ratio_location[#ratio_location + 1] = G.hand.cards[i]
+            end
         end
-    }))
+        if (((( #ratio_location ) * (0.70)) * 10) % 10 ) <= 4 then 
+            location = math.floor(( #ratio_location ) * (0.70))
+        else
+            location = math.ceil(( #ratio_location ) * (0.70))
+        end
+
+        if ratio and card.area and card.area == G.hand and G.GAME.current_round.hands_played == 0 then
+            for i = 1, #ratio_location do
+                if ratio_location[location] == card then 
+                    card.children.ratio_select:draw_shader('dissolve', nil, nil, nil, card.children.center, nil, nil)
+                end
+            end
+        end
+    end,
+	conditions = { vortex = false, facing = "front" },
+})
+
+-- Button (Revo and FAC)
+
+local card_highlight = Card.highlight
+function Card:highlight(is_higlighted)
+    if string.find(self.ability.name, "j_nic_button") or
+    string.find(self.ability.name, "j_nic_clover_pit") or
+    string.find(self.ability.name, "j_nic_jokrle") then
+        self.highlighted = is_higlighted
+		if self.highlighted and self.area and self.area.config.type ~= "shop" and self.area.config.type ~= "consumeable" then
+            self.children.use_button = UIBox({
+                definition = Incognito.use_and_sell_buttons(self),
+                config = {
+                    align = "cr",
+                    offset = {
+                        x = -0.4,
+                        y = 0,
+                    },
+                    parent = self,
+                },
+            })
+        elseif self.children.use_button then
+			self.children.use_button:remove()
+			self.children.use_button = nil
+		else
+		    card_highlight(self, is_higlighted)
+	    end
+	else
+		card_highlight(self, is_higlighted)
+	end
 end
 
-G.FUNCS.nic_can_cloverpit = function(e)
-    local card = e.config.ref_table
-    if G.GAME.dollars > (card.ability.extra["dollars_loss"] - 1) then
-        e.config.colour = G.C.GOLD
-		e.config.button = "nic_cloverpit"
+function Incognito.use_and_sell_buttons(card)
+    local sell = {n=G.UIT.C, config={align = "cr"}, nodes={
+        {n=G.UIT.C, config={ref_table = card, align = "cr",padding = 0.1, r=0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'sell_card', func = 'can_sell_card', handy_insta_action = 'buy_or_sell'}, nodes={
+            {n=G.UIT.B, config = {w=0.1,h=0.6}},
+            {n=G.UIT.C, config={align = "tm"}, nodes={
+                {n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
+                    {n=G.UIT.T, config={text = localize('b_sell'),colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true}}
+                }},
+                {n=G.UIT.R, config={align = "cm"}, nodes={
+                    {n=G.UIT.T, config={text = localize('$'),colour = G.C.WHITE, scale = 0.55, shadow = true}},
+                    {n=G.UIT.T, config={ref_table = card, ref_value = 'sell_cost_label',colour = G.C.WHITE, scale = 0.55, shadow = true}}
+                }}
+            }}
+        }},
+    }}
+    
+    local use = {n=G.UIT.C, config={align = "cr"}, nodes={
+        {n=G.UIT.C, config={ref_table = card, align = "cm",padding = 0.1, r=0.08, minw = 1.25, minh = 0.8, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, button = 'nic_use_card', func = "nic_can_use_card", handy_insta_action = 'use'}, nodes={
+            {n=G.UIT.B, config = {w=0.1,h=0.6}},
+            {n=G.UIT.C, config={align = "cm"}, nodes={
+                {n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
+                    {n=G.UIT.T, config={text = localize("b_use"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
+                }},
+            }},
+        }},
+    }}
+
+    local ret = {
+    n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
+        {n=G.UIT.C, config={padding = 0.15, align = 'cl'}, nodes={
+            {n=G.UIT.R, config={align = 'cl'}, nodes={
+                sell
+            }},
+            card.config.center.use and {n=G.UIT.R, config={align = 'cl'}, nodes={
+                use
+            }},
+        }},
+    }}
+    return ret
+end
+
+G.FUNCS.nic_can_use_card = function(e)
+	local center = e.config.ref_table.config.center
+	local card = e.config.ref_table
+	if
+		center.can_use and center:can_use(e.config.ref_table) and not e.config.ref_table.debuff
+		and G.STATE ~= G.STATES.HAND_PLAYED and G.STATE ~= G.STATES.DRAW_TO_HAND and G.STATE ~= G.STATES.PLAY_TAROT
+		and not (((G.play and #G.play.cards > 0) or (G.CONTROLLER.locked) or (G.GAME.STOP_USE and G.GAME.STOP_USE > 0)))
+	then
+		e.config.colour = G.C.RED
+		e.config.button = "nic_use_card"
 	else
 		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
 		e.config.button = nil
 	end
+end
+
+G.FUNCS.nic_use_card = function(e)
+	local card = e.config.ref_table
+	local prev_state = G.TAROT_INTERRUPT
+	G.TAROT_INTERRUPT = G.STATE
+	G.CONTROLLER.locks.use = true
+	
+	local center = card.config.center
+	local keep_on_use = false
+	if center.keep_on_use and type(center.keep_on_use) == 'function' then
+        keep_on_use = center:keep_on_use(card)
+    end
+	if center.use and type(center.use) == 'function' then
+		center:use(card)
+	end
+
+	G.E_MANAGER:add_event(Event({
+		delay = 0.2,
+		func = function()
+			if not keep_on_use then card:start_dissolve() end
+			G.E_MANAGER:add_event(Event({
+				delay = 0.1,
+				func = function()
+					G.TAROT_INTERRUPT = prev_state
+					G.CONTROLLER.locks.use = false
+					return true;
+				end
+			}))
+			return true;
+		end
+	}))
+
+	SMODS.calculate_context{use_plant = card, kept_on_use = keep_on_use}
 end
 
 -- Click in Collection
@@ -357,21 +313,3 @@ end
 -- Retrigger Jokers
 
 SMODS.current_mod.optional_features = { cardareas = {}, retrigger_joker = true, post_trigger = true }
-
--- Gradient
-
---[[SMODS.Gradient{
-    key = 'rainbow',
-    colours = {
-        HEX('e50000'),
-        HEX('ff8d00'),
-        HEX('ffee00'),
-        HEX('028121'),
-        HEX('004cff'),
-        HEX('770088')
-    },
-}]]
-
---G.ARGS.LOC_COLOURS['nic_rainbow'] = SMODS.Gradients['rainbow']
-
--- card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "71!", colour = HEX("d0d0d0")})

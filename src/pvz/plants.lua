@@ -231,6 +231,15 @@ SMODS.Joker{ -- Cherry Bomb
             end
         }))
         delay(0.3)
+        if #G.deck.cards <= 0 then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.death_text = "cherrybomb"
+                    G.GAME.death_texture = "nicpvzjokers"
+                    return true
+                end
+            }))
+        end
     end,
 
     can_use = function(self, card)
@@ -248,10 +257,10 @@ SMODS.Joker{ -- Wall-nut
     rarity = 'nic_plants',
     cost = 2,
     pos = {x = 3, y = 0},
-    config = { extra = { hand = 1, discard = 1 } },
+    config = { extra = { hand = 1, discard = 1, countdown = 3, countdown_needed = 3 } },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.hand, card.ability.extra.discard } }
+        return { vars = { card.ability.extra.discard, card.ability.extra.hand, card.ability.extra.countdown, card.ability.extra.countdown_needed } }
     end,
 
     in_pool = function (self, args)
@@ -284,6 +293,13 @@ SMODS.Joker{ -- Wall-nut
                     message = "+1 Discard",
                     colour = G.C.RED
                 }
+            end
+        end
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if card.ability.extra.countdown - 1 > 0 then
+                card.ability.extra.countdown = card.ability.extra.countdown - 1
+            else
+                card:start_dissolve()
             end
         end
     end
@@ -350,6 +366,15 @@ SMODS.Joker{ -- Potato Mine
             end
         }))
         delay(0.3)
+        if #G.deck.cards <= 0 then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.death_text = "potatomine"
+                    G.GAME.death_texture = "nicpvzjokers"
+                    return true
+                end
+            }))
+        end
     end,
 
     can_use = function(self, card)
@@ -470,6 +495,15 @@ SMODS.Joker{ -- Chomper
             end
         }))
         delay(0.3)
+        if #G.deck.cards <= 0 then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.death_text = "chomper"
+                    G.GAME.death_texture = "nicpvzjokers"
+                    return true
+                end
+            }))
+        end
     end,
 
     can_use = function(self, card)
@@ -651,7 +685,7 @@ SMODS.Joker{ -- Grave Buster
     rarity = 'nic_plants',
     cost = 3,
     pos = {x = 5, y = 1},
-    config = { extra = { max_highlighted = 3, amount = 3 } },
+    config = { extra = { max_highlighted = 1, amount = 3 } },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.max_highlighted, card.ability.extra.amount } }
@@ -702,12 +736,10 @@ SMODS.Joker{ -- Grave Buster
 
     can_use = function(self, card)
         local stone = false
-        for i = 1, #G.hand.highlighted do
-			for _, playing_card in ipairs(G.hand.highlighted) do
-				if SMODS.has_enhancement(playing_card, 'm_stone') then
-					stone = true
-				end
-			end
+        for _, playing_card in ipairs(G.hand.highlighted) do
+            if SMODS.has_enhancement(playing_card, 'm_stone') then
+                stone = true
+            end
 		end
         return G.hand and #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.max_highlighted and stone
     end
@@ -790,7 +822,7 @@ SMODS.Joker{ -- Hypno-shroom
 
 SMODS.Joker{ -- Scaredy-shroom
     key = "scaredyshroom",
-    blueprint_compat = false,
+    blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
@@ -924,6 +956,7 @@ SMODS.Joker{ -- Doom-shroom
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.j_nic_crater
         return { vars = { } }
     end,
 
@@ -956,6 +989,7 @@ SMODS.Joker{ -- Doom-shroom
                 G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
                 G.STATE = G.STATES.HAND_PLAYED
                 G.STATE_COMPLETE = true
+                SMODS.add_card({ key = "j_nic_crater" })
                 end_round()
                 return true
             end
@@ -966,11 +1000,56 @@ SMODS.Joker{ -- Doom-shroom
                 return true
             end
         }))
+        if #G.deck.cards <= 0 then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.death_text = "doomshroom"
+                    G.GAME.death_texture = "nicpvzjokers"
+                    return true
+                end
+            }))
+        end
     end,
 
     can_use = function(self, card)
         return G.STATE == G.STATES.SELECTING_HAND
     end
+}
+
+SMODS.Joker{ -- Crater
+    key = "crater",
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = false,
+    no_collection = true,
+    atlas = 'nicpvzjokers',
+    rarity = 'nic_plants',
+    cost = 0,
+    pos = {x = 1, y = 2},
+    config = { extra = { countdown = 3, countdown_needed = 3 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.countdown, card.ability.extra.countdown_needed } }
+    end,
+
+    in_pool = function (self, args)
+        return false
+    end,
+
+    add_to_deck = function (self, card, from_debuff)
+        card.ability.extra.countdown = card.ability.extra.countdown_needed + 1
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval then
+            if card.ability.extra.countdown - 1 > 0 then
+                card.ability.extra.countdown = card.ability.extra.countdown - 1
+            else
+                card:start_dissolve()
+            end
+        end
+    end,
 }
 
 SMODS.Joker{ -- Lily Pad
@@ -982,7 +1061,7 @@ SMODS.Joker{ -- Lily Pad
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 1, y = 2},
+    pos = {x = 2, y = 2},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -1005,7 +1084,7 @@ SMODS.Joker{ -- Squash
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 2, y = 2},
+    pos = {x = 3, y = 2},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -1028,7 +1107,7 @@ SMODS.Joker{ -- Threepeater
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 3, y = 2},
+    pos = {x = 4, y = 2},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -1051,7 +1130,7 @@ SMODS.Joker{ -- Tangle Kelp
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 4, y = 2},
+    pos = {x = 5, y = 2},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -1074,7 +1153,7 @@ SMODS.Joker{ -- Jalapeno
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 5, y = 2},
+    pos = {x = 6, y = 2},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -1086,6 +1165,42 @@ SMODS.Joker{ -- Jalapeno
             allow_duplicates = true
         }
     end,
+
+    add_to_deck = function(self, card, from_debuff)    
+        local eval = function(card) return not card.REMOVED end
+        juice_card_until(card, eval, true)
+    end,
+
+    use = function(self, card, area, copier)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.4,
+            func = function()
+                play_sound('nic_jalapeno')
+                card:juice_up(0.3, 0.5)
+                return true
+            end
+        }))
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                SMODS.destroy_cards(G.hand.cards)
+                return true
+            end
+        }))
+        if #G.deck.cards <= 0 then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.death_text = "jalapeno"
+                    G.GAME.death_texture = "nicpvzjokers"
+                    return true
+                end
+            }))
+        end
+    end,
+
+    can_use = function(self, card)
+        return G.hand and #G.hand.cards > 1
+    end
 }
 
 SMODS.Joker{ -- Spikeweed
@@ -1097,7 +1212,7 @@ SMODS.Joker{ -- Spikeweed
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 6, y = 2},
+    pos = {x = 7, y = 2},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -1121,7 +1236,7 @@ SMODS.Joker{ -- Torchwood
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 7, y = 2},
+    pos = {x = 8, y = 2},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -1144,7 +1259,7 @@ SMODS.Joker{ -- Tall-Nut
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 8, y = 2},
+    pos = {x = 9, y = 2},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
@@ -1167,7 +1282,7 @@ SMODS.Joker{ -- Sea-Shroom
     atlas = 'nicpvzjokers',
     rarity = 'nic_plants',
     cost = 5,
-    pos = {x = 9, y = 2},
+    pos = {x = 0, y = 3},
     config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)

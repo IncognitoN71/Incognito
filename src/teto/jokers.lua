@@ -421,7 +421,7 @@ SMODS.Joker{ -- Mesmerizer Teto
                 }
             }
             return { 
-                vars = { card.ability.extra.repetitions },
+                vars = { },
                 main_end = main_end 
             }
         end

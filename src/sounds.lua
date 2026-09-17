@@ -125,6 +125,11 @@ SMODS.Sound{ -- Ice-shroom
     path = "pvz/iceshroom.ogg",
 }
 
+SMODS.Sound{ -- Jalapeno
+    key = "jalapeno",
+    path = "pvz/jalapeno.ogg",
+}
+
 SMODS.Sound{ -- Potato Mine Explode
     key = "potatomineexplode",
     path = "pvz/potatomineexplode.ogg",

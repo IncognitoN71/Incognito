@@ -1,4 +1,4 @@
--- Plant Select
+-- Plant Select (ThunderEdge)
 
 local set_sprites_hook = Card.set_sprites
 function Card:set_sprites(_center, _front)
@@ -10,7 +10,7 @@ function Card:set_sprites(_center, _front)
 end
 
 SMODS.draw_ignore_keys.plant_select = true
-SMODS.DrawStep({ -- (ThunderEdge)
+SMODS.DrawStep({
     key = "plant_select",
     order = 201,
     func = function(card, layer)
@@ -43,6 +43,17 @@ function Card:set_cost()
         self.sell_cost = 0
     end
     self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
+end
+
+-- No Sell (Hyperfixation)
+
+local nosell_hook = Card.can_sell_card
+function Card:can_sell_card(context)
+	if self.config.center.key == 'j_nic_crater' then
+		return false
+	else
+		return nosell_hook(self, context)
+	end
 end
 
 -- Card Area (Aiko)
@@ -90,6 +101,50 @@ G.FUNCS.check_for_buy_space = function(card)
     return check_for_buy_space_ref(card)
 end
 
+-- Clicky click
+
+local card_click_ref = Card.click
+function Card:click(...)
+    if self.config.center.key == "j_nic_crazydave" and G.SETTINGS.paused then
+        play_sound("nic_crazydave" ..  pseudorandom('j_nic_crazydave', 1, 12))
+        self:juice_up()
+    elseif self.config.center.key == "j_nic_cherrybomb" and G.SETTINGS.paused then
+        play_sound('nic_cherrybomb')
+        self:start_dissolve()
+        self:juice_up()
+    elseif self.config.center.key == "j_nic_potatomine" and G.SETTINGS.paused then
+        play_sound('nic_potatomineexplode')
+        self:start_dissolve()
+        self:juice_up()
+    elseif self.config.center.key == "j_nic_chomper" and G.SETTINGS.paused then
+        play_sound('nic_chomper')
+        self.children.center:set_sprite_pos({x = 8, y = 0})
+        self:juice_up()
+    elseif self.config.center.key == "j_nic_gravebuster" and G.SETTINGS.paused then
+        play_sound('nic_gravebuster')
+        self:start_dissolve()
+        self:juice_up()
+    elseif self.config.center.key == "j_nic_hypnoshroom" and G.SETTINGS.paused then
+        play_sound('nic_hypnoshroom')
+        self:start_dissolve()
+        self:juice_up()
+    elseif self.config.center.key == "j_nic_scaredyshroom" and G.SETTINGS.paused then
+        play_sound('tarot1')
+        self.children.center:set_sprite_pos({x = 8, y = 1})
+        self:juice_up()
+    elseif self.config.center.key == "j_nic_iceshroom" and G.SETTINGS.paused then
+        play_sound('nic_iceshroom')
+        self:start_dissolve()
+        self:juice_up()
+    elseif self.config.center.key == "j_nic_doomshroom" and G.SETTINGS.paused then
+        play_sound('nic_doomshroom')
+        self:set_ability('j_nic_crater')
+        self:juice_up()
+    else
+        return card_click_ref(self, ...)
+    end
+end
+
 -- Button (Revo and FAC)
 
 local card_highlight = Card.highlight
@@ -111,99 +166,10 @@ function Card:highlight(is_higlighted)
         elseif self.children.use_button then
 			self.children.use_button:remove()
 			self.children.use_button = nil
-		end
+		else
+		    card_highlight(self, is_higlighted)
+	    end
 	else
 		card_highlight(self, is_higlighted)
 	end
-end
-
-function Incognito.use_and_sell_buttons(card)
-    local sell = {n=G.UIT.C, config={align = "cr"}, nodes={
-        {n=G.UIT.C, config={ref_table = card, align = "cr",padding = 0.1, r=0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = true, button = 'sell_card', func = 'can_sell_card', handy_insta_action = 'buy_or_sell'}, nodes={
-            {n=G.UIT.B, config = {w=0.1,h=0.6}},
-            {n=G.UIT.C, config={align = "tm"}, nodes={
-                {n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
-                    {n=G.UIT.T, config={text = localize('b_sell'),colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true}}
-                }},
-                {n=G.UIT.R, config={align = "cm"}, nodes={
-                    {n=G.UIT.T, config={text = localize('$'),colour = G.C.WHITE, scale = 0.55, shadow = true}},
-                    {n=G.UIT.T, config={ref_table = card, ref_value = 'sell_cost_label',colour = G.C.WHITE, scale = 0.55, shadow = true}}
-                }}
-            }}
-        }},
-    }}
-    
-    local use = {n=G.UIT.C, config={align = "cr"}, nodes={
-        {n=G.UIT.C, config={ref_table = card, align = "cm",padding = 0.1, r=0.08, minw = 1.25, minh = 0.8, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, button = 'use_plant', func = "can_use_plant", handy_insta_action = 'use'}, nodes={
-            {n=G.UIT.B, config = {w=0.1,h=0.6}},
-            {n=G.UIT.C, config={align = "cm"}, nodes={
-                {n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
-                    {n=G.UIT.T, config={text = localize("b_use"), colour = G.C.UI.TEXT_LIGHT, scale = 0.55, shadow = true}}
-                }},
-            }},
-        }},
-    }}
-
-    local ret = {
-    n=G.UIT.ROOT, config = {padding = 0, colour = G.C.CLEAR}, nodes={
-        {n=G.UIT.C, config={padding = 0.15, align = 'cl'}, nodes={
-            {n=G.UIT.R, config={align = 'cl'}, nodes={
-                sell
-            }},
-            card.config.center.use and {n=G.UIT.R, config={align = 'cl'}, nodes={
-                use
-            }},
-        }},
-    }}
-    return ret
-end
-
-G.FUNCS.can_use_plant = function(e)
-	local center = e.config.ref_table.config.center
-	local card = e.config.ref_table
-	if
-		center.can_use and center:can_use(e.config.ref_table) and not e.config.ref_table.debuff
-		and G.STATE ~= G.STATES.HAND_PLAYED and G.STATE ~= G.STATES.DRAW_TO_HAND and G.STATE ~= G.STATES.PLAY_TAROT
-		and not (((G.play and #G.play.cards > 0) or (G.CONTROLLER.locked) or (G.GAME.STOP_USE and G.GAME.STOP_USE > 0)))
-	then
-		e.config.colour = G.C.RED
-		e.config.button = "use_plant"
-	else
-		e.config.colour = G.C.UI.BACKGROUND_INACTIVE
-		e.config.button = nil
-	end
-end
-
-G.FUNCS.use_plant = function(e)
-	local card = e.config.ref_table
-	local prev_state = G.TAROT_INTERRUPT
-	G.TAROT_INTERRUPT = G.STATE
-	G.CONTROLLER.locks.use = true
-	
-	local center = card.config.center
-	local keep_on_use = false
-	if center.keep_on_use and type(center.keep_on_use) == 'function' then
-        keep_on_use = center:keep_on_use(card)
-    end
-	if center.use and type(center.use) == 'function' then
-		center:use(card)
-	end
-
-	G.E_MANAGER:add_event(Event({
-		delay = 0.2,
-		func = function()
-			if not keep_on_use then card:start_dissolve() end
-			G.E_MANAGER:add_event(Event({
-				delay = 0.1,
-				func = function()
-					G.TAROT_INTERRUPT = prev_state
-					G.CONTROLLER.locks.use = false
-					return true;
-				end
-			}))
-			return true;
-		end
-	}))
-
-	SMODS.calculate_context{use_plant = card, kept_on_use = keep_on_use}
 end
