@@ -230,7 +230,7 @@ SMODS.Joker{ -- Sly Cooper
         if card.ability.extra.slycooper_remaining == 0 then
             if (context.buying_card or context.nic_buying_booster or context.nic_buying_voucher) and context.card.cost > 0 then
                 card.ability.extra.slycooper_remaining = 1
-                if SMODS.pseudorandom_probability(card, ('j_nic_slycooper'), 1, card.ability.extra.odds) then
+                if SMODS.pseudorandom_probability(card, ('j_nic_sly_cooper'), 1, card.ability.extra.odds) then
                     context.card.cost = context.card.cost * 2
                     SMODS.calculate_effect({message = localize('k_nic_caught_ex'), colour = G.C.RED}, context.card)
                     play_sound('nic_metalalert')
@@ -634,9 +634,7 @@ SMODS.Joker{ -- Human Torch
                     played_hand[#played_hand + 1] = context.scoring_hand[i]
                 end
             end
-
-            local destroy_card = pseudorandom_element(played_hand, 'j_nic_humantorch')
-
+            local destroy_card = pseudorandom_element(played_hand, 'j_nic_human_torch')
             if destroy_card then
                 SMODS.destroy_cards(destroy_card)
                 delay(0.5)
@@ -862,22 +860,26 @@ SMODS.Joker{ -- Incognito
             end
         end
 
-        if context.before and not context.blueprint then
-            for _, spades_cards in ipairs(G.hand.cards) do
-                if not (spades_cards.base.suit == "Spades") then
+        if context.after and not context.blueprint then
+            local spades_cards = {}
+            for i = 1, #G.hand.cards do
+                if not (G.hand.cards[i].base.suit == "Spades") then
                     if SMODS.pseudorandom_probability(card, ('j_nic_incognito'), 1, card.ability.extra.odds) then
-                        SMODS.destroy_cards(spades_cards)
+                        spades_cards[#spades_cards + 1] = G.hand.cards[i]
                         G.E_MANAGER:add_event(Event({
                             func = function()
                                 play_sound('nic_swoon')
                                 return true
                             end
                         }))
-                        SMODS.calculate_effect({message = localize('k_nic_swoon_ex'), colour = G.C.SUITS.Spades}, spades_cards)
+                        SMODS.calculate_effect({message = localize('k_nic_swoon_ex'), colour = G.C.SUITS.Spades}, G.hand.cards[i])
                     else
-                        SMODS.calculate_effect({message = localize('k_nope_ex'), colour = G.C.SUITS.Spades}, spades_cards)
+                        SMODS.calculate_effect({message = localize('k_nope_ex'), colour = G.C.SUITS.Spades}, G.hand.cards[i])
                     end
                 end
+            end
+            if spades_cards then
+                SMODS.destroy_cards(spades_cards)
             end
         end
 
@@ -1909,7 +1911,7 @@ SMODS.Joker { -- Jokrle
 }
 
 SMODS.Joker{ -- Solar Eclipse
-    key = "solareclipse",
+    key = "solar_eclipse",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
@@ -2031,19 +2033,11 @@ SMODS.Joker{ -- Invert
         return { vars = { new_numerator, new_denominator, card.ability.extra.handsize } }
     end,
 
-    add_to_deck = function(self, card, from_debuff)
-        love.audio.stop()
-    end,
-
     remove_from_deck = function(self, card, from_debuff)
         G.hand:change_size(-card.ability.extra.handsize)
     end,
 
     calculate = function(self, card, context)
-        if context.destroy_card and context.destroy_card.should_destroy then
-            return { remove = true, colour = G.C.DARK_EDITION }
-        end
-
         if context.remove_playing_cards then
             local spades_cards = 0
             for _, removed_card in ipairs(context.removed) do
@@ -2063,26 +2057,32 @@ SMODS.Joker{ -- Invert
             end
         end
 
-        if context.individual and context.cardarea == G.play and context.other_card:is_suit("Spades") then
-            context.other_card.should_destroy = true
-            return { message = "HAHAHA!", colour = G.C.DARK_EDITION }
-        end
-
-        if context.individual and context.cardarea == G.hand and not context.end_of_round then
-            if context.other_card.edition and context.other_card.edition.negative == true then
-            else
-                if (context.other_card.base.suit == "Spades") then
-                    if SMODS.pseudorandom_probability(card, ('j_nic_invert'), 1, card.ability.extra.odds) then
-                        local other_card = context.other_card
-                        G.E_MANAGER:add_event(Event({
-                            func = function()
-                                other_card:set_edition('e_negative', nil, true)
-                                return true
-                            end
-                        }))
-                        return { message = "HAHAHA!", colour = G.C.DARK_EDITION }
-                    else
-                        return { message = "NOPE!", colour = G.C.DARK_EDITION }
+        if context.after and not context.blueprint then
+            local negative_card = {}
+            for i = 1, #context.scoring_hand do
+                if context.scoring_hand[i].edition and context.scoring_hand[i].edition.negative == true then
+                    negative_card[#negative_card + 1] = context.scoring_hand[i]
+                    SMODS.calculate_effect({message = localize('k_nic_hahaha_ex'), colour = G.C.SUITS.Spades}, context.scoring_hand[i])
+                end
+            end
+            if negative_card then
+                SMODS.destroy_cards(negative_card)
+            end
+            for _, spades_cards in ipairs(G.hand.cards) do
+                if spades_cards.edition and spades_cards.edition.negative == true then
+                else
+                    if (spades_cards.base.suit == "Spades") then
+                        if SMODS.pseudorandom_probability(card, ('j_nic_invert'), 1, card.ability.extra.odds) then
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    spades_cards:set_edition('e_negative', nil, true)
+                                    return true
+                                end
+                            }))
+                            SMODS.calculate_effect({message = localize('k_nic_hahaha_ex'), colour = G.C.SUITS.Spades}, spades_cards)
+                        else
+                            SMODS.calculate_effect({message = localize('k_nope_ex'), colour = G.C.SUITS.Spades}, spades_cards)
+                        end
                     end
                 end
             end
@@ -2176,16 +2176,8 @@ SMODS.Joker { -- Cuphead
     config = { extra = { parry = 0, mult = 4, mult_gain = 4 } },
 
     loc_vars = function(self, info_queue, card)
-        local card1 = "*"
-        local card2 = "*"
-        local card3 = "*"
-        local card4 = "*"
-        local card5 = "*"
-        local colour1 = G.C.UI.TEXT_INACTIVE
-        local colour2 = G.C.UI.TEXT_INACTIVE
-        local colour3 = G.C.UI.TEXT_INACTIVE
-        local colour4 = G.C.UI.TEXT_INACTIVE
-        local colour5 = G.C.UI.TEXT_INACTIVE
+        local card1, card2, card3, card4, card5 = "*", "*", "*", "*", "*"
+        local colour1, colour2, colour3, colour4, colour5 = G.C.UI.TEXT_INACTIVE,  G.C.UI.TEXT_INACTIVE,  G.C.UI.TEXT_INACTIVE,  G.C.UI.TEXT_INACTIVE,  G.C.UI.TEXT_INACTIVE
         if card.ability.extra.parry > 0 then card1 = "[]" colour1 = G.C.SUITS.Hearts else card1 = "*" colour1 = G.C.UI.TEXT_INACTIVE end
         if card.ability.extra.parry > 1 then card2 = "[]" colour2 = G.C.SUITS.Hearts else card2 = "*" colour2 = G.C.UI.TEXT_INACTIVE end
         if card.ability.extra.parry > 2 then card3 = "[]" colour3 = G.C.SUITS.Hearts else card3 = "*" colour3 = G.C.UI.TEXT_INACTIVE end
@@ -2199,13 +2191,13 @@ SMODS.Joker { -- Cuphead
             if card.ability.extra.parry < 5 then
                 card.ability.extra.parry = card.ability.extra.parry + 1
                 return {
-                    message = "PARRY!",
+                    message = localize('k_nic_parry_ex'),
                     colour = G.C.SUITS.Hearts
                 }
             elseif card.ability.extra.parry == 5 then
                 card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
                 return {
-                    message = "EXTRA PARRY!",
+                    message = localize('k_nic_extra_parry_ex'),
                     colour = G.C.SUITS.Hearts
                 }
             end
@@ -2222,14 +2214,14 @@ SMODS.Joker { -- Cuphead
                 if card.ability.extra.parry == 5 then
                     card.ability.extra.parry = 0
                     return {
-                        message = "SUPER EX!",
+                        message = localize('k_nic_super_ex_ex'),
                         colour = G.C.SUITS.Hearts,
                         mult = card.ability.extra.mult * 5
                     }
                 elseif card.ability.extra.parry > 0 then
                     card.ability.extra.parry = card.ability.extra.parry - 1
                     return {
-                        message = "EX!",
+                        message = localize('k_nic_ex_ex'),
                         colour = G.C.SUITS.Hearts,
                         mult = card.ability.extra.mult
                     }
@@ -2253,16 +2245,8 @@ SMODS.Joker { -- Mugman
     config = { extra = { parry = 0, chips = 31, chips_gain = 31 } },
 
     loc_vars = function(self, info_queue, card)
-        local card1 = "*"
-        local card2 = "*"
-        local card3 = "*"
-        local card4 = "*"
-        local card5 = "*"
-        local colour1 = G.C.UI.TEXT_INACTIVE
-        local colour2 = G.C.UI.TEXT_INACTIVE
-        local colour3 = G.C.UI.TEXT_INACTIVE
-        local colour4 = G.C.UI.TEXT_INACTIVE
-        local colour5 = G.C.UI.TEXT_INACTIVE
+        local card1, card2, card3, card4, card5 = "*", "*", "*", "*", "*"
+        local colour1, colour2, colour3, colour4, colour5 = G.C.UI.TEXT_INACTIVE,  G.C.UI.TEXT_INACTIVE,  G.C.UI.TEXT_INACTIVE,  G.C.UI.TEXT_INACTIVE,  G.C.UI.TEXT_INACTIVE
         if card.ability.extra.parry > 0 then card1 = "[]" colour1 = G.C.SUITS.Clubs else card1 = "*" colour1 = G.C.UI.TEXT_INACTIVE end
         if card.ability.extra.parry > 1 then card2 = "[]" colour2 = G.C.SUITS.Clubs else card2 = "*" colour2 = G.C.UI.TEXT_INACTIVE end
         if card.ability.extra.parry > 2 then card3 = "[]" colour3 = G.C.SUITS.Clubs else card3 = "*" colour3 = G.C.UI.TEXT_INACTIVE end
@@ -2276,13 +2260,13 @@ SMODS.Joker { -- Mugman
             if card.ability.extra.parry < 5 then
                 card.ability.extra.parry = card.ability.extra.parry + 1
                 return {
-                    message = "PARRY!",
+                    message = localize('k_nic_parry_ex'),
                     colour = G.C.SUITS.Clubs
                 }
             elseif card.ability.extra.parry == 5 then
                 card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_gain
                 return {
-                    message = "EXTRA PARRY!",
+                    message = localize('k_nic_extra_parry_ex'),
                     colour = G.C.SUITS.Clubs
                 }
             end
@@ -2299,14 +2283,14 @@ SMODS.Joker { -- Mugman
                 if card.ability.extra.parry == 5 then
                     card.ability.extra.parry = 0
                     return {
-                        message = "SUPER EX!",
+                        message = localize('k_nic_super_ex_ex'),
                         colour = G.C.SUITS.Clubs,
                         chips = card.ability.extra.chips * 5
                     }
                 elseif card.ability.extra.parry > 0 then
                     card.ability.extra.parry = card.ability.extra.parry - 1
                     return {
-                        message = "EX!",
+                        message = localize('k_nic_ex_ex'),
                         colour = G.C.SUITS.Clubs,
                         chips = card.ability.extra.chips
                     }
@@ -2329,14 +2313,13 @@ SMODS.Joker { -- Selenologist
     config = { extra = { odds = 100 } },
 
     loc_vars = function(self, info_queue, card)
-        local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds) 
-        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { new_numerator, new_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { vars = { } }
     end,
 
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over == false and context.main_eval and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-            if SMODS.pseudorandom_probability(card, ('moonchange'), 1, card.ability.extra.odds) then
+            if pseudorandom('moonchange', G.GAME.phases_numerator, G.GAME.phases_denominator) == G.GAME.phases_numerator then
                 G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
                 G.E_MANAGER:add_event(Event({
                     func = function()
@@ -2389,7 +2372,7 @@ SMODS.Joker { -- Lunation
                 no_message = true,
             })
             return {
-                message = "X" .. card.ability.extra.xchips .. " Chips",
+                message = localize { type = 'variable', key = 'a_xchips', vars = { card.ability.extra.xchips } },
                 colour = G.C.NIC_PHASES
             }
         end

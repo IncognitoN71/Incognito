@@ -317,7 +317,7 @@ return {
                     "{C:inactive,s:0.8}Answer: {V:31,s:0.8}#33#"},
                 }
             },
-            j_nic_solareclipse = {
+            j_nic_solar_eclipse = {
                 name = "Solar Eclipse",
                 text = {
                     "Gains {C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
@@ -328,7 +328,7 @@ return {
                     "{C:inactive,s:0.8}Scored based on current variant",
                 }
             },
-            j_nic_solareclipse_sun = {
+            j_nic_solar_eclipse_sun = {
                 name = {
                     "Solar Eclipse",
                     "{C:mult,s:0.5}Sun Variant",
@@ -340,7 +340,7 @@ return {
                     "{C:inactive,s:0.8}Scored based on current variant",
                 }
             },
-            j_nic_solareclipse_moon = {
+            j_nic_solar_eclipse_moon = {
                 name = {
                     "Solar Eclipse",
                     "{C:chips,s:0.5}Moon Variant",
@@ -1996,6 +1996,7 @@ return {
             k_nic_clobberin_time_ex = "Clobberin' Time!",
             k_nic_fantastic_ex = "Fantastic!",
             k_nic_swoon_ex = "Swoon!",
+            k_nic_hahaha_ex = "Hahaha!",
             k_nic_love_heart = "Love <3",
             k_nic_ratio = "|-|-|-|-|-|-o-|-|-|",
             k_nic_focus_up_ex = "Focus Up!",
@@ -2008,6 +2009,10 @@ return {
             k_nic_splendid_ex = "Splendid!",
             k_nic_great_ex = "Great!",
             k_nic_phew_ex = "Phew!",
+            k_nic_parry_ex = "Parry!",
+            k_nic_extra_parry_ex = "Extra Parry!",
+            k_nic_ex_ex = "EX!",
+            k_nic_super_ex_ex = "Super EX!",
             -- Rarity
             k_nic_incognito = "Incognito",
             k_nic_teto = "Teto",

@@ -50,7 +50,7 @@ if Incognito.config.not_finished then
 	SMODS.load_file("src/scrapped/scrapped.lua")()
 end
 
--- Hyperfixation
+--[[ Hyperfixation
 if Hyperfixation then
     SMODS.load_file("src/crossmod/hyperfixation.lua")()
     if Hyperfixation.hypercross then
@@ -75,12 +75,12 @@ if Hyperfixation then
     end
 end
 
---[[ MoreFluff (notMario)
+-- MoreFluff (notMario)
 if MoreFluff then -- Main
     SMODS.load_file("src/crossmod/morefluff/main.lua")()
 elseif FLUFF then -- Rewritten
     SMODS.load_file("src/crossmod/morefluff/rewritten.lua")()
-end]]
+end
 
 -- Alloy (Corobo)
 if ALLOY then
@@ -105,4 +105,4 @@ end
 -- Partner
 if next(SMODS.find_mod("partner")) then
     SMODS.load_file("src/crossmod/partners.lua")()
-end
+end]]
