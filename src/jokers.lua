@@ -965,7 +965,8 @@ SMODS.Joker{ -- Strawberry Cake
             context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.mult
             return {
                 message = localize('k_nic_love_heart'),
-                colour = G.C.SUITS.Hearts
+                colour = G.C.SUITS.Hearts,
+                message_card = context.other_card
             }
         end
     end

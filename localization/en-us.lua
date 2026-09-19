@@ -494,21 +494,20 @@ return {
 
             -- Teto
 
-            j_nic_kasanejokto = {
+            j_nic_kasane_jokto = {
                 name = "Kasane Jokto",
                 text = {
                     "{C:attention}Retrigger{} played {C:attention}4s",
                     "an additional {C:attention}#1#{} times",
                 }
             },
-            j_nic_ambassadorteto = {
+            j_nic_ambassador_teto = {
                 name = "Ambassador Teto",
                 text = {
                     "All cards held in hand",
-                    "change {C:attention}suits{} in this order",
+                    "cycles {C:attention}suits{} in this order",
                     "{C:clubs}Clubs{} > {C:diamonds}Diamonds{} >",
                     "{C:spades}Spades{} > {C:hearts}Hearts{}",
-                    "{C:inactive}(Stops at {C:hearts}Hearts{C:inactive})",
                 }
             },
             j_nic_pear = {
@@ -527,7 +526,7 @@ return {
                     "is destroyed at end of round",
                 }
             },
-            j_nic_doctorkidori = {
+            j_nic_doctor_kidori = {
                 name = "Doctor Kidori",
                 text = {
                     "If this {C:attention}Joker{} is in",
@@ -535,7 +534,7 @@ return {
                     "{C:attention}4s{} changes {C:dark_edition}Edition",
                 }
             },
-            j_nic_birdbrainteto = { 
+            j_nic_birdbrain_teto = { 
                 name = "Birdbrain Teto",
                 text = {
                     "This Joker gains {C:mult}+#2#{} Mult",
@@ -544,21 +543,21 @@ return {
 
                 }
             }, 
-            j_nic_tenebrerossosangueteto = { 
+            j_nic_tenebre_rosso_sangue_teto = { 
                 name = "Tenebre Rosso Sangue Teto",
                 text = {
                     "This Joker gains {C:money}$#1#{} for",
                     "each {C:hearts}Heart{} card destroyed",
                 }
             },
-            j_nic_spokenforteto = { 
+            j_nic_spoken_for_teto = { 
                 name = "Spoken For Teto",
                 text = {
                     "Each {C:nic_teto}Teto{} themed",
                     "{C:attention}Joker{} gives {X:red,C:white}X#1#{} Mult",
                 }
             },
-            j_nic_tetowordoftheday = { 
+            j_nic_teto_word_of_the_day = { 
                 name = "Teto Word Of The Day",
                 text = {
                     "After {C:attention}#2# Blinds{}, sell",
@@ -568,7 +567,7 @@ return {
                     "{C:inactive}(Currently {C:attention}#1#{C:inactive}/#2#)",
                 }
             },
-            j_nic_mesmerizerteto = { 
+            j_nic_mesmerizer_teto = { 
                 name = "Mesmerizer Teto",
                 text = {
                     "If leftmost {C:attention}Joker",
@@ -594,25 +593,24 @@ return {
                     "{C:inactive}(Must have room)",
                 }
             },
-            j_nic_minimumrageteto = {
+            j_nic_minimum_rage_teto = {
                 name = "Minimum Rage Teto",
                 text = {
                     "Recent bought {C:attention}card cost",
-                    "adds into current {C:mult}Mult{},",
-                    "resets when any {C:attention}card{} is {C:attention}sold",
+                    "adds into current {C:mult}Mult",
                     "{C:inactive}(Currently {C:mult}+#1#{C:inactive} Mult)",
                 }
             },
-            j_nic_tetoterritory = {
+            j_nic_teto_territory = {
                 name = "Teto Territory",
                 text = {
                     "When {C:attention}Boss Blind{} is selected,",
-                    "a random non {C:nic_teto}Teto{} Joker",
-                    "turns into a {C:nic_teto}Teto{} Joker",
+                    "transform Joker to the",
+                    "right into a {C:nic_teto}Teto{} Joker",
                     "{C:inactive,s:0.8} Food Jokers turn into Pears",
                 }
             },
-            j_nic_contradictionsteto = {
+            j_nic_contradictions_teto = {
                 name = "Contradictions Teto",
                 text = {
                     "When {C:attention}Blind{} is selected,",
@@ -620,7 +618,7 @@ return {
                     "deck changes {C:attention}Ranks",
                 }
             },
-            j_nic_pearbasket = {
+            j_nic_pear_basket = {
                 name = "Pear Basket",
                 text = {
                     "This Joker stores a {C:nic_teto}Pear{} for",
@@ -629,7 +627,7 @@ return {
                     "{C:inactive}(Currently {C:nic_teto}#1#{C:inactive} Pears)",
                 }
             },
-            j_nic_keychainteto = {
+            j_nic_keychain_teto = {
                 name = "Keychain Teto",
                 text = {
                     "{C:attention}End of round{}, create",
@@ -637,7 +635,7 @@ return {
                     "{C:red,E:2}self destructs",
                 }
             },
-            j_nic_logoffteto = {
+            j_nic_log_off_teto = {
                 name = "Log Off Teto",
                 text = {
                     "Loses {X:mult,C:white}X#2#{} Mult per",
@@ -653,7 +651,7 @@ return {
                     "{C:red}unsuccessfully{} triggers",
                 }
             },
-            j_nic_cadmiumcolors = {
+            j_nic_cadmium_colors = {
                 name = "Cadmium Colors",
                 text = {
                     "{X:red,C:white}X#1#{} Mult if all played",
@@ -661,6 +659,26 @@ return {
                     "and all cards held",
                     "in hand are {V:2}#3#",
                     "{C:inactive,s:0.8}Suits switches at end of round",
+                }
+            },
+            j_nic_hito_mania = {
+                name = "HITO Mania",
+                text = {
+                }
+            },
+            j_nic_rot_for_clout = {
+                name = "Rot For Clout",
+                text = {
+                }
+            },
+            j_nic_bread = {
+                name = "Bread",
+                text = {
+                }
+            },
+            j_nic_machine_love = {
+                name = "Machine Love",
+                text = {
                 }
             },
 
@@ -2013,6 +2031,18 @@ return {
             k_nic_extra_parry_ex = "Extra Parry!",
             k_nic_ex_ex = "EX!",
             k_nic_super_ex_ex = "Super EX!",
+            -- Teto
+            k_nic_blood_ex = "Blood!",
+            k_nic_teto_pear_ex = "Teto Pear!",
+            k_nic_my_penis_ex = "My Penis!",
+            k_nic_teto_ex = "Teto!",
+            k_nic_teto_word_of_the_day_ex = "Teto Word Of The Day!",
+            k_nic_big_shot = "[BIG SHOT]",
+            k_nic_tetoris_ex = "Tetoris!",
+            k_nic_territory_ex = "Territory!",
+            k_nic_contradictions_ex = "Contradictions!",
+            k_nic_yay_ex = "Yay!",
+            k_nic_logging_off_ex = "Logging Off!",
             -- Rarity
             k_nic_incognito = "Incognito",
             k_nic_teto = "Teto",
@@ -2073,8 +2103,10 @@ return {
             nic_inactive = "Inactive!",
             nic_moneyactive = "Success!",
             nic_moneyinactive = "Working...",
-            nic_tetoactive = "Mesmerized!",
-            nic_tetoinactive = "No Luck! No Hope!",
+            nic_mesmerizeractive = "Mesmerized!",
+            nic_mesmerizerinactive = "No Luck! No Hope!",
+            nic_territoryactive = "Territory!",
+            nic_territoryinactive = "Boo!",
         },
         v_text = {
             ch_c_nic_incognito1 = { "You have {C:clubs}Clubs{}, {C:hearts}Hearts{}, {C:diamonds}Diamonds{}" },
