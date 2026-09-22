@@ -1,6 +1,6 @@
 SMODS.Atlas{ -- Logo
-    key = "niclogo",
-    path = "niclogo.png",
+    key = "logo",
+    path = "logo.png",
     px = 333,
     py = 210,
 }
@@ -27,7 +27,7 @@ Incognito.custom_ui = function(nodes)
                             object = SMODS.create_sprite(
                                 0, 0,
                                 8, 5,
-                                'nic_niclogo',
+                                'nic_logo',
                                 { x = 0, y = 0 }
                             )
                         }
@@ -157,7 +157,7 @@ function Incognito.generate_credits_desc_nodes(entry)
 
     area:emplace(card)
 
-    if entry.joker == "j_nic_tetoundiscovered" then
+    if entry.joker == "j_nic_teto_undiscovered" then
     else
         card.no_ui = true
     end
@@ -318,20 +318,20 @@ function Incognito.teto_ui()
 end
 
 SMODS.Atlas { -- Teto Undiscovered
-    key = 'nictetoundiscovered',
-    path = "crossmod/nictetoundiscovered.png",
+    key = 'teto_undiscovered',
+    path = "teto/teto_undiscovered.png",
     px = 71,
     py = 95
 }
 
 SMODS.Joker{ -- Teto Undiscovered
-    key = "tetoundiscovered",
+    key = "teto_undiscovered",
     no_collection = true,
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = true,
-    atlas = 'nictetoundiscovered',
+    atlas = 'teto_undiscovered',
     rarity = 'nic_teto',
     cost = 4,
     pos = {x = 0, y = 0},
@@ -347,8 +347,8 @@ SMODS.Joker{ -- Teto Undiscovered
             trigger = 'after',
             delay = 1.5,
             func = function()
-                G.GAME.death_text = "tetoundiscovered"
-                G.GAME.death_texture = "nictetoundiscovered"
+                G.GAME.death_text = "teto_undiscovered"
+                G.GAME.death_texture = "teto_undiscovered"
                 G.STATE = G.STATES.GAME_OVER
                 G.FILE_HANDLER.force = true
                 G.STATE_COMPLETE = false
@@ -359,13 +359,12 @@ SMODS.Joker{ -- Teto Undiscovered
 }
 
 Incognito.cool_mods_table = {
-    { joker = (Hyperfixation and "j_nic_tetoraq") or "j_nic_tetoundiscovered", language = "en", type = "mod", name = "Hyperfixation", artist = Hyperfixation and "got the mod :3" or "get the mod >:(" , link = "https://github.com/tomatoseandcrying/hyperfixation-OLD-/tree/dev" },
-    { joker = (Hyperfixation and "j_nic_tetolyne") or "j_nic_tetoundiscovered", language = "en", type = "mod", name = "Hyperfixation", artist = Hyperfixation and "got the mod :3" or "get the mod >:(" , link = "https://github.com/tomatoseandcrying/hyperfixation-OLD-/tree/dev" },
-    { joker = (MoreFluff and "j_nic_triteto") or (FLUFF and "j_nic_tritetorewritten") or "j_nic_tetoundiscovered", language = "en", type = "mod", name = "MoreFluff", artist = (MoreFluff or FLUFF) and "got the mod :3" or "get the mod >:(" , link = "https://github.com/notmario/MoreFluff" },
-    { joker = (ALLOY and "j_nic_tetorobo") or "j_nic_tetoundiscovered", language = "en", type = "mod", name = "ALLOY", artist = ALLOY and "got the mod :3" or "get the mod >:(" , link = "https://github.com/TheCoroboCorner/Alloy" },
-    { joker = (next(SMODS.find_mod("LobotomyCorp")) and "j_nic_mysteto") or "j_nic_tetoundiscovered", language = "en", type = "mod", name = "LobotomyCorp", artist = next(SMODS.find_mod("LobotomyCorp")) and "got the mod :3" or "get the mod >:(" , link = "https://github.com/Mysthaps/LobotomyCorp" },
-    { joker = (next(SMODS.find_mod("baddirector")) and "j_nic_tetoxko") or "j_nic_tetoundiscovered", language = "en", type = "mod", name = "BadDirector", artist = next(SMODS.find_mod("baddirector")) and "got the mod :3" or "get the mod >:(" , link = "https://github.com/Clickseee/BadDirector" },
-    { joker = (next(SMODS.find_mod("entr")) and "j_nic_rubteto") or "j_nic_tetoundiscovered", language = "en", type = "mod", name = "Entropy", artist = next(SMODS.find_mod("entr")) and "got the mod :3" or "get the mod >:(" , link = "https://github.com/lord-ruby/Entropy" },
+    { joker = (Hyperfixation and "j_nic_tetoraq") or "j_nic_teto_undiscovered", language = "en", type = "mod", name = "Hyperfixation", artist = Hyperfixation and "got the mod :3" or "get the mod >:(" , link = "https://github.com/tomatoseandcrying/hyperfixation-OLD-/tree/dev" },
+    { joker = (Hyperfixation and "j_nic_tetolyne") or "j_nic_teto_undiscovered", language = "en", type = "mod", name = "Hyperfixation", artist = Hyperfixation and "got the mod :3" or "get the mod >:(" , link = "https://github.com/tomatoseandcrying/hyperfixation-OLD-/tree/dev" },
+    { joker = (MoreFluff and "j_nic_triteto") or (FLUFF and "j_nic_tritetorewritten") or "j_nic_teto_undiscovered", language = "en", type = "mod", name = "MoreFluff", artist = (MoreFluff or FLUFF) and "got the mod :3" or "get the mod >:(" , link = "https://github.com/notmario/MoreFluff" },
+    { joker = (ALLOY and "j_nic_tetorobo") or "j_nic_teto_undiscovered", language = "en", type = "mod", name = "ALLOY", artist = ALLOY and "got the mod :3" or "get the mod >:(" , link = "https://github.com/TheCoroboCorner/Alloy" },
+    { joker = (next(SMODS.find_mod("LobotomyCorp")) and "j_nic_mysteto") or "j_nic_teto_undiscovered", language = "en", type = "mod", name = "LobotomyCorp", artist = next(SMODS.find_mod("LobotomyCorp")) and "got the mod :3" or "get the mod >:(" , link = "https://github.com/Mysthaps/LobotomyCorp" },
+    { joker = (next(SMODS.find_mod("entr")) and "j_nic_rubteto") or "j_nic_teto_undiscovered", language = "en", type = "mod", name = "Entropy", artist = next(SMODS.find_mod("entr")) and "got the mod :3" or "get the mod >:(" , link = "https://github.com/lord-ruby/Entropy" },
 }
 
 function Incognito.cool_mods_ui()

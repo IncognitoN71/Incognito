@@ -1,13 +1,13 @@
 SMODS.Atlas{ -- Plant Consumables
-    key = "nicpvzconsumables",
-    path = "pvz/nicpvzconsumables.png",
+    key = "pvz_consumables",
+    path = "pvz/pvz_consumables.png",
     px = 71,
     py = 95,
 }
 
 SMODS.ConsumableType {
     key = 'ZenGarden',
-    default = 'c_nic_mysteryvase',
+    default = 'c_nic_mystery_vase',
     primary_colour = G.C.NIC_PLANTS,
     secondary_colour = G.C.NIC_PLANTS,
     collection_rows = { 6, 6 },
@@ -29,29 +29,29 @@ SMODS.ConsumableType {
 }
 
 SMODS.Consumable { -- Mystery Vase
-    key = 'mysteryvase',
+    key = 'mystery_vase',
     set = 'ZenGarden',
     cost = 4,
-    atlas = 'nicpvzconsumables',
+    atlas = 'pvz_consumables',
     pos = {x = 0, y = 1 },
     soul_pos = {x = 0, y = 0 },
     config = { },
     pools = { ["Vase"] = true },
 
     loc_vars = function(self, info_queue, center) 
-		info_queue[#info_queue+1] = G.P_CENTERS["j_nic_crazydave"]
+		info_queue[#info_queue+1] = G.P_CENTERS["j_nic_crazy_dave"]
 	end,
 
     use = function(self, card, area, copier)
         G.E_MANAGER:add_event(Event({
             func = function()
                 local crazy = 1
-                if next(SMODS.find_card("j_nic_crazydave")) then
+                if next(SMODS.find_card("j_nic_crazy_dave")) then
                     crazy = 0
                 else
                     crazy = 1
                 end
-                local random = pseudorandom('c_nic_mysteryvase', 1 + crazy, 4)
+                local random = pseudorandom('c_nic_mystery_vase', 1 + crazy, 4)
                 play_sound('nic_vasebreak')
 
                 if random == 1 then
@@ -100,22 +100,22 @@ SMODS.Consumable { -- Mystery Vase
 }
 
 SMODS.Consumable { -- Plants Vase
-    key = 'plantsvase',
+    key = 'plants_vase',
     set = 'ZenGarden',
     cost = 4,
-    atlas = 'nicpvzconsumables',
+    atlas = 'pvz_consumables',
     pos = {x = 1, y = 1 },
     soul_pos = {x = 1, y = 0 },
     config = { },
     pools = { ["Vase"] = true, ["PlantVase"] = true },
 
     loc_vars = function(self, info_queue, center) 
-		info_queue[#info_queue+1] = G.P_CENTERS["j_nic_crazydave"]
+		info_queue[#info_queue+1] = G.P_CENTERS["j_nic_crazy_dave"]
 	end,
 
     in_pool = function (self, args)
         return true, {
-            allow_duplicates = next(SMODS.find_card("c_nic_plantsvase")) or next(SMODS.find_card("j_nic_crazydave")) 
+            allow_duplicates = next(SMODS.find_card("c_nic_plantsvase")) or next(SMODS.find_card("j_nic_crazy_dave")) 
         }
     end,
 
@@ -133,7 +133,7 @@ SMODS.Consumable { -- Plants Vase
     end,
 
     can_use = function(self, card)
-        return G.zengarden and #G.zengarden.cards < G.zengarden.config.card_limit and next(SMODS.find_card("j_nic_crazydave"))
+        return G.zengarden and #G.zengarden.cards < G.zengarden.config.card_limit and next(SMODS.find_card("j_nic_crazy_dave"))
     end,
 }
 
@@ -141,7 +141,7 @@ SMODS.Consumable { -- Shovel
     key = 'shovel',
     set = 'ZenGarden',
     cost = 4,
-    atlas = 'nicpvzconsumables',
+    atlas = 'pvz_consumables',
     pos = {x = 2, y = 1 },
     soul_pos = {x = 2, y = 0 },
     config = { },

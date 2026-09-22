@@ -9,16 +9,16 @@ SMODS.ObjectType{
 
 SMODS.Consumable {
     discovered = false,
-    key = 'bluemoon',
+    key = 'blue_moon',
     set = 'Phases',
     cost = 4,
-    atlas = 'nicphases',
+    atlas = 'phases',
     pos = {x = 0, y = 1 },
     config = { mult = 1, chips = 1, modifier = 1, modifier_gain = 0.2 },
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changing_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -89,16 +89,16 @@ SMODS.Consumable {
 
 SMODS.Consumable {
     discovered = false,
-    key = 'bloodmoon',
+    key = 'blood_moon',
     set = 'Phases',
     cost = 4,
-    atlas = 'nicphases',
+    atlas = 'phases',
     pos = {x = 1, y = 1 },
     config = { mult = 1.5, chips = 1.5, reusable = 0, reusable_gain = 1 },
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changing_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -198,13 +198,13 @@ SMODS.Consumable {
     key = 'micromoon',
     set = 'Phases',
     cost = 4,
-    atlas = 'nicphases',
+    atlas = 'phases',
     pos = {x = 2, y = 1 },
     config = { mult = 1.5, chips = 1.5, cost = 1, cost_gain = 2 },
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changing_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -295,13 +295,13 @@ SMODS.Consumable {
     key = 'supermoon',
     set = 'Phases',
     cost = 4,
-    atlas = 'nicphases',
+    atlas = 'phases',
     pos = {x = 3, y = 1 },
     config = { mult = 1.5, chips = 1.5 },
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changing_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -355,17 +355,17 @@ SMODS.Consumable {
 
 SMODS.Consumable {
     discovered = false,
-    key = 'solareclipse',
+    key = 'solar_eclipse',
     set = 'Phases',
     cost = 4,
-    atlas = 'nicphases',
+    atlas = 'phases',
     pos = {x = 4, y = 1 },
     config = { mult = 1.5, chips = 1.5, odds = 4 },
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.odds) 
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changing_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -425,17 +425,17 @@ SMODS.Consumable {
 
 SMODS.Consumable {
     discovered = false,
-    key = 'moonring',
+    key = 'moon_ring',
     set = 'Phases',
     cost = 4,
-    atlas = 'nicphases',
+    atlas = 'phases',
     pos = {x = 5, y = 1 },
     config = { mult = 1.5, chips = 1.5 },
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
         local moonring_card = G.GAME.current_round.nic_moonring_card or { rank = 'Ace', suit = 'Spades' }
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changing_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -492,16 +492,16 @@ SMODS.Consumable {
 
 SMODS.Consumable {
     discovered = false,
-    key = 'nullmoon',
+    key = 'null_moon',
     set = 'Phases',
     cost = 4,
-    atlas = 'nicphases',
+    atlas = 'phases',
     pos = {x = 6, y = 1 },
     config = { mult = 1.5, chips = 1.5, extra_slots_used = -1, },
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changing_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { 
             vars = { 
                 G.GAME.last_hand_played and localize(G.GAME.last_hand_played, 'poker_hands') or localize('k_none'),
@@ -547,16 +547,16 @@ SMODS.Consumable {
 
 SMODS.Consumable {
     discovered = false,
-    key = 'mineralmoon',
+    key = 'mineral_moon',
     set = 'Phases',
     cost = 4,
-    atlas = 'nicphases',
+    atlas = 'phases',
     pos = {x = 7, y = 1 },
     config = { mult = 1.5, chips = 1.5 },
     pools = { ["SpecialPhases"] = true },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_changingspecialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_changing_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
 
         local planet = nil
         if G.GAME.last_hand_played then

@@ -1,13 +1,13 @@
-SMODS.Atlas { -- Tags
-  key = "nictags",
+SMODS.Atlas { -- tags
+  key = "tags",
   px = 34,
   py = 34,
-  path = "nictags.png" 
+  path = "tags.png" 
 }
 
 SMODS.Tag { -- Teto Tag
     key = "teto",
-    atlas = 'nictags',
+    atlas = 'tags',
     pos = { x = 0, y = 0 },
 
     in_pool = function(self, args)
@@ -37,7 +37,7 @@ SMODS.Tag { -- Teto Tag
 
 SMODS.Tag { -- Twindrill Tag
     key = "twindrill",
-    atlas = 'nictags',
+    atlas = 'tags',
     pos = { x = 1, y = 0 },
 
     loc_vars = function(self, info_queue, tag)
@@ -72,8 +72,8 @@ SMODS.Tag { -- Twindrill Tag
 }
 
 SMODS.Tag { -- Vase Tag
-    key = "vase1",
-    atlas = 'nictags',
+    key = "vase_1",
+    atlas = 'tags',
     pos = { x = 2, y = 0 },
 
     loc_vars = function(self, info_queue, tag)
@@ -108,8 +108,8 @@ SMODS.Tag { -- Vase Tag
 }
 
 SMODS.Tag { -- Vase Tag
-    key = "vase2",
-    atlas = 'nictags',
+    key = "vase_2",
+    atlas = 'tags',
     pos = { x = 3, y = 0 },
 
     loc_vars = function(self, info_queue, tag)
@@ -145,7 +145,7 @@ SMODS.Tag { -- Vase Tag
 
 SMODS.Tag { -- Lunar Tag
     key = "lunar",
-    atlas = 'nictags',
+    atlas = 'tags',
     pos = { x = 4, y = 0 },
 
     loc_vars = function(self, info_queue, tag)

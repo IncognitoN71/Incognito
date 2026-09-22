@@ -1,15 +1,15 @@
 SMODS.Atlas{ -- Sticker
-    key = "nicstickers",
-    path = "nicstickers.png",
+    key = "stickers",
+    path = "stickers.png",
     px = 71,
     py = 95,
 }
 
 SMODS.Sticker {
-    key = "tetosticker",
+    key = "teto_sticker",
     badge_colour = HEX("e15d73"),
     rate = 0.0,
-    atlas = "nicstickers",
+    atlas = "stickers",
     pos = { x = 0, y = 0 },
     config = { repetitions = 1 },
 

@@ -1,19 +1,19 @@
 SMODS.Atlas{ -- Seals
-    key = "nicseals",
-    path = "nicseals.png",
+    key = "seals",
+    path = "seals.png",
     px = 71,
     py = 95,
 }
 
 SMODS.Seal {
     key = "teal",
-    atlas = "nicseals",
+    atlas = "seals",
     pos = { x = 0, y = 0 },
     config = { extra = { } },
     badge_colour = G.C.NIC_PHASES,
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { vars = { } }
     end,
 

@@ -3,7 +3,7 @@
 local set_sprites_hook = Card.set_sprites
 function Card:set_sprites(_center, _front)
     set_sprites_hook(self, _center, _front)
-    self.children.plant_select = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["nic_nicpvzconsumables"], { x = 3, y = 1 })
+    self.children.plant_select = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["nic_pvz_consumables"], { x = 3, y = 1 })
     self.children.plant_select.role.draw_major = self
     self.children.plant_select.states.hover.can = false
     self.children.plant_select.states.click.can = false
@@ -105,14 +105,14 @@ end
 
 local card_click_ref = Card.click
 function Card:click(...)
-    if self.config.center.key == "j_nic_crazydave" and G.SETTINGS.paused then
-        play_sound("nic_crazydave" ..  pseudorandom('j_nic_crazydave', 1, 12))
+    if self.config.center.key == "j_nic_crazy_dave" and G.SETTINGS.paused then
+        play_sound("nic_crazydave" ..  pseudorandom('j_nic_crazy_dave', 1, 12))
         self:juice_up()
-    elseif self.config.center.key == "j_nic_cherrybomb" and G.SETTINGS.paused then
+    elseif self.config.center.key == "j_nic_cherry_bomb" and G.SETTINGS.paused then
         play_sound('nic_cherrybomb')
         self:start_dissolve()
         self:juice_up()
-    elseif self.config.center.key == "j_nic_potatomine" and G.SETTINGS.paused then
+    elseif self.config.center.key == "j_nic_potato_mine" and G.SETTINGS.paused then
         play_sound('nic_potatomineexplode')
         self:start_dissolve()
         self:juice_up()
@@ -120,23 +120,23 @@ function Card:click(...)
         play_sound('nic_chomper')
         self.children.center:set_sprite_pos({x = 8, y = 0})
         self:juice_up()
-    elseif self.config.center.key == "j_nic_gravebuster" and G.SETTINGS.paused then
+    elseif self.config.center.key == "j_nic_grave_buster" and G.SETTINGS.paused then
         play_sound('nic_gravebuster')
         self:start_dissolve()
         self:juice_up()
-    elseif self.config.center.key == "j_nic_hypnoshroom" and G.SETTINGS.paused then
+    elseif self.config.center.key == "j_nic_hypno_shroom" and G.SETTINGS.paused then
         play_sound('nic_hypnoshroom')
         self:start_dissolve()
         self:juice_up()
-    elseif self.config.center.key == "j_nic_scaredyshroom" and G.SETTINGS.paused then
+    elseif self.config.center.key == "j_nic_scaredy_shroom" and G.SETTINGS.paused then
         play_sound('tarot1')
         self.children.center:set_sprite_pos({x = 8, y = 1})
         self:juice_up()
-    elseif self.config.center.key == "j_nic_iceshroom" and G.SETTINGS.paused then
+    elseif self.config.center.key == "j_nic_ice_shroom" and G.SETTINGS.paused then
         play_sound('nic_iceshroom')
         self:start_dissolve()
         self:juice_up()
-    elseif self.config.center.key == "j_nic_doomshroom" and G.SETTINGS.paused then
+    elseif self.config.center.key == "j_nic_doom_shroom" and G.SETTINGS.paused then
         play_sound('nic_doomshroom')
         self:set_ability('j_nic_crater')
         self:juice_up()
@@ -149,7 +149,7 @@ end
 
 local card_highlight = Card.highlight
 function Card:highlight(is_higlighted)
-    if self.config.center.rarity == "nic_plants" or string.find(self.ability.name, "j_nic_crazydave") then
+    if self.config.center.rarity == "nic_plants" or string.find(self.ability.name, "j_nic_crazy_dave") then
         self.highlighted = is_higlighted
 		if self.highlighted and self.area and self.area.config.type ~= "shop" and self.area.config.type ~= "consumeable" then
             self.children.use_button = UIBox({

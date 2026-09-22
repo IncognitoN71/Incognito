@@ -1,15 +1,15 @@
 SMODS.Atlas{ -- Backs
-    key = 'nicbacks',
-    path = 'nicbacks.png',
+    key = 'backs',
+    path = 'backs.png',
     px = 71,
     py = 95,
 }
 
 SMODS.Back {
     key = "plants",
-    atlas = 'nicbacks',
+    atlas = 'backs',
     pos = { x = 0, y = 0 },
-    config = { joker = 'j_nic_crazydave', consumables = { 'c_nic_mysteryvase', 'c_nic_mysteryvase' } },
+    config = { joker = 'j_nic_crazy_dave', consumables = { 'c_nic_mystery_vase', 'c_nic_mystery_vase' } },
     loc_vars = function(self, info_queue, back)
         return {
             vars = { localize ({ type = 'name_text', key = self.config.joker, set = 'Joker' }),
@@ -21,9 +21,9 @@ SMODS.Back {
 
 SMODS.Back {
     key = "tidal",
-    atlas = 'nicbacks',
+    atlas = 'backs',
     pos = { x = 1, y = 0 },
-    config = { voucher = 'v_crystal_ball', consumables = { 'c_nic_newmoon', 'c_high_priestess' } },
+    config = { voucher = 'v_crystal_ball', consumables = { 'c_nic_new_moon', 'c_high_priestess' } },
 
     loc_vars = function(self, info_queue, back)
         return {

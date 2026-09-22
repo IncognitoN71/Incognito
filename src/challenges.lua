@@ -2,9 +2,9 @@ SMODS.Challenge { -- OOPS? ALL SWOONS!
     key = 'incognito',
     rules = {
         custom = {
-            { id = "nic_incognito1" },
-            { id = "nic_incognito2" },
-            { id = "nic_incognito3" },
+            { id = "nic_incognito_1" },
+            { id = "nic_incognito_2" },
+            { id = "nic_incognito_3" },
         },
         modifiers = {
             { id = 'joker_slots', value = 3 },
@@ -82,7 +82,7 @@ SMODS.Challenge { -- OOPS? ALL HAHAHA!
     key = 'invert',
     rules = {
         custom = {
-            { id = "nic_invert1" },
+            { id = "nic_invert_1" },
         },
         modifiers = {
             { id = 'joker_slots', value = 3 },
@@ -160,7 +160,7 @@ SMODS.Challenge { -- THE FUTURE WILL BE PAVED WITH METAL!
     key = 'machinedramon',
     rules = {
         custom = {
-            { id = "nic_machinedramon1" },
+            { id = "nic_machinedramon_1" },
         },
         modifiers = {
             { id = 'joker_slots', value = 6 },

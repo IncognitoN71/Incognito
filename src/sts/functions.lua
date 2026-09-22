@@ -1,13 +1,13 @@
 SMODS.Atlas{ -- STS Mult Text
-    key = "nicstsmulttext",
-    path = "sts/nicstsmulttext.png",
+    key = "sts_mult_text",
+    path = "sts/sts_mult_text.png",
     px = 71,
     py = 7,
 }
 
 SMODS.Atlas{ -- STS Summon Text
-    key = "nicstssummontext",
-    path = "sts/nicstssummontext.png",
+    key = "sts_summon_text",
+    path = "sts/sts_summon_text.png",
     px = 71,
     py = 7,
 }
@@ -26,7 +26,7 @@ SMODS.draw_ignore_keys.sprite = true
 -- Mult
 local function mult_sprite(canvas, x, y, pos) -- (Ruby Entropy)
     local quad = love.graphics.newQuad(71 * pos.x, 7 * pos.y, 71, 7, 142, 84)
-    canvas:renderTo(function() love.graphics.draw(G.ASSET_ATLAS["nic_nicstsmulttext"].image, quad, x, y, 0, 1, 1, 0, 0) end)
+    canvas:renderTo(function() love.graphics.draw(G.ASSET_ATLAS["nic_sts_mult_text"].image, quad, x, y, 0, 1, 1, 0, 0) end)
 end
 
 SMODS.DrawStep({ -- Unleash
@@ -122,7 +122,7 @@ SMODS.DrawStep({ -- The Scythe
 -- Summon
 local function summon_sprite(canvas, x, y, pos) -- (Ruby Entropy)
     local quad = love.graphics.newQuad(71 * pos.x, 7 * pos.y, 71, 7, 142, 84)
-    canvas:renderTo(function() love.graphics.draw(G.ASSET_ATLAS["nic_nicstssummontext"].image, quad, x, y, 0, 1, 1, 0, 0) end)
+    canvas:renderTo(function() love.graphics.draw(G.ASSET_ATLAS["nic_sts_summon_text"].image, quad, x, y, 0, 1, 1, 0, 0) end)
 end
 
 SMODS.DrawStep({ -- Dirge

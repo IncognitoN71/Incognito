@@ -83,7 +83,7 @@ end
 local set_sprites_hook = Card.set_sprites
 function Card:set_sprites(_center, _front)
     set_sprites_hook(self, _center, _front)
-    self.children.ratio_select = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["nic_nicjokers"], { x = 9, y = 1 })
+    self.children.ratio_select = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, G.ASSET_ATLAS["nic_jokers"], { x = 9, y = 1 })
     self.children.ratio_select.role.draw_major = self
     self.children.ratio_select.states.hover.can = false
     self.children.ratio_select.states.click.can = false

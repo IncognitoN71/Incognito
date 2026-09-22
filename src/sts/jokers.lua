@@ -1,6 +1,6 @@
 SMODS.Atlas{ -- STS Jokers
-    key = "nicstsjokers",
-    path = "sts/nicstsjokers.png",
+    key = "sts_jokers",
+    path = "sts/sts_jokers.png",
     px = 71,
     py = 95,
 }
@@ -11,14 +11,14 @@ SMODS.Joker { -- Unleash
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicstsjokers',
+    atlas = 'sts_jokers',
     rarity = 2,
     cost = 6,
     pos = {x = 0, y = 0},
     config = { extra = { mult = 6, total = 6 } },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_ostyhp", set = "Other", vars = { G.GAME.osty_hp, G.GAME.osty_maxhp } }
+        info_queue[#info_queue + 1] = { key = "nic_osty_hp", set = "Other", vars = { G.GAME.osty_hp, G.GAME.osty_maxhp } }
         return { vars = { (card.ability.extra.mult + G.GAME.osty_hp) * G.GAME.lethality } }
     end,
 
@@ -41,7 +41,7 @@ SMODS.Joker { -- Dirge
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicstsjokers',
+    atlas = 'sts_jokers',
     rarity = 2,
     cost = 6,
     pos = {x = 1, y = 0},
@@ -49,7 +49,7 @@ SMODS.Joker { -- Dirge
     
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_nic_soul
-        info_queue[#info_queue + 1] = { key = "nic_ostyhp", set = "Other", vars = { G.GAME.osty_hp, G.GAME.osty_maxhp } }
+        info_queue[#info_queue + 1] = { key = "nic_osty_hp", set = "Other", vars = { G.GAME.osty_hp, G.GAME.osty_maxhp } }
         return { vars = { card.ability.extra.summon, G.GAME.current_round.hands_left * card.ability.extra.summon } }
     end,
 
@@ -92,7 +92,7 @@ SMODS.Joker { -- Call of the Void
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicstsjokers',
+    atlas = 'sts_jokers',
     rarity = 2,
     cost = 6,
     pos = {x = 2, y = 0},
@@ -141,7 +141,7 @@ SMODS.Joker { -- The Scythe
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicstsjokers',
+    atlas = 'sts_jokers',
     rarity = 2,
     cost = 6,
     pos = {x = 3, y = 0},
@@ -178,7 +178,7 @@ SMODS.Joker { -- Lethality
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicstsjokers',
+    atlas = 'sts_jokers',
     rarity = 2,
     cost = 6,
     pos = {x = 4, y = 0},

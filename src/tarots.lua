@@ -1,6 +1,6 @@
 SMODS.Atlas{ -- Tarots
-    key = "nictarots",
-    path = "nictarots.png",
+    key = "tarots",
+    path = "tarots.png",
     px = 71,
     py = 95,
 }
@@ -11,11 +11,11 @@ SMODS.Consumable {
     unlocked = true,
     discovered = false,
     cost = 4,
-    atlas = 'nictarots',
+    atlas = 'tarots',
     pos = {x = 0, y = 0 },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_tetosticker", set = "Other" }
+        info_queue[#info_queue + 1] = { key = "nic_teto_sticker", set = "Other" }
         info_queue[#info_queue+1] = G.P_CENTERS["j_nic_pear"]
         return { vars = { } }
     end, 
@@ -70,12 +70,12 @@ SMODS.Consumable {
     key = 'selene',
     set = 'Tarot',
     cost = 4,
-    atlas = 'nictarots',
+    atlas = 'tarots',
     pos = {x = 1, y = 0 },
     config = { extra = { phases = 2 } },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return { vars = { card.ability.extra.phases } }
     end,
 

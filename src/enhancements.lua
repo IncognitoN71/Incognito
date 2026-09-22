@@ -1,13 +1,13 @@
 SMODS.Atlas{ -- Jokers
-    key = "nicenhancements",
-    path = "nicenhancements.png",
+    key = "enhancements",
+    path = "enhancements.png",
     px = 71,
     py = 95,
 }
 
 SMODS.Enhancement {
     key = 'soul',
-    atlas = 'nicenhancements',
+    atlas = 'enhancements',
     pos = { x = 0, y = 0 },
     replace_base_card = true,
     no_rank = true,

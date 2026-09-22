@@ -1,13 +1,13 @@
 SMODS.Atlas{ -- Boosters
-    key = 'nicboosters',
-    path = 'nicboosters.png',
+    key = 'boosters',
+    path = 'boosters.png',
     px = 71,
     py = 95,
 }
 
 SMODS.Booster{
     key = 'teto_normal',
-    atlas = 'nicboosters',
+    atlas = 'boosters',
     pos = {x = 0, y = 0},
     discovered = false,
     weight = 0.5,
@@ -53,7 +53,7 @@ SMODS.ObjectType{
 
 SMODS.Booster{
     key = 'vase_normal_1',
-    atlas = 'nicboosters',
+    atlas = 'boosters',
     pos = {x = 1, y = 0},
     discovered = false,
     weight = 0.5,
@@ -99,7 +99,7 @@ SMODS.ObjectType{
 
 SMODS.Booster{
     key = 'vase_normal_2',
-    atlas = 'nicboosters',
+    atlas = 'boosters',
     pos = {x = 2, y = 0},
     discovered = false,
     weight = 0.1,
@@ -145,7 +145,7 @@ SMODS.ObjectType{
 
 SMODS.Booster{
     key = 'tools_normal',
-    atlas = 'nicboosters',
+    atlas = 'boosters',
     pos = {x = 3, y = 0},
     discovered = false,
     weight = 0,
@@ -192,7 +192,7 @@ SMODS.ObjectType{
 
 SMODS.Booster{
     key = 'lunar_normal_1',
-    atlas = 'nicboosters',
+    atlas = 'boosters',
     pos = {x = 0, y = 1},
     discovered = false,
     weight = 0.5,
@@ -209,7 +209,7 @@ SMODS.Booster{
     end,
 
     loc_vars = function(self, info_queue, center)
-        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return {
             vars = {
                 center.ability.choose,
@@ -262,7 +262,7 @@ SMODS.Booster{
 
 SMODS.Booster{
     key = 'lunar_normal_2',
-    atlas = 'nicboosters',
+    atlas = 'boosters',
     pos = {x = 1, y = 1},
     discovered = false,
     weight = 0.5,
@@ -279,7 +279,7 @@ SMODS.Booster{
     end,
 
     loc_vars = function(self, info_queue, center)
-        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return {
             vars = {
                 center.ability.choose,
@@ -332,7 +332,7 @@ SMODS.Booster{
 
 SMODS.Booster{
     key = 'lunar_jumbo',
-    atlas = 'nicboosters',
+    atlas = 'boosters',
     pos = {x = 2, y = 1},
     discovered = false,
     weight = 0.5,
@@ -349,7 +349,7 @@ SMODS.Booster{
     end,
 
     loc_vars = function(self, info_queue, center)
-        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return {
             vars = {
                 center.ability.choose,
@@ -402,7 +402,7 @@ SMODS.Booster{
 
 SMODS.Booster{
     key = 'lunar_mega',
-    atlas = 'nicboosters',
+    atlas = 'boosters',
     pos = {x = 3, y = 1},
     discovered = false,
     weight = 0.125,
@@ -419,7 +419,7 @@ SMODS.Booster{
     end,
 
     loc_vars = function(self, info_queue, center)
-        info_queue[#info_queue + 1] = { key = "nic_specialphases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
+        info_queue[#info_queue + 1] = { key = "nic_special_phases", set = "Other", vars = { G.GAME.phases_numerator, G.GAME.phases_denominator, } }
         return {
             vars = {
                 center.ability.choose,

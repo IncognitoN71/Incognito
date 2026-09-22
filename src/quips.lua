@@ -1,17 +1,17 @@
 -- Win
 
 SMODS.JimboQuip{
-    key = 'tetowordofthedaywin1',
+    key = 'nic_teto_word_of_the_day_win_1',
     type = 'win',
     extra = { 
-        center = 'j_nic_tetowordoftheday', 
+        center = 'j_nic_teto_word_of_the_day', 
         sound = 'nic_tetowordoftheday',
         times = 1,
         particle_colours = { HEX("e15d73"), HEX("e15d73"), HEX("e15d73") }, 
         materialize_colours = { HEX("e15d73"), HEX("e15d73"), HEX("e15d73") } 
     },
     filter = function()
-        if next(SMODS.find_card('j_nic_tetowordoftheday')) then
+        if next(SMODS.find_card('j_nic_teto_word_of_the_day')) then
             return true, { weight = 100 }
         end
         return false
@@ -19,7 +19,7 @@ SMODS.JimboQuip{
 }
 
 SMODS.JimboQuip{
-    key = 'peartowin1',
+    key = 'pearto_win_1',
     type = 'win',
     extra = { 
         center = 'j_nic_pearto', 
@@ -37,17 +37,17 @@ SMODS.JimboQuip{
 -- Loss
 
 SMODS.JimboQuip{
-    key = 'tetowordofthedayloss1',
+    key = 'nic_teto_word_of_the_day_loss_1',
     type = 'loss',
     extra = { 
-        center = 'j_nic_tetowordoftheday', 
+        center = 'j_nic_teto_word_of_the_day', 
         sound = 'nic_tetowordoftheday',
         times = 1,
         particle_colours = { HEX("e15d73"), HEX("e15d73"), HEX("e15d73") }, 
         materialize_colours = { HEX("e15d73"), HEX("e15d73"), HEX("e15d73") } 
     },
     filter = function()
-        if next(SMODS.find_card('j_nic_tetowordoftheday')) then
+        if next(SMODS.find_card('j_nic_teto_word_of_the_day')) then
             return true, { weight = 100 }
         end
         return false
@@ -55,7 +55,7 @@ SMODS.JimboQuip{
 }
 
 SMODS.JimboQuip{
-    key = 'deathloss1',
+    key = 'death_lose_1',
     type = 'loss',
     extra = { 
         center = 'j_nic_death', 

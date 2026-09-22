@@ -1,31 +1,31 @@
 SMODS.Atlas{ -- Plant Jokers
-    key = "nicpvzjokers",
-    path = "pvz/nicpvzjokers.png",
+    key = "pvz_jokers",
+    path = "pvz/pvz_jokers.png",
     px = 71,
     py = 95,
 }
 
 SMODS.Joker{ -- Crazy Dave
-    key = "crazydave",
+    key = "crazy_dave",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 2,
     cost = 5,
     pos = {x = 0, y = 6},
     config = { extra = { mult = 12 } },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = { key = 'tag_nic_vase1', set = 'Tag' }
-        return { vars = { localize { type = 'name_text', set = 'Tag', key = 'tag_nic_vase1' } } }
+        info_queue[#info_queue + 1] = { key = 'tag_nic_vase_1', set = 'Tag' }
+        return { vars = { localize { type = 'name_text', set = 'Tag', key = 'tag_nic_vase_1' } } }
     end,
 
     add_to_deck = function (self, card, from_debuff)
         G.E_MANAGER:add_event(Event({
             func = function()
-                G.GAME.zengarden = #SMODS.find_card("j_nic_crazydave")
+                G.GAME.zengarden = #SMODS.find_card("j_nic_crazy_dave")
                 return true
             end
         }))
@@ -34,7 +34,7 @@ SMODS.Joker{ -- Crazy Dave
     remove_from_deck = function (self, card, from_debuff)
         G.E_MANAGER:add_event(Event({
             func = function()
-                G.GAME.zengarden = #SMODS.find_card("j_nic_crazydave")
+                G.GAME.zengarden = #SMODS.find_card("j_nic_crazy_dave")
                 G.zengarden.states.visible = false
                 if G.GAME.zengarden < 1 then
                     for i = 1, #G.zengarden.cards do 
@@ -68,7 +68,7 @@ SMODS.Joker{ -- Crazy Dave
             card:juice_up(0.5, 0.5)
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    local random = pseudorandom('j_nic_crazydave', 1, 12)
+                    local random = pseudorandom('j_nic_crazy_dave', 1, 12)
                     play_sound("nic_crazydave" .. random)
                     return true
                 end
@@ -77,7 +77,7 @@ SMODS.Joker{ -- Crazy Dave
         if context.joker_main and next(context.poker_hands["Straight"]) then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    local random = pseudorandom('j_nic_crazydave', 1, 12)
+                    local random = pseudorandom('j_nic_crazy_dave', 1, 12)
                     play_sound("nic_crazydave" .. random)
                     return true
                 end
@@ -97,7 +97,7 @@ SMODS.Joker{ -- Crazy Dave
             trigger = 'after',
             delay = 0.4,
             func = function()
-                local random = pseudorandom('j_nic_crazydave', 1, 12)
+                local random = pseudorandom('j_nic_crazy_dave', 1, 12)
                 play_sound("nic_crazydave" .. random)
                 card:juice_up(0.3, 0.5)
                 return true
@@ -129,7 +129,7 @@ SMODS.Joker{ -- Peashooter
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 4,
     pos = {x = 0, y = 0},
@@ -160,7 +160,7 @@ SMODS.Joker{ -- Sunflower
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 2,
     pos = {x = 1, y = 0},
@@ -186,12 +186,12 @@ SMODS.Joker{ -- Sunflower
 }
 
 SMODS.Joker{ -- Cherry Bomb
-    key = "cherrybomb",
+    key = "cherry_bomb",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 6,
     pos = {x = 2, y = 0},
@@ -234,8 +234,8 @@ SMODS.Joker{ -- Cherry Bomb
         if #G.deck.cards <= 0 then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    G.GAME.death_text = "cherrybomb"
-                    G.GAME.death_texture = "nicpvzjokers"
+                    G.GAME.death_text = "cherry_bomb"
+                    G.GAME.death_texture = "pvz_jokers"
                     return true
                 end
             }))
@@ -248,12 +248,12 @@ SMODS.Joker{ -- Cherry Bomb
 }
 
 SMODS.Joker{ -- Wall-nut
-    key = "wallnut",
+    key = "wall_nut",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 2,
     pos = {x = 3, y = 0},
@@ -271,7 +271,7 @@ SMODS.Joker{ -- Wall-nut
 
     calculate = function(self, card, context)
         if context.setting_blind and not context.blueprint then
-            if pseudorandom('wallnut', 1, 2) == 1 then
+            if pseudorandom('wall_nut', 1, 2) == 1 then
                 G.E_MANAGER:add_event(Event({
                     func = function()
                         ease_hands_played(card.ability.extra.hand)
@@ -306,12 +306,12 @@ SMODS.Joker{ -- Wall-nut
 }
 
 SMODS.Joker{ -- Potato Mine
-    key = "potatomine",
+    key = "potato_mine",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 1,
     pos = {x = 5, y = 0},
@@ -369,8 +369,8 @@ SMODS.Joker{ -- Potato Mine
         if #G.deck.cards <= 0 then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    G.GAME.death_text = "potatomine"
-                    G.GAME.death_texture = "nicpvzjokers"
+                    G.GAME.death_text = "potato_mine"
+                    G.GAME.death_texture = "pvz_jokers"
                     return true
                 end
             }))
@@ -383,12 +383,12 @@ SMODS.Joker{ -- Potato Mine
 }
 
 SMODS.Joker{ -- Snow Pea
-    key = "snowpea",
+    key = "snow_pea",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 7,
     pos = {x = 6, y = 0},
@@ -429,7 +429,7 @@ SMODS.Joker{ -- Chomper
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 6,
     pos = {x = 7, y = 0},
@@ -499,7 +499,7 @@ SMODS.Joker{ -- Chomper
             G.E_MANAGER:add_event(Event({
                 func = function()
                     G.GAME.death_text = "chomper"
-                    G.GAME.death_texture = "nicpvzjokers"
+                    G.GAME.death_texture = "pvz_jokers"
                     return true
                 end
             }))
@@ -517,7 +517,7 @@ SMODS.Joker{ -- Repeater
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 8,
     pos = {x = 9, y = 0},
@@ -546,12 +546,12 @@ SMODS.Joker{ -- Repeater
 }
 
 SMODS.Joker{ -- Puff-shroom
-    key = "puffshroom",
+    key = "puff_shroom",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 0,
     pos = {x = 0, y = 1},
@@ -579,12 +579,12 @@ SMODS.Joker{ -- Puff-shroom
 }
 
 SMODS.Joker{ -- Sun-shroom
-    key = "sunshroom",
+    key = "sun_shroom",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 1,
     pos = {x = 3, y = 1},
@@ -632,12 +632,12 @@ SMODS.Joker{ -- Sun-shroom
 }
 
 SMODS.Joker{ -- Fume-shroom
-    key = "fumeshroom",
+    key = "fume_shroom",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 3,
     pos = {x = 4, y = 1},
@@ -676,12 +676,12 @@ SMODS.Joker{ -- Fume-shroom
 }
 
 SMODS.Joker{ -- Grave Buster
-    key = "gravebuster",
+    key = "grave_buster",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 3,
     pos = {x = 5, y = 1},
@@ -725,7 +725,7 @@ SMODS.Joker{ -- Grave Buster
                             cen_pool[#cen_pool + 1] = enhancement_center
                         end
                     end
-                    local enhancement = pseudorandom_element(cen_pool, 'nic_gravebuster')
+                    local enhancement = pseudorandom_element(cen_pool, 'j_nic_grave_buster')
                     cards[i] = SMODS.add_card { set = "Base", enhancement = enhancement.key }
                 end
                 SMODS.calculate_context({ playing_card_added = true, cards = cards })
@@ -746,12 +746,12 @@ SMODS.Joker{ -- Grave Buster
 }
 
 SMODS.Joker{ -- Hypno-shroom
-    key = "hypnoshroom",
+    key = "hypno_shroom",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 3,
     pos = {x = 6, y = 1},
@@ -794,7 +794,7 @@ SMODS.Joker{ -- Hypno-shroom
                                 cen_pool[#cen_pool + 1] = enhancement_center
                             end
                         end
-                        local enhancement = pseudorandom_element(cen_pool, 'nic_hypnoshroom')
+                        local enhancement = pseudorandom_element(cen_pool, 'j_nic_hypno_shroom')
 
                         local cards = copy_card(G.hand.highlighted[i], nil, nil, G.playing_card)
 
@@ -821,12 +821,12 @@ SMODS.Joker{ -- Hypno-shroom
 }
 
 SMODS.Joker{ -- Scaredy-shroom
-    key = "scaredyshroom",
+    key = "scaredy_shroom",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 1,
     pos = {x = 7, y = 1},
@@ -873,12 +873,12 @@ SMODS.Joker{ -- Scaredy-shroom
 }
 
 SMODS.Joker{ -- Ice-shroom
-    key = "iceshroom",
+    key = "ice_shroom",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 3,
     pos = {x = 9, y = 1},
@@ -944,12 +944,12 @@ SMODS.Joker{ -- Ice-shroom
 }
 
 SMODS.Joker{ -- Doom-shroom
-    key = "doomshroom",
+    key = "doom_shroom",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 0, y = 2},
@@ -1003,8 +1003,8 @@ SMODS.Joker{ -- Doom-shroom
         if #G.deck.cards <= 0 then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    G.GAME.death_text = "doomshroom"
-                    G.GAME.death_texture = "nicpvzjokers"
+                    G.GAME.death_text = "doom_shroom"
+                    G.GAME.death_texture = "pvz_jokers"
                     return true
                 end
             }))
@@ -1023,7 +1023,7 @@ SMODS.Joker{ -- Crater
     unlocked = true,
     discovered = false,
     no_collection = true,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 0,
     pos = {x = 1, y = 2},
@@ -1053,12 +1053,12 @@ SMODS.Joker{ -- Crater
 }
 
 SMODS.Joker{ -- Lily Pad
-    key = "lilypad",
+    key = "lily_pad",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 2, y = 2},
@@ -1081,7 +1081,7 @@ SMODS.Joker{ -- Squash
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 3, y = 2},
@@ -1104,7 +1104,7 @@ SMODS.Joker{ -- Threepeater
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 4, y = 2},
@@ -1122,12 +1122,12 @@ SMODS.Joker{ -- Threepeater
 }
 
 SMODS.Joker{ -- Tangle Kelp
-    key = "tanglekelp",
+    key = "tangle_kelp",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 5, y = 2},
@@ -1150,7 +1150,7 @@ SMODS.Joker{ -- Jalapeno
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 6, y = 2},
@@ -1191,7 +1191,7 @@ SMODS.Joker{ -- Jalapeno
             G.E_MANAGER:add_event(Event({
                 func = function()
                     G.GAME.death_text = "jalapeno"
-                    G.GAME.death_texture = "nicpvzjokers"
+                    G.GAME.death_texture = "pvz_jokers"
                     return true
                 end
             }))
@@ -1209,7 +1209,7 @@ SMODS.Joker{ -- Spikeweed
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 7, y = 2},
@@ -1233,7 +1233,7 @@ SMODS.Joker{ -- Torchwood
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 8, y = 2},
@@ -1251,12 +1251,12 @@ SMODS.Joker{ -- Torchwood
 }
 
 SMODS.Joker{ -- Tall-Nut
-    key = "tallnut",
+    key = "tall_nut",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 9, y = 2},
@@ -1274,12 +1274,12 @@ SMODS.Joker{ -- Tall-Nut
 }
 
 SMODS.Joker{ -- Sea-Shroom
-    key = "seashroom",
+    key = "sea_shroom",
     blueprint_compat = false,
     eternal_compat = true,
     unlocked = true,
     discovered = false,
-    atlas = 'nicpvzjokers',
+    atlas = 'pvz_jokers',
     rarity = 'nic_plants',
     cost = 5,
     pos = {x = 0, y = 3},

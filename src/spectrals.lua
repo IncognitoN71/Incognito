@@ -1,6 +1,6 @@
 SMODS.Atlas{ -- Spectrals
-    key = "nicspectrals",
-    path = "nicspectrals.png",
+    key = "spectrals",
+    path = "spectrals.png",
     px = 71,
     py = 95,
 }
@@ -11,7 +11,7 @@ SMODS.Consumable {
     unlocked = true,
     discovered = false,
     cost = 4,
-    atlas = 'nicspectrals',
+    atlas = 'spectrals',
     pos = {x = 0, y = 0 },
     config = { max_highlighted = 1 },
 
