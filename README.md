@@ -9,44 +9,10 @@ I did the art and code so don't flame me too hard for taking so long or how bad 
 There is also a scrapped content button, just a bunch of stuff I didn't fully flesh out.\
 (But I might add them in the future hehehehe)
 
-# Contents
+# Content
 
-## 66 Jokers:
-1 Common Joker\
-19 Uncommon Jokers\
-11 Rare Jokers\
-2 Legendary Jokers\
-17 Teto Jokers\
-16 Plants Jokers
-
-## 1 Tarot:
-Tetarot
-
-## 3 Tags:
-Teto Tag\
-Twindrill Tag\
-Vase Tag
-
-## 1 Deck:
-Plants Deck
-
-## 1 Custom Consumable:
-Zen Garden
-- Mystery Vase
-- Plants Vase
-- Shovel
-
-## 3 Challenge Runs:
-OOPS? ALL SWOONS!\
-O0p$? @l- HAHAHA!\
-THE FUTURE WILL BE PAVED WITH METAL!
+Play and find out (I forgot)
 
 ## Crossovers
-[Revos-Vault](https://github.com/Cdrvo/Revos-Vault---Balatro-Mod)\
-[MoreFluff](https://github.com/notmario/MoreFluff)\
-[ALLOY](https://github.com/TheCoroboCorner/Alloy)\
-[Hyperfixation (Only DEV)](https://github.com/tomatoseandcrying/hyperfixation/tree/main)\
-[GARBSHIT](https://github.com/Gainumki/GARBSHIT)\
-[JokerDisplay](https://github.com/nh6574/JokerDisplay/tree/32404069a39f6f9389bb97de006ad8e00de4f913)\
-[Partner](https://github.com/Icecanno/Partner-API)\
-More maybe idk XP
+None, since I need to properly redo them in stuff blah blah blah
+If people crossmod me then okie dookieeee
