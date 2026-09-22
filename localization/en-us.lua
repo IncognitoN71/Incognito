@@ -455,7 +455,7 @@ return {
                     "{C:inactive}(Currently {C:nic_necrobinder}+#2#{C:inactive} Summon)",
                 }
             },
-            j_nic_callofthevoid = {
+            j_nic_call_of_the_void = {
                 name = "Call of the Void",
                 text = {
                     "Start of your turn,",
@@ -463,7 +463,7 @@ return {
                     "into your {C:attention}hand{}.",
                 }
             },
-            j_nic_thescythe = {
+            j_nic_the_scythe = {
                 name = "The Scythe",
                 text = {
                     "On {C:attention}first hand{}, {C:mult}+#1#{} Mult.",
@@ -912,7 +912,7 @@ return {
                     "{C:green}Infinite Reroll",
                 }
             },
-            j_nic_thetruefibonaccisequence = {
+            j_nic_the_true_fibonacci_sequence = {
                 name = "The True Fibonacci Sequence",
                 text = {
                     "When {C:attention}Scored{}, Increases {X:chips,C:white}XChips",

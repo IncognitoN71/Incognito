@@ -87,7 +87,7 @@ SMODS.Joker { -- Dirge
 }
 
 SMODS.Joker { -- Call of the Void
-    key = "callofthevoid",
+    key = "call_of_the_void",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
@@ -136,7 +136,7 @@ SMODS.Joker { -- Call of the Void
 }
 
 SMODS.Joker { -- The Scythe
-    key = "thescythe",
+    key = "the_scythe",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,

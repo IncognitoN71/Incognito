@@ -333,7 +333,7 @@ SMODS.Joker{ -- Reroll Infinite
 
 
 SMODS.Joker{ -- The True Fibonacci Sequence
-    key = "thetruefibonaccisequence",
+    key = "the_true_fibonacci_sequence",
     blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
