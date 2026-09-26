@@ -22,7 +22,6 @@ SMODS.ConsumableType {
                 "this card in an",
                 "unseeded run to",
                 "learn what it does",
-
             },
         }
     },
@@ -31,6 +30,8 @@ SMODS.ConsumableType {
 SMODS.Consumable { -- Mystery Vase
     key = 'mystery_vase',
     set = 'ZenGarden',
+    unlocked = true,
+    discovered = false,
     cost = 4,
     atlas = 'pvz_consumables',
     pos = {x = 0, y = 1 },
@@ -102,6 +103,8 @@ SMODS.Consumable { -- Mystery Vase
 SMODS.Consumable { -- Plants Vase
     key = 'plants_vase',
     set = 'ZenGarden',
+    unlocked = true,
+    discovered = false,
     cost = 4,
     atlas = 'pvz_consumables',
     pos = {x = 1, y = 1 },
@@ -140,6 +143,8 @@ SMODS.Consumable { -- Plants Vase
 SMODS.Consumable { -- Shovel
     key = 'shovel',
     set = 'ZenGarden',
+    unlocked = true,
+    discovered = false,
     cost = 4,
     atlas = 'pvz_consumables',
     pos = {x = 2, y = 1 },

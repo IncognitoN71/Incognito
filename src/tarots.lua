@@ -69,6 +69,8 @@ SMODS.Consumable {
 SMODS.Consumable {
     key = 'selene',
     set = 'Tarot',
+    unlocked = true,
+    discovered = false,
     cost = 4,
     atlas = 'tarots',
     pos = {x = 1, y = 0 },

@@ -45,6 +45,10 @@ assert(SMODS.load_file("src/phases/functions.lua"))()
 assert(SMODS.load_file("src/phases/basephases.lua"))()
 assert(SMODS.load_file("src/phases/specialphases.lua"))()
 
+-- Cartridge
+assert(SMODS.load_file("src/cartridge/cartridge.lua"))()
+assert(SMODS.load_file("src/cartridge/functions.lua"))()
+
 -- Poopoo
 if Incognito.config.not_finished then
 	SMODS.load_file("src/scrapped/scrapped.lua")()

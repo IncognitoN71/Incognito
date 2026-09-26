@@ -893,6 +893,16 @@ return {
                 }
             },
 
+            -- Cartridge
+
+            j_nic_3ds = {
+                name = "3DS",
+                text = {
+                    "Insert {C:nic_cartridge}Cartridge",
+                    "to inherit effect"
+                }
+            },
+
             -- Scrapped
 
             j_nic_overflow = {
@@ -1194,6 +1204,77 @@ return {
                     "{C:inactive}( {V:2}#6#{C:inactive} )",
                     "{s:0.2} ",
                     "{C:inactive}(Must have room)"},
+                }
+            },
+        },
+        Cartridge = {
+            c_nic_default = {
+                name = "Default",
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_heart_gold = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}HeartGold"
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_spade_steel = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}SpadeSteel"
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_star = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Star"
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_moon = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Moon"
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_rhythm_steven = {
+                name = "Rhythm Steven",
+                text = {
+                    ""
+                }
+            },
+            c_nic_the_joker_midas_mask = {
+                name = {
+                    "The Joker",
+                    "{s:0.5}Midas Mask 3D"
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_weetopia = {
+                name = "Weetopia",
+                text = {
+                    ""
+                }
+            },
+            c_nic_balatro = {
+                name = "Balatro",
+                text = {
+                    ""
                 }
             },
         },
@@ -1537,6 +1618,7 @@ return {
             nic_mesmerizer_inactive = "No Luck! No Hope!",
             nic_territory_active = "Territory!",
             nic_territory_inactive = "Boo!",
+            nic_insert = "Insert",
         },
         v_text = {
             ch_c_nic_incognito_1 = { "You have {C:clubs}Clubs{}, {C:hearts}Hearts{}, {C:diamonds}Diamonds{}" },
