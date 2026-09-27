@@ -1209,9 +1209,11 @@ return {
         },
         Cartridge = {
             c_nic_default = {
-                name = "Default",
+                name = "Test",
                 text = {
-                    ""
+                    "{C:mult}+#1#{} Mult",
+                    "Double Mult before",
+                    "scoring"
                 }
             },
             c_nic_pokemon_heart_gold = {

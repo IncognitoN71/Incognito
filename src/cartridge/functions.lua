@@ -27,7 +27,7 @@ function Card:highlight(is_higlighted)
 	end
 end
 
--- 3DS Overlay
+--[[ 3DS Overlay
 
 SMODS.draw_ignore_keys.cartridge_overlay = true
 SMODS.DrawStep({
@@ -35,8 +35,8 @@ SMODS.DrawStep({
     order = 201,
     func = function(card, layer)
         if card.config.center.key == "j_nic_3ds" and card.ability then
-            local cartridge = G.P_CENTERS[card.ability.extra.cartridge]
             if card.ability.extra.cartridge then
+                local cartridge = G.P_CENTERS[card.ability.extra.cartridge.config.center.key]
                 card.children.cartridge_overlay = Sprite(0, 0, G.CARD_W, G.CARD_H, G.ASSET_ATLAS[cartridge.overlay_atlas], cartridge.pos)
                 card.children.cartridge_overlay.role.draw_major = card
                 card.children.cartridge_overlay:draw_shader("dissolve", nil, nil, nil, card.children.center, nil, nil)
@@ -44,4 +44,4 @@ SMODS.DrawStep({
         end
     end,
 	conditions = { vortex = false, facing = "front" },
-})
+})]]

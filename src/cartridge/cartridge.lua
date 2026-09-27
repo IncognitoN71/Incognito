@@ -33,9 +33,11 @@ SMODS.Joker { -- 3DS
     config = { extra = { cartridge = nil } },
 
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS[card.ability.extra.cartridge]
         if card.area and card.area == G.jokers then
             local compatible = card.ability.extra.cartridge
+            if compatible then
+                info_queue[#info_queue+1] = G.P_CENTERS[compatible.config.center.key]
+            end
             main_end = {
                 {
                     n = G.UIT.C,
@@ -45,7 +47,7 @@ SMODS.Joker { -- 3DS
                             n = G.UIT.C,
                             config = { ref_table = card, align = "m", colour = compatible and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
                             nodes = {
-                                { n = G.UIT.T, config = { text = ' ' .. (compatible and localize { type = 'name_text', key = card.ability.extra.cartridge, set = 'Cartridge' } or localize { type = 'variable', key = 'nic_insert' }) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+                                { n = G.UIT.T, config = { text = ' ' .. (compatible and localize { type = 'name_text', key = compatible.config.center.key, set = 'Cartridge' } or localize { type = 'variable', key = 'nic_insert' }) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
                             }
                         }
                     }
@@ -67,14 +69,10 @@ SMODS.Joker { -- 3DS
 
     calculate = function(self, card, context)
 		if not context.blueprint then
-            local cartridge = {}
-            if card.ability.extra.cartridge and (G.P_CENTERS[card.ability.extra.cartridge] or {}).cartridge_calculate then
-                local ret = G.P_CENTERS[card.ability.extra.cartridge]:cartridge_calculate(card, context)
-                if ret and next(ret) then
-                    cartridge[#cartridge + 1] = ret
-                end
+            local cartridge = card.ability.extra.cartridge
+            if cartridge and (G.P_CENTERS[cartridge.config.center.key] or {}).cartridge_calculate then
+                return G.P_CENTERS[cartridge.config.center.key]:cartridge_calculate(cartridge.config.center, card, context)
             end
-            return SMODS.merge_effects(cartridge)
         end
 	end,
 
@@ -87,7 +85,7 @@ SMODS.Joker { -- 3DS
             func = function()
                 card:juice_up()
                 play_sound("nic_click")
-                SMODS.add_card({ set = 'Cartridge', key = card.ability.extra.cartridge })
+                SMODS.copy_card(card.ability.extra.cartridge)
                 card.ability.extra.cartridge = nil
                 G.jokers:unhighlight_all()
                 return true
@@ -114,15 +112,15 @@ Incognito.Cartridge = SMODS.Consumable:extend({
         if not ds.ability.extra.cartridge then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    ds.ability.extra.cartridge = card.config.center.key
+                    ds.ability.extra.cartridge = card
                     return true
                 end
             }))
-        elseif ds.ability.extra.cartridge ~= card.config.center.key then
+        elseif ds.ability.extra.cartridge ~= card then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    SMODS.add_card({ set = 'Cartridge', key = ds.ability.extra.cartridge })
-                    ds.ability.extra.cartridge = card.config.center.key
+                    SMODS.copy_card(ds.ability.extra.cartridge)
+                    ds.ability.extra.cartridge = card
                     return true
                 end
             }))
@@ -170,13 +168,21 @@ Incognito.Cartridge({
     atlas = 'cartridge',
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 0, y = 0 },
-    config = { extra = { } },
+    config = { extra = { mult = 4 } },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { } }
+        return { vars = { card.ability.extra.mult } }
     end,
 
-    cartridge_calculate = function(self, card, context)
+    cartridge_calculate = function(self, cartridge, card, context)
+        if context.joker_main then
+            return {
+                mult = cartridge.config.extra.mult
+            }
+        end
+        if context.before then 
+            cartridge.config.extra.mult = cartridge.config.extra.mult * 2
+        end
     end,
 })
 
