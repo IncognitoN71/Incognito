@@ -27,12 +27,12 @@ function Card:highlight(is_higlighted)
 	end
 end
 
---[[ 3DS Overlay
+-- 3DS Overlay
 
-SMODS.draw_ignore_keys.cartridge_overlay = true
+--[[SMODS.draw_ignore_keys.cartridge_overlay = true
 SMODS.DrawStep({
     key = "cartridge_overlay",
-    order = 201,
+    order = 20,
     func = function(card, layer)
         if card.config.center.key == "j_nic_3ds" and card.ability then
             if card.ability.extra.cartridge then

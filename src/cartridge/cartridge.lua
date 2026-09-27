@@ -30,13 +30,13 @@ SMODS.Joker { -- 3DS
     cost = 6,
     pos = {x = 0, y = 0},
     display_size = { w = 95 },
-    config = { extra = { cartridge = nil } },
+    config = { cartridge = nil, cartridge_key = nil },
 
     loc_vars = function(self, info_queue, card)
         if card.area and card.area == G.jokers then
-            local compatible = card.ability.extra.cartridge
+            local compatible = card.ability.cartridge_key
             if compatible then
-                info_queue[#info_queue+1] = G.P_CENTERS[compatible.config.center.key]
+                info_queue[#info_queue + 1] = G.P_CENTERS[compatible.config.center.key]
             end
             main_end = {
                 {
@@ -69,9 +69,9 @@ SMODS.Joker { -- 3DS
 
     calculate = function(self, card, context)
 		if not context.blueprint then
-            local cartridge = card.ability.extra.cartridge
+            local cartridge = card.ability.cartridge_key
             if cartridge and (G.P_CENTERS[cartridge.config.center.key] or {}).cartridge_calculate then
-                return G.P_CENTERS[cartridge.config.center.key]:cartridge_calculate(cartridge.config.center, card, context)
+                return G.P_CENTERS[cartridge.config.center.key]:cartridge_calculate(card, context, card.ability.cartridge)
             end
         end
 	end,
@@ -85,8 +85,10 @@ SMODS.Joker { -- 3DS
             func = function()
                 card:juice_up()
                 play_sound("nic_click")
-                SMODS.copy_card(card.ability.extra.cartridge)
-                card.ability.extra.cartridge = nil
+                local new_cartridge = SMODS.copy_card(card.ability.cartridge_key)
+                new_cartridge.ability.extra = card.ability.cartridge
+                card.ability.cartridge = nil
+                card.ability.cartridge_key = nil
                 G.jokers:unhighlight_all()
                 return true
             end
@@ -94,7 +96,7 @@ SMODS.Joker { -- 3DS
     end,
 
     can_use = function(self, card)
-        return card.ability.extra.cartridge
+        return card.ability.cartridge
     end
 }
 
@@ -109,18 +111,21 @@ Incognito.Cartridge = SMODS.Consumable:extend({
 
     use = function(self, card, area, copier)
         local ds = G.jokers.highlighted[1]
-        if not ds.ability.extra.cartridge then
+        if not ds.ability.cartridge_key then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    ds.ability.extra.cartridge = card
+                    ds.ability.cartridge = card.ability.extra
+                    ds.ability.cartridge_key = card
                     return true
                 end
             }))
-        elseif ds.ability.extra.cartridge ~= card then
+        elseif ds.ability.cartridge_key ~= card then
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    SMODS.copy_card(ds.ability.extra.cartridge)
-                    ds.ability.extra.cartridge = card
+                    local new_cartridge = SMODS.copy_card(ds.ability.cartridge_key)
+                    new_cartridge.ability.extra = ds.ability.cartridge
+                    ds.ability.cartridge = card.ability.extra
+                    ds.ability.cartridge_key = card
                     return true
                 end
             }))
@@ -174,14 +179,14 @@ Incognito.Cartridge({
         return { vars = { card.ability.extra.mult } }
     end,
 
-    cartridge_calculate = function(self, cartridge, card, context)
+    cartridge_calculate = function(self, card, context, cartridge)
         if context.joker_main then
             return {
-                mult = cartridge.config.extra.mult
+                mult = cartridge.mult
             }
         end
         if context.before then 
-            cartridge.config.extra.mult = cartridge.config.extra.mult * 2
+            cartridge.mult = cartridge.mult * 2
         end
     end,
 })
@@ -199,7 +204,7 @@ Incognito.Cartridge({
         return { vars = { } }
     end,
 
-    cartridge_calculate = function(self, card, context)
+    cartridge_calculate = function(self, card, context, cartridge)
     end,
 })
 
