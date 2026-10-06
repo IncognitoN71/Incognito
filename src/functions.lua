@@ -27,15 +27,6 @@ to_number = to_number or function(num)
     return num
 end
 
--- Death Text (Lobcorp)
-
-local new_roundref = new_round 
-function new_round()
-    new_roundref()
-    G.GAME.death_text = nil
-    G.GAME.death_texture = nil
-end
-
 -- Crazy Taxi
 
 local function reset_nic_crazy_taxi_rank()
@@ -71,9 +62,21 @@ local function reset_nic_moonring_card()
     end
 end
 
--- Resetting Every Round
+-- Resetting Every Round and G.GAME
 
 function SMODS.current_mod.reset_game_globals(run_start)
+    if run_start then
+        -- Phases
+        G.GAME.phases_numerator = 1
+        G.GAME.phases_denominator = 100 
+        -- STS Osty
+        G.GAME.osty_hp = 0
+        G.GAME.osty_maxhp = 0
+        G.GAME.lethality = 1
+        -- Lobotomy Corp Death Text
+        G.GAME.death_text = nil
+        G.GAME.death_texture = nil
+    end
     reset_nic_crazy_taxi_rank() -- Crazy Taxi
     reset_nic_moonring_card() -- Moon Ring (What are you doing here bruh)
 end

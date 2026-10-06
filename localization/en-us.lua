@@ -4,10 +4,10 @@ return {
             b_nic_plants = {
                 name = "Plants Deck",
                 text = {
-                    "Start run with",
+                    "Start run with a",
                     "{C:nic_plants,T:j_nic_crazydave}#1#{} joker",
                     "and {C:attention}2{} copies of",
-                    "{C:nic_plants,T:c_nic_mysteryvase}#2#{} Card"
+                    "{C:nic_plants,T:c_nic_mysteryvase}#2#{} Card",
                 }
             },
             b_nic_tidal = {
@@ -16,7 +16,15 @@ return {
                     "Start run with the",
                     "{C:tarot,T:v_crystal_ball}#1#{} voucher{},",
                     "{C:nic_phases,T:c_nic_newmoon}#2#{}, and",
-                    "{C:tarot,T:c_high_priestess}#3#"
+                    "{C:tarot,T:c_high_priestess}#3#",
+                }
+            },
+            b_nic_3decks = {
+                name = "3Decks",
+                text = {
+                    "Start run with",
+                    "a {C:nic_cartridge,T:j_nic_3ds}#1#{} joker and",
+                    "{C:nic_cartridge,T:c_nic_pokemon_heart_gold}#2#",
                 }
             }
         },
@@ -899,7 +907,7 @@ return {
                 name = "3DS",
                 text = {
                     "Insert {C:nic_cartridge}Cartridge",
-                    "to inherit effect"
+                    "to inherit effect",
                 }
             },
 
@@ -1208,27 +1216,82 @@ return {
             },
         },
         Cartridge = {
-            c_nic_default = {
-                name = "Test",
-                text = {
-                    "{C:mult}+#1#{} Mult",
-                    "Double Mult before",
-                    "scoring"
-                }
-            },
             c_nic_pokemon_heart_gold = {
                 name = {
                     "Pokémon",
-                    "{s:0.5}HeartGold"
+                    "{s:0.5}HeartGold",
                 },
                 text = {
-                    ""
+                    "#1#"
                 }
             },
             c_nic_pokemon_spade_steel = {
                 name = {
                     "Pokémon",
-                    "{s:0.5}SpadeSteel"
+                    "{s:0.5}SpadeSteel",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_tarot = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Tarot",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_planet = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Planet",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_spectral = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Spectral",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_sock = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Sock",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_buskin = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Buskin",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_mark = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Mark",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_hook = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Hook",
                 },
                 text = {
                     ""
@@ -1237,7 +1300,7 @@ return {
             c_nic_pokemon_star = {
                 name = {
                     "Pokémon",
-                    "{s:0.5}Star"
+                    "{s:0.5}Star",
                 },
                 text = {
                     ""
@@ -1246,7 +1309,58 @@ return {
             c_nic_pokemon_moon = {
                 name = {
                     "Pokémon",
-                    "{s:0.5}Moon"
+                    "{s:0.5}Moon",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_onyx_agate = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Onyx Agate",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_pokemon_rough_gem = {
+                name = {
+                    "Pokémon",
+                    "{s:0.5}Rough Gem",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_the_joker_delayed_hourglass = {
+                name = {
+                    "The Joker",
+                    "{s:0.5}Delayed Hourglass",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_the_joker_midas_mask = {
+                name = {
+                    "The Joker",
+                    "{s:0.5}Midas Mask 3D",
+                },
+                text = {
+                    ""
+                }
+            },
+            c_nic_canio_and_yorick = {
+                name = "Canio and Yorick",
+                text = {
+                    ""
+                }
+            },
+            c_nic_paper_canio_sticker_stake = {
+                name = {
+                    "Paper Canio",
+                    "{s:0.5}Sticker Stake",
                 },
                 text = {
                     ""
@@ -1255,16 +1369,11 @@ return {
             c_nic_rhythm_steven = {
                 name = "Rhythm Steven",
                 text = {
-                    ""
-                }
-            },
-            c_nic_the_joker_midas_mask = {
-                name = {
-                    "The Joker",
-                    "{s:0.5}Midas Mask 3D"
-                },
-                text = {
-                    ""
+                    "Played cards with {C:attention}even{} rank",
+                    "give {C:mult}+#1#{} Mult when scored, gain",
+                    "{C:mult}+#2#{} Mult for each {C:attention}consecutive",
+                    "scored {C:attention}even{} rank in played hand",
+                    "{C:inactive}(10, 8, 6, 4, 2)",
                 }
             },
             c_nic_weetopia = {
@@ -1275,6 +1384,12 @@ return {
             },
             c_nic_balatro = {
                 name = "Balatro",
+                text = {
+                    ""
+                }
+            },
+            c_nic_cut_the_nope = {
+                name = "Cut the Nope",
                 text = {
                     ""
                 }

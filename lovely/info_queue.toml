@@ -1,0 +1,31 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 50
+
+# Aikoshen Compat (Optional)
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = '''loc_vars = {cfg.extra}
+        localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}
+   end'''
+position = 'at'
+payload = '''loc_vars = {cfg.extra}
+        localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars} -- comment to stop a bad patch
+   end'''
+match_indent = true
+
+# Thanks Foo
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = '''localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}
+   end'''
+position = 'at'
+payload = '''localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}
+     elseif _c.set == "Cartridge" then
+         localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}
+     end
+'''
+match_indent = true

@@ -12,15 +12,6 @@ SMODS.Atlas{ -- STS Summon Text
     py = 7,
 }
 
-local igo = Game.init_game_object
-function Game:init_game_object()
-    local ret = igo(self)
-    ret.osty_hp = 0
-    ret.osty_maxhp = 0
-    ret.lethality = 1
-    return ret
-end
-
 SMODS.draw_ignore_keys.sprite = true
 
 -- Mult
@@ -79,7 +70,7 @@ SMODS.DrawStep({ -- The Scythe
 	order = 25,
 	func = function(self)
         local card = self.config.center_key
-        if card ~= "j_nic_thescythe" or not G.P_CENTERS[card].discovered or not G.P_CENTERS[card].unlocked then return end
+        if card ~= "j_nic_the_scythe" or not G.P_CENTERS[card].discovered or not G.P_CENTERS[card].unlocked then return end
 
         if not self.children.sprite then 
             self.children.sprite = SMODS.CanvasSprite(

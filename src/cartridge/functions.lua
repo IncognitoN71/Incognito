@@ -29,19 +29,17 @@ end
 
 -- 3DS Overlay
 
---[[SMODS.draw_ignore_keys.cartridge_overlay = true
+SMODS.draw_ignore_keys.cartridge_overlay = true
 SMODS.DrawStep({
     key = "cartridge_overlay",
-    order = 20,
+    order = 25,
     func = function(card, layer)
-        if card.config.center.key == "j_nic_3ds" and card.ability then
-            if card.ability.extra.cartridge then
-                local cartridge = G.P_CENTERS[card.ability.extra.cartridge.config.center.key]
-                card.children.cartridge_overlay = Sprite(0, 0, G.CARD_W, G.CARD_H, G.ASSET_ATLAS[cartridge.overlay_atlas], cartridge.pos)
-                card.children.cartridge_overlay.role.draw_major = card
-                card.children.cartridge_overlay:draw_shader("dissolve", nil, nil, nil, card.children.center, nil, nil)
-            end
+        if card.config.center.key == "j_nic_3ds" and card.ability and card.ability.cartridge_key then
+            local cartridge = G.P_CENTERS[card.ability.cartridge_key]
+            card.children.cartridge_overlay = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[cartridge.overlay_atlas], cartridge.pos)
+            card.children.cartridge_overlay.role.draw_major = card
+            card.children.cartridge_overlay:draw_shader("dissolve", nil, nil, nil, card.children.center, nil, nil)
         end
     end,
 	conditions = { vortex = false, facing = "front" },
-})]]
+})
