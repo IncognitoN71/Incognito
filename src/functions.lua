@@ -66,13 +66,6 @@ end
 
 function SMODS.current_mod.reset_game_globals(run_start)
     if run_start then
-        -- Phases
-        G.GAME.phases_numerator = 1
-        G.GAME.phases_denominator = 100 
-        -- STS Osty
-        G.GAME.osty_hp = 0
-        G.GAME.osty_maxhp = 0
-        G.GAME.lethality = 1
         -- Lobotomy Corp Death Text
         G.GAME.death_text = nil
         G.GAME.death_texture = nil

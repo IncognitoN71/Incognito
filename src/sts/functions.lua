@@ -12,6 +12,17 @@ SMODS.Atlas{ -- STS Summon Text
     py = 7,
 }
 
+-- G.GAME
+
+local igo = Game.init_game_object
+function Game:init_game_object()
+    local ret = igo(self)
+    ret.osty_hp = 0
+    ret.osty_maxhp = 0
+    ret.lethality = 1
+    return ret
+end
+
 SMODS.draw_ignore_keys.sprite = true
 
 -- Mult

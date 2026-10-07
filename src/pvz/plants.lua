@@ -1199,7 +1199,7 @@ SMODS.Joker{ -- Jalapeno
     end,
 
     can_use = function(self, card)
-        return G.hand and #G.hand.cards > 1
+        return G.hand and #G.hand.cards > 0
     end
 }
 
