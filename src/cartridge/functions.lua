@@ -2,7 +2,7 @@
 
 local card_highlight = Card.highlight
 function Card:highlight(is_higlighted)
-    if string.find(self.ability.name, "j_nic_3ds") then
+    if self.ability.cartridge_key then
         self.highlighted = is_higlighted
 		if self.highlighted and self.area and self.area.config.type ~= "shop" and self.area.config.type ~= "consumeable" then
             self.children.use_button = UIBox({
@@ -34,9 +34,9 @@ SMODS.DrawStep({
     key = "cartridge_overlay",
     order = 25,
     func = function(card, layer)
-        if card.config.center.key == "j_nic_3ds" and card.ability and card.ability.cartridge_key then
+        if card.ability and card.ability.cartridge_key then
             local cartridge = G.P_CENTERS[card.ability.cartridge_key]
-            card.children.cartridge_overlay = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS[cartridge.overlay_atlas], cartridge.pos)
+            card.children.cartridge_overlay = Sprite(0, 0, G.CARD_W, G.CARD_H, G.ASSET_ATLAS[cartridge.overlay_atlas], cartridge.pos)
             card.children.cartridge_overlay.role.draw_major = card
             card.children.cartridge_overlay:draw_shader("dissolve", nil, nil, nil, card.children.center, nil, nil)
         end

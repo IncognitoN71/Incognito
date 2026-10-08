@@ -903,6 +903,13 @@ return {
 
             -- Cartridge
 
+            j_nic_ds = {
+                name = "DS",
+                text = {
+                    "Insert {C:nic_cartridge}Cartridge",
+                    "to inherit effect",
+                }
+            },
             j_nic_3ds = {
                 name = "3DS",
                 text = {
@@ -1285,7 +1292,10 @@ return {
                     "{s:0.5}Mark",
                 },
                 text = {
-                    ""
+                    "All {C:attention}face{} cards are drawn",
+                    "face down and gives {C:mult}+#1#{} Mult",
+                    "for each {C:attention}face{} card face down",
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 }
             },
             c_nic_pokemon_hook = {
@@ -1294,7 +1304,9 @@ return {
                     "{s:0.5}Hook",
                 },
                 text = {
-                    ""
+                    "Draw {C:attention}2{} random cards",
+                    "in discard pile after",
+                    "each hand played"
                 }
             },
             c_nic_pokemon_star = {

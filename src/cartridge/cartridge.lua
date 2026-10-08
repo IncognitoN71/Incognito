@@ -12,93 +12,6 @@ SMODS.Atlas{ -- Cartridge Overlay
     py = 95,
 }
 
-SMODS.Atlas{ -- 3DS
-    key = "3ds",
-    path = "cartridge/3ds.png",
-    px = 95,
-    py = 95,
-}
-
-SMODS.Joker { -- 3DS
-    key = "3ds",
-    blueprint_compat = false,
-    eternal_compat = true,
-    unlocked = true,
-    discovered = false,
-    atlas = '3ds',
-    rarity = 2,
-    cost = 6,
-    pos = {x = 0, y = 0},
-    display_size = { w = 95 },
-    config = { cartridge = nil, cartridge_key = nil },
-
-    loc_vars = function(self, info_queue, card)
-        if card.area and card.area == G.jokers then
-            local cartridge = card.ability.cartridge_key
-            if cartridge and (G.P_CENTERS[cartridge] or {}).loc_vars then
-                local vars = G.P_CENTERS[cartridge]:loc_vars(info_queue, {ability = { extra = card.ability.cartridge } }).vars
-                info_queue[#info_queue + 1] = { key = cartridge, set = "Cartridge", vars = vars }
-            end
-            main_end = {
-                {
-                    n = G.UIT.C,
-                    config = { align = "bm", minh = 0.4 },
-                    nodes = {
-                        {
-                            n = G.UIT.C,
-                            config = { ref_table = card, align = "m", colour = cartridge and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
-                            nodes = {
-                                { n = G.UIT.T, config = { text = ' ' .. (cartridge and localize { type = 'name_text', key = cartridge, set = 'Cartridge' } or localize { type = 'variable', key = 'nic_insert' }) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
-                            }
-                        }
-                    }
-                }
-            }
-            return { 
-                main_end = main_end 
-            }
-        end
-    end, 
-
-    update = function(self, card)
-        if #SMODS.find_card("j_nic_3ds") > 1 then
-            card.children.center:set_sprite_pos({x = 1, y = 0})
-        else
-            card.children.center:set_sprite_pos({x = 0, y = 0})
-        end
-    end,
-
-    calculate = function(self, card, context)
-        local cartridge = card.ability.cartridge_key
-        if cartridge and (G.P_CENTERS[cartridge] or {}).cartridge_calculate then
-            return G.P_CENTERS[cartridge]:cartridge_calculate(card, context, card.ability.cartridge)
-        end
-	end,
-
-    keep_on_use = function(self, card)
-        return true
-    end,
-
-    use = function(self, card, area, copier)
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                card:juice_up()
-                play_sound("nic_click")
-                local new_cartridge = SMODS.add_card({ set = 'Cartridge', key = card.ability.cartridge_key })
-                new_cartridge.ability.extra = card.ability.cartridge
-                card.ability.cartridge = nil
-                card.ability.cartridge_key = nil
-                G.jokers:unhighlight_all()
-                return true
-            end
-        }))
-    end,
-
-    can_use = function(self, card)
-        return card.ability.cartridge
-    end
-}
-
 Incognito.Cartridge = SMODS.Consumable:extend({
 	object_type = "Consumable",
 	set = "Cartridge",
@@ -127,7 +40,17 @@ Incognito.Cartridge = SMODS.Consumable:extend({
     end,
 
     can_use = function(self, card)
-        return #G.jokers.highlighted == 1 and G.jokers.highlighted[1].config.center.key == "j_nic_3ds"
+        local ds = false
+        if card:has_attribute('ds') then
+            if #G.jokers.highlighted == 1 and (G.jokers.highlighted[1]:has_attribute('ds') or G.jokers.highlighted[1]:has_attribute('3ds')) then
+                ds = true
+            end
+        elseif card:has_attribute('3ds') then
+            if #G.jokers.highlighted == 1 and G.jokers.highlighted[1]:has_attribute('3ds') then
+                ds = true
+            end
+        end
+        return ds
     end,
 })
 
@@ -161,9 +84,10 @@ Incognito.Cartridge({
     pos = {x = 0, y = 0 },
     pixel_size = { h = 67, w = 63 },
     config = { extra = { } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { G.GAME.consumeable_usage_total and G.GAME.consumeable_usage_total.cartridge or 0 } }
+        return { vars = { } }
     end,
 
     cartridge_calculate = function(self, card, context, cartridge)
@@ -178,6 +102,7 @@ Incognito.Cartridge({
     pos = {x = 1, y = 0 },
     pixel_size = { h = 67, w = 63 },
     config = { extra = { } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -195,6 +120,7 @@ Incognito.Cartridge({
     pos = {x = 2, y = 0 },
     pixel_size = { h = 67, w = 63 },
     config = { extra = { } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -212,6 +138,7 @@ Incognito.Cartridge({
     pos = {x = 3, y = 0 },
     pixel_size = { h = 67, w = 63 },
     config = { extra = { } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -229,6 +156,7 @@ Incognito.Cartridge({
     pos = {x = 4, y = 0 },
     pixel_size = { h = 67, w = 63 },
     config = { extra = { } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -246,6 +174,7 @@ Incognito.Cartridge({
     pos = {x = 5, y = 0 },
     pixel_size = { h = 67, w = 63 },
     config = { extra = { } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -263,6 +192,7 @@ Incognito.Cartridge({
     pos = {x = 6, y = 0 },
     pixel_size = { h = 67, w = 63 },
     config = { extra = { } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -278,13 +208,39 @@ Incognito.Cartridge({
     atlas = 'cartridge',
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 7, y = 0 },
-    config = { extra = { } },
+    config = { extra = { mult = 3 } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { } }
+        local face_tally = 0
+        if G.playing_cards then
+            for i = 1, #G.hand.cards do
+                if G.hand.cards[i]:is_face() and G.hand.cards[i].facing == 'back' then
+                    face_tally = face_tally + 1 
+                end
+            end 
+        end
+        return { vars = { card.ability.extra.mult, card.ability.extra.mult * face_tally } }
     end,
 
     cartridge_calculate = function(self, card, context, cartridge)
+        if context.stay_flipped and context.to_area == G.hand and
+            context.other_card:is_face(true) then
+            return {
+                stay_flipped = true
+            }
+        end
+        if context.joker_main then
+            local face_tally = 0
+            for i = 1, #G.hand.cards do
+                if G.hand.cards[i]:is_face() and G.hand.cards[i].facing == 'back' then
+                    face_tally = face_tally + 1 
+                end
+            end 
+            return {
+                mult = cartridge.mult * face_tally
+            }
+        end
     end,
 })
 
@@ -294,14 +250,39 @@ Incognito.Cartridge({
     atlas = 'cartridge',
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 8, y = 0 },
-    config = { extra = { } },
+    config = { extra = { discard = false } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
     end,
 
     cartridge_calculate = function(self, card, context, cartridge)
-    end,
+        if context.press_play or context.setting_blind then 
+            cartridge.discard = true
+        end
+
+        if context.drawing_cards and cartridge.discard == true then
+            if #G.discard.cards > 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        local _cards = {}
+                        for _, playing_card in ipairs(G.discard) do
+                            _cards[#_cards + 1] = playing_card
+                        end
+                        for i = 1, 2 do
+                            card:juice_up()
+                            local discard_card = pseudorandom_element(_cards, 'c_pokemon_hook')
+                            draw_card(G.discard, G.hand, 90, 'up', true, discard_card)
+                        end
+                        play_sound('tarot2')
+                        return true
+                    end
+                }))
+            end
+            cartridge.discard = false
+        end
+    end
 })
 
 Incognito.Cartridge({
@@ -311,6 +292,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 9, y = 0 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -327,6 +309,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 0, y = 1 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -343,6 +326,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 1, y = 1 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -359,6 +343,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 2, y = 1 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -376,6 +361,7 @@ Incognito.Cartridge({
     pos = {x = 3, y = 1 },
     pixel_size = { h = 67, w = 63 },
     config = { extra = { } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -384,23 +370,6 @@ Incognito.Cartridge({
     cartridge_calculate = function(self, card, context, cartridge)
     end,
 })
-
---[[Incognito.Cartridge({ -- "The Legend of Zelda: Spirit Tracks"
-    key = 'idk',
-    set = 'Cartridge',
-    atlas = 'cartridge',
-    overlay_atlas = 'nic_cartridge_overlay',
-    pos = {x = 4, y = 1 },
-    pixel_size = { h = 67, w = 63 },
-    config = { extra = { } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { } }
-    end,
-
-    cartridge_calculate = function(self, card, context, cartridge)
-    end,
-})]]
 
 Incognito.Cartridge({
     key = 'the_joker_midas_mask',
@@ -409,6 +378,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 5, y = 1 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -418,72 +388,6 @@ Incognito.Cartridge({
     end,
 })
 
---[[Incognito.Cartridge({ -- "The Legend of Zelda: Ocarina of Time"
-    key = 'idk',
-    set = 'Cartridge',
-    atlas = 'cartridge',
-    overlay_atlas = 'nic_cartridge_overlay',
-    pos = {x = 6, y = 1 },
-    config = { extra = { } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { } }
-    end,
-
-    cartridge_calculate = function(self, card, context, cartridge)
-    end,
-})]]
-
---[[Incognito.Cartridge({ -- "The Legend of Zelda: A Link Between World"
-    key = 'idk',
-    set = 'Cartridge',
-    atlas = 'cartridge',
-    overlay_atlas = 'nic_cartridge_overlay',
-    pos = {x = 7, y = 1 },
-    config = { extra = { } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { } }
-    end,
-
-    cartridge_calculate = function(self, card, context, cartridge)
-    end,
-})]]
-
---[[Incognito.Cartridge({ -- "Super Mario Bros"
-    key = 'idk',
-    set = 'Cartridge',
-    atlas = 'cartridge',
-    overlay_atlas = 'nic_cartridge_overlay',
-    pos = {x = 8, y = 1 },
-    pixel_size = { h = 67, w = 63 },
-    config = { extra = { } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { } }
-    end,
-
-    cartridge_calculate = function(self, card, context, cartridge)
-    end,
-})]]
-
---[[Incognito.Cartridge({ -- "Mario Kart"
-    key = 'idk',
-    set = 'Cartridge',
-    atlas = 'cartridge',
-    overlay_atlas = 'nic_cartridge_overlay',
-    pos = {x = 9, y = 1 },
-    pixel_size = { h = 67, w = 63 },
-    config = { extra = { } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { } }
-    end,
-
-    cartridge_calculate = function(self, card, context, cartridge)
-    end,
-})]]
-
 Incognito.Cartridge({
     key = 'canio_and_yorick',
     set = 'Cartridge',
@@ -491,6 +395,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 0, y = 2 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -507,6 +412,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 1, y = 2 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -516,47 +422,15 @@ Incognito.Cartridge({
     end,
 })
 
---[[Incognito.Cartridge({ -- "Super Mario 3D Land"
-    key = 'idk',
-    set = 'Cartridge',
-    atlas = 'cartridge',
-    overlay_atlas = 'nic_cartridge_overlay',
-    pos = {x = 2, y = 2 },
-    pixel_size = { h = 67, w = 63 },
-    config = { extra = { } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { } }
-    end,
-
-    cartridge_calculate = function(self, card, context, cartridge)
-    end,
-})]]
-
---[[Incognito.Cartridge({ -- "Luigi's Mansion"
-    key = 'idk',
-    set = 'Cartridge',
-    atlas = 'cartridge',
-    overlay_atlas = 'nic_cartridge_overlay',
-    pos = {x = 3, y = 2 },
-    pixel_size = { h = 67, w = 63 },
-    config = { extra = { } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { } }
-    end,
-
-    cartridge_calculate = function(self, card, context, cartridge)
-    end,
-})]]
-
 Incognito.Cartridge({
     key = 'rhythm_steven',
     set = 'Cartridge',
     atlas = 'cartridge',
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 4, y = 2 },
+    pixel_size = { h = 67, w = 63 },
     config = { extra = { mult = 6, mult_base = 6, mult_gain = 2 } },
+    attributes = { "ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult, card.ability.extra.mult_gain } }
@@ -612,6 +486,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 5, y = 2 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -628,6 +503,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 6, y = 2 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -644,6 +520,7 @@ Incognito.Cartridge({
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 7, y = 2 },
     config = { extra = { } },
+    attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { } }

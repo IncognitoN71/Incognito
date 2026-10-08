@@ -16,7 +16,6 @@ SMODS.Joker{ -- Kasane Jokto
     cost = 5,
     pos = {x = 0, y = 0},
     config = { extra = { repetitions = 2 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "NeatoJokers"
@@ -48,7 +47,6 @@ SMODS.Joker{ -- Ambassador Teto
     cost = 6,
     pos = {x = 1, y = 0},
     config = { extra = { xmult = 1.5 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "アンバサダー"
@@ -98,7 +96,7 @@ SMODS.Joker{ -- Pear
     cost = 6,
     pos = {x = 2, y = 0},
     config = { extra = { levels = 1, pear = 5, pear_needed = 5, pear_loss = 1 } },
-    pools = { Food = true, ["Teto"] = true, ["Pear"] = true },
+    pools = { Food = true, ["Pear"] = true },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.levels, card.ability.extra.pear, card.ability.extra.pear_needed } }
@@ -139,7 +137,7 @@ SMODS.Joker{ -- Pearto
     cost = 7,
     pos = {x = 3, y = 0},
     config = { extra = { levels = 3, odds = 1000 } },
-    pools = { Food = true, ["Teto"] = true, ["Pear"] = true },
+    pools = { Food = true, ["Pear"] = true },
 
     loc_vars = function(self, info_queue, card)
         local new_numerator, new_denominator = SMODS.get_probability_vars(card, 1, card.ability.extra.odds) 
@@ -187,7 +185,6 @@ SMODS.Joker{ -- Doctor Kidori
     cost = 8,
     pos = {x = 4, y = 0},
     config = { extra = { } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "イガク"
@@ -225,7 +222,6 @@ SMODS.Joker{ -- Birdbrain Teto
     cost = 5,
     pos = {x = 5, y = 0},
     config = { extra = { mult = 0, mult_gain = 5 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "BIRDBRAIN"
@@ -269,7 +265,6 @@ SMODS.Joker{ -- Tenebre Rosso Sangue Teto
     cost = 7,
     pos = {x = 6, y = 0},
     config = { extra = { dollars = 4 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "Tenebre Rosso Sangue [Cover]"
@@ -308,7 +303,6 @@ SMODS.Joker{ -- Spoken For Teto
     cost = 8,
     pos = {x = 7, y = 0},
     config = { extra = { xmult = 1.5 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "Spoken For"
@@ -339,7 +333,6 @@ SMODS.Joker{ -- Teto Word Of The Day
     cost = 8,
     pos = {x = 8, y = 0},
     config = { extra = { teto = 0, teto_rounds = 2 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.teto, card.ability.extra.teto_rounds } }
@@ -398,7 +391,6 @@ SMODS.Joker{ -- Mesmerizer Teto
     cost = 8,
     pos = {x = 9, y = 0},
     config = { extra = { } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "メズマライザー"
@@ -457,7 +449,6 @@ SMODS.Joker{ -- Spamteto
     cost = 5,
     pos = {x = 0, y = 1},
     config = { extra = { dollars = 30, dollars_final = 0, uses = 0 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "Koasha Spamteto"
@@ -517,7 +508,6 @@ SMODS.Joker{ -- Tetoris
     cost = 5,
     pos = {x = 1, y = 1},
     config = { extra = { hearts = 5, hearts_needed = 5, hearts_loss = 1 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "テトリス"
@@ -584,7 +574,6 @@ SMODS.Joker{ -- Minimum Rage Teto
     cost = 5,
     pos = {x = 2, y = 1},
     config = { extra = { mult = 0 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "MINIMUM RAGE"
@@ -621,7 +610,6 @@ SMODS.Joker{ -- Teto Territory
     cost = 5,
     pos = {x = 3, y = 1},
     config = { extra = { } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "oxi"
@@ -685,7 +673,14 @@ SMODS.Joker{ -- Teto Territory
                         func = function()
                             joker_to_teto:juice_up(0.5, 0.5)
                             play_sound('tarot2', 1.1, 0.6)
-                            joker_to_teto:set_ability(pseudorandom_element(G.P_CENTER_POOLS.Teto, 'teto').key)
+                            local cen_pool = {}
+                            for _, teto_joker in pairs(G.P_CENTER_POOLS.Joker) do
+                                if teto_joker.rarity == "nic_teto" and teto_joker.key ~= self.key then
+                                    cen_pool[#cen_pool + 1] = teto_joker
+                                end
+                            end
+                            local teto = pseudorandom_element(cen_pool, 'j_nic_teto_territory').key
+                            joker_to_teto:set_ability(teto)
                             return true
                         end
                     }))
@@ -710,7 +705,6 @@ SMODS.Joker{ -- Contradictions Teto
     cost = 5,
     pos = {x = 4, y = 1},
     config = { extra = { } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "CONTRADICTIONS"
@@ -761,7 +755,7 @@ SMODS.Joker{ -- Pear Basket
     cost = 7,
     pos = {x = 5, y = 1},
     config = { extra = { levels = 0, levels_gain = 1 } },
-    pools = { Food = true, ["Teto"] = true, ["Pear"] = true },
+    pools = { Food = true, ["Pear"] = true },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.levels, card.ability.extra.levels_gain }, }
@@ -803,7 +797,6 @@ SMODS.Joker{ -- Keychain Teto
     cost = 5,
     pos = {x = 6, y = 1},
     config = { extra = {} },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = 'tag_nic_twindrill', set = 'Tag' }
@@ -849,7 +842,6 @@ SMODS.Joker{ -- Log Off Teto
     pos = {x = 7, y = 1},
     pixel_size = { h = 71 },
     config = { extra = { xmult = 3, xmult_loss = 0.01 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "LOG OFF"
@@ -906,7 +898,6 @@ SMODS.Joker{ -- TetOS 4.1
     pos = {x = 8, y = 1},
     pixel_size = { h = 71 },
     config = { extra = { levels = 1 } },
-    pools = { ["Teto"] = true },
 
     loc_vars = function(self, info_queue, card)
         local name = "Machine Love"
@@ -937,7 +928,6 @@ SMODS.Joker{ -- Cadmium Colors
     cost = 5,
     pos = {x = 9, y = 1},
     config = { extra = { xmult = 3, suit1 = "Hearts", suit2 = "Diamonds" } },
-    pools = { ["Teto"] = true },
     
     loc_vars = function(self, info_queue, card)
         local name = "Cadmium Colors"
@@ -997,7 +987,6 @@ SMODS.Joker{ -- HITO Mania
     pos = {x = 0, y = 2},
     pixel_size = { w = 59 },
     config = { extra = { } },
-    pools = { ["Teto"] = true },
     
     loc_vars = function(self, info_queue, card)
         local name = "人マニア"
@@ -1021,7 +1010,6 @@ SMODS.Joker{ -- Rot For Clout
     cost = 6,
     pos = {x = 1, y = 2},
     config = { extra = { } },
-    pools = { ["Teto"] = true },
     
     loc_vars = function(self, info_queue, card)
         local name = "Rot For Clout"
@@ -1045,7 +1033,6 @@ SMODS.Joker{ -- Bread
     cost = 6,
     pos = {x = 2, y = 2},
     config = { extra = { } },
-    pools = { ["Teto"] = true },
     
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -1067,7 +1054,6 @@ SMODS.Joker{ -- Machine Love
     pos = {x = 3, y = 2},
     soul_pos = {x = 4, y = 2},
     config = { extra = { } },
-    pools = { ["Teto"] = true },
     
     loc_vars = function(self, info_queue, card)
         local name = "Machine Love"

@@ -47,6 +47,7 @@ assert(SMODS.load_file("src/phases/specialphases.lua"))()
 
 -- Cartridge
 assert(SMODS.load_file("src/cartridge/cartridge.lua"))()
+assert(SMODS.load_file("src/cartridge/ds.lua"))()
 assert(SMODS.load_file("src/cartridge/functions.lua"))()
 
 -- Poopoo
