@@ -208,14 +208,39 @@ Incognito.Cartridge({
     atlas = 'cartridge',
     overlay_atlas = 'nic_cartridge_overlay',
     pos = {x = 7, y = 0 },
-    config = { extra = { } },
+    config = { extra = { mult = 3 } },
     attributes = { "3ds" },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { } }
+        local face_tally = 0
+        if G.playing_cards then
+            for i = 1, #G.hand.cards do
+                if G.hand.cards[i]:is_face() and G.hand.cards[i].facing == 'back' then
+                    face_tally = face_tally + 1 
+                end
+            end 
+        end
+        return { vars = { card.ability.extra.mult, card.ability.extra.mult * face_tally } }
     end,
 
     cartridge_calculate = function(self, card, context, cartridge)
+        if context.stay_flipped and context.to_area == G.hand and
+            context.other_card:is_face(true) then
+            return {
+                stay_flipped = true
+            }
+        end
+        if context.joker_main then
+            local face_tally = 0
+            for i = 1, #G.hand.cards do
+                if G.hand.cards[i]:is_face() and G.hand.cards[i].facing == 'back' then
+                    face_tally = face_tally + 1 
+                end
+            end 
+            return {
+                mult = cartridge.mult * face_tally
+            }
+        end
     end,
 })
 
