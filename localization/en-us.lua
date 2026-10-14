@@ -1292,10 +1292,7 @@ return {
                     "{s:0.5}Mark",
                 },
                 text = {
-                    "All {C:attention}face{} cards are drawn",
-                    "face down and gives {C:mult}+#1#{} Mult",
-                    "for each {C:attention}face{} card face down",
-                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                    "",
                 }
             },
             c_nic_pokemon_hook = {
